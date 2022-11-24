@@ -1,0 +1,13 @@
+<mat-card>
+    <mat-card-content>
+        <mat-toolbar class="primary">Funcionários Cadastrados</mat-toolbar>
+
+        <div  class="column-flex mat-elevation-z8">
+            <app-funcionario-list *ngIf="funcionario$ | async as funcionario"
+            [funcionarios]="funcionario"
+            (add)="onAdd()"
+            (edit)="onEdit($event)"
+            ></app-funcionario-list>
+        </div>
+    </mat-card-content>
+</mat-card>

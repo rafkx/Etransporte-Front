@@ -1,0 +1,37 @@
+<mat-table [dataSource]="funcionarios">
+    <!-- Nome Column -->
+    <ng-container matColumnDef="nomeFun">
+    <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+    <mat-cell *matCellDef="let funcionario"> {{funcionario.nomeFun}} </mat-cell>
+    </ng-container>
+
+    <!-- CPF Column -->
+    <ng-container matColumnDef="cpf">
+    <mat-header-cell *matHeaderCellDef> CPF </mat-header-cell>
+    <mat-cell *matCellDef="let funcionario"> {{funcionario.cpf}} </mat-cell>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="action-column">
+            <button mat-mini-fab color="primary" aria-label="Adicionar funcionario" (click)="onAdd()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let funcionario" class="action-column">
+            <button mat-icon-button style="color: #5BC168;" aria-label="Editar funcionario" (click)="onEdit(funcionario)">
+                <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button style="color: #5BC168;" aria-label="Remover funcionario">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-cell>
+
+
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
