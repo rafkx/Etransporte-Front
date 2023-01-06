@@ -1,0 +1,194 @@
+<mat-card>
+    <mat-card-content>
+        <mat-toolbar class="primary">Cadastro de Veículo</mat-toolbar>
+
+        <mat-card-content>
+            <form [formGroup]="form">
+                <mat-form-field class="full-width">
+                    <mat-label>Placa do Veículo</mat-label>
+                    <input matInput formControlName="placa">
+                    <mat-error *ngIf="form.get('placa')?.invalid">
+                        {{ getErrorMessage("placa") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Renavam do Veículo</mat-label>
+                    <input matInput formControlName="renavam">
+                    <mat-error *ngIf="form.get('renavam')?.invalid">
+                        {{ getErrorMessage("renavam") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Chassi do Veículo</mat-label>
+                    <input matInput formControlName="chassi">
+                    <mat-error *ngIf="form.get('chassi')?.invalid">
+                        {{ getErrorMessage("chassi") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Tipo do Chassi</mat-label>
+                    <input matInput formControlName="tipoChassi">
+                    <mat-error *ngIf="form.get('tipoChassi')?.invalid">
+                        {{ getErrorMessage("tipoChassi") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Ano do Veículo</mat-label>
+                    <input matInput type="number" formControlName="ano">
+                    <mat-error *ngIf="form.get('ano')?.invalid">
+                        {{ getErrorMessage("ano") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Modelo do Veículo</mat-label>
+                    <input matInput formControlName="modelo">
+                    <mat-error *ngIf="form.get('modelo')?.invalid">
+                        {{ getErrorMessage("modelo") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Marca do Veículo</mat-label>
+                    <input matInput formControlName="marca">
+                    <mat-error *ngIf="form.get('marca')?.invalid">
+                        {{ getErrorMessage("marca") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Combustível do Veículo</mat-label>
+                    <input matInput formControlName="combustivel">
+                    <mat-error *ngIf="form.get('combustivel')?.invalid">
+                        {{ getErrorMessage("combustivel") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Última km do Veículo</mat-label>
+                    <input matInput formControlName="ultimaKm">
+                    <mat-error *ngIf="form.get('ultimaKm')?.invalid">
+                        {{ getErrorMessage("ultimaKm") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Cor Interna do Veículo</mat-label>
+                    <input matInput formControlName="corInterna">
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Cor Externa do Veículo</mat-label>
+                    <input matInput formControlName="corExterna">
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Número do Motor Interna do Veículo</mat-label>
+                    <input matInput formControlName="numMotorInterno">
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Número do Motor Externo do Veículo</mat-label>
+                    <input matInput formControlName="numMotorExterno">
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>O Veículo Tem Rastreador?</mat-label>
+                    <input matInput formControlName="rastreador">
+                    <mat-select formControlName="rastreador">
+                        <mat-option></mat-option>
+                        <mat-option value=true>Sim</mat-option>
+                        <mat-option value=false>Não</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>O Veículo Tem Bloqueador?</mat-label>
+                    <input matInput formControlName="bloqueador">
+                    <mat-select formControlName="bloqueador">
+                        <mat-option></mat-option>
+                        <mat-option value=true>Sim</mat-option>
+                        <mat-option value=false>Não</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Data de Aquisição do Veículo</mat-label>
+                    <input matInput formControlName="dataAquisicao">
+                    <mat-error *ngIf="form.get('dataAquisicao')?.invalid">
+                        {{ getErrorMessage("dataAquisicao") }}
+                    </mat-error>
+                    <!--<mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>-->
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Condição do Veículo</mat-label>
+                    <mat-select formControlName="condicao">
+                        <mat-option></mat-option>
+                        <mat-option value="novo">Novo</mat-option>
+                        <mat-option value="velho">Velho</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.get('condicao')?.invalid">
+                        {{ getErrorMessage("condicao") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Valor da Compra do Veículo</mat-label>
+                    <input matInput type="number" formControlName="valorCompra">
+                    <mat-error *ngIf="form.get('valorCompra')?.invalid">
+                        {{ getErrorMessage("valorCompra") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Valor da Reforma do Veículo</mat-label>
+                    <input matInput type="number" formControlName="ValorReforma">
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Valor de Mercado do Veículo</mat-label>
+                    <input matInput type="number" formControlName="valorMercado">
+                    <mat-error *ngIf="form.get('valorMercado')?.invalid">
+                        {{ getErrorMessage("valorMercado") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Nome do Vendendor do Veículo</mat-label>
+                    <input matInput formControlName="nomeVendedor">
+                    <mat-error *ngIf="form.get('nomeVendedor')?.invalid">
+                        {{ getErrorMessage("nomeVendedor") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Telefone do Vendedor do Veículo</mat-label>
+                    <input matInput formControlName="teleVendedor">
+                    <mat-error *ngIf="form.get('teleVendedor')?.invalid">
+                        {{ getErrorMessage("teleVendedor") }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Descrição do Veículo</mat-label>
+                    <input matInput formControlName="descricao">
+                    <mat-error *ngIf="form.get('descricao')?.invalid">
+                        {{ getErrorMessage("descricao") }}
+                    </mat-error>
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+            <button mat-raised-button (click)="onCancel()">Cancelar</button>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>

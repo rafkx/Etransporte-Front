@@ -3,9 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FuncionarioModule } from './funcionario/funcionario.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppMaterialModule } from './shared/app-material/app-material.module';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return localStorage.getItem("token")
+}
 
 @NgModule({
   declarations: [
@@ -16,8 +20,14 @@ import { AppMaterialModule } from './shared/app-material/app-material.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     AppMaterialModule,
-    FuncionarioModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['http://localhost:3000'],
+        
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
