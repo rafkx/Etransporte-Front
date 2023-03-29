@@ -21,17 +21,17 @@
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef class="action-column">
             <button mat-mini-fab color="primary" aria-label="Adicionar veiculo" (click)="onAdd()">
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add">add</mat-icon>
             </button>
         </mat-header-cell>
 
         <mat-cell *matCellDef="let veiculo" class="action-column">
             <button mat-icon-button style="color: #5BC168;" aria-label="Editar veiculo" (click)="onEdit(veiculo)">
-                <mat-icon>edit</mat-icon>
+                <mat-icon fontIcon="edit"></mat-icon>
             </button>
 
             <button mat-icon-button style="color: #5BC168;" aria-label="Remover veiculo" (click)="onDelete(veiculo)">
-                <mat-icon>delete</mat-icon>
+                <mat-icon fontIcon="delete"></mat-icon>
             </button>
         </mat-cell>
 

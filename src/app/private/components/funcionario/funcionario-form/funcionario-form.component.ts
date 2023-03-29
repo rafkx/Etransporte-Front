@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { FuncionarioService } from '../funcionario.service';
-import { Funcionario } from '../model/funcionario';
+import { Funcionario } from 'src/app/models/funcionario';
+import { FuncionarioService } from '../funcionario-service/funcionario.service';
 
 @Component({
   selector: 'app-funcionario-form',
@@ -27,7 +27,7 @@ export class FuncionarioFormComponent implements OnInit {
     rua: [''],
     bairro: [''],
     cep: [''],
-    numero: [''],
+    numero: [0],
     city: [''],
     funcao: ['', [Validators.required]],
     salario: [0, [Validators.required]],

@@ -1,1 +1,14 @@
-<p>dashboard works!</p>
+<mat-toolbar class="primary">
+    <button mat-button [matMenuTriggerFor]="menu">|||</button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="goToFuncionario()">Funcionário</button>
+        <button mat-menu-item (click)="goToVeiculo()">Veículo</button>
+        <button mat-menu-item (click)="goToAutentication()">Autenticação</button>
+        <button mat-menu-item (click)="goToServico()">Serviço</button>
+        <button mat-menu-item (click)="goToPeca()">Peça</button>
+        <button mat-menu-item (click)="goToQuilometro()">Quilometragens</button>
+        <button mat-menu-item (click)="goToAbastecimento()">Abastecimento</button>
+        <button mat-menu-item (click)="logOut()">Sair</button>
+    </mat-menu>
+    <span>Etransporte</span>
+</mat-toolbar>

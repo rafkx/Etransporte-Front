@@ -1,0 +1,72 @@
+<mat-card>
+    <mat-card-content>
+        <mat-toolbar class="primary">Cadastro Peça</mat-toolbar>
+
+        <mat-card-content>
+            <form [formGroup]="form"> 
+                
+                <mat-form-field class="full-width">
+                    <mat-label>Nome Peça</mat-label>
+                    <input matInput formControlName="nomePeca" />
+                    <mat-error *ngIf="nomePeca.touched && nomePeca.hasError('required')">Nome da peça é obrigatório</mat-error>
+                </mat-form-field>
+                
+                <mat-form-field class="full-width">
+                    <mat-label>Código Peça</mat-label>
+                    <input matInput formControlName="codPeca" />
+                    <mat-error *ngIf="codPeca.touched && codPeca.hasError('required')">Código da peça é obrigatório</mat-error>
+                </mat-form-field>
+                
+                <mat-form-field class="full-width">
+                    <mat-label>Descrição da Peça</mat-label>
+                    <input matInput formControlName="descricao" />
+                    <mat-error *ngIf="descricao.touched && descricao.hasError('required')">Descrição é obrigatório</mat-error>
+                </mat-form-field>
+                
+                <mat-form-field class="full-width">
+                    <mat-label>Marca do Fabricante da Peça</mat-label>
+                    <input matInput formControlName="marcaFabricante" />
+                    <mat-error *ngIf="marcaFabricante.touched && marcaFabricante.hasError('required')">Marca é obrigatório</mat-error>
+                </mat-form-field>
+                
+                <mat-form-field class="full-width">
+                    <mat-label>Modelo da Peça</mat-label>
+                    <input matInput formControlName="modelo" />
+                    <mat-error *ngIf="modelo.touched && modelo.hasError('required')">Modelo é obrigatório</mat-error>
+                </mat-form-field>
+                
+                <mat-form-field class="full-width">
+                    <mat-label>Peça Pequena</mat-label>
+                    <mat-select formControlName="pequenaPeca">
+                      <mat-option *ngFor="let peca of pecas" [value]="peca">
+                        {{peca.nomePeca}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                
+                <mat-form-field class="full-width">
+                    <mat-label>Fornecedor da Peça</mat-label>
+                    <mat-select formControlName="fornecedorP">
+                      <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor.id">
+                        {{fornecedor.nome}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Veiculo</mat-label>
+                    <mat-select formControlName="veiculo">
+                      <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo">
+                        {{veiculo.placa}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+            <button mat-raised-button (click)="onCancel()">Cancelar</button>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,61 @@
+<mat-card>
+    <mat-card-content>
+        <mat-toolbar class="primary">Cadastro Abastecimento</mat-toolbar>
+
+        <mat-card-content>
+            <form [formGroup]="form">
+
+                <mat-form-field class="full-width">
+                    <mat-label>Tipo do Combustível de Litros</mat-label>
+                    <input matInput formControlName="tipoComb" />
+                    <mat-error *ngIf="tipoComb.touched && tipoComb.hasError('required')">Tipo de combustível é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Quantidade de Litros</mat-label>
+                    <input type="number" step="any" matInput formControlName="quantLitros" />
+                    <mat-error *ngIf="quantLitros.touched && quantLitros.hasError('required')">Quantidade de litros é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Valor do Litro</mat-label>
+                    <input type="number" step="any" matInput formControlName="valorLitro" />
+                    <mat-error *ngIf="valorLitro.touched && valorLitro.hasError('required')">Valor do litro é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Desconto</mat-label>
+                    <input type="number" step="any" matInput formControlName="desconto" />
+                    <mat-error *ngIf="desconto.touched && desconto.hasError('required')">Desconto é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Data</mat-label>
+                    <input type="date" matInput formControlName="data" />
+                    <mat-error *ngIf="data.touched && data.hasError('required')">Data é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Veiculo</mat-label>
+                    <mat-select formControlName="veiculo">
+                      <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo">
+                        {{veiculo.placa}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                
+                <mat-form-field class="full-width" formGroupName="km">
+                    <mat-label>Quantidade km</mat-label>
+                    <input matInput formControlName="quantKm" />
+                    <mat-error *ngIf="quantKm.touched && quantKm.hasError('required')">Quantidade de Km é obrigatório</mat-error>
+                </mat-form-field>
+                
+            </form>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+            <button mat-raised-button (click)="onCancel()">Cancelar</button>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>

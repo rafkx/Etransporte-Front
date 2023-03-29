@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Veiculo } from '../model/veiculo';
+import { Veiculo } from 'src/app/models/veiculo';
+
 
 @Component({
   selector: 'app-veiculo-list',

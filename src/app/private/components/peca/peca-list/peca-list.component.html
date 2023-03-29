@@ -1,0 +1,44 @@
+<mat-table [dataSource]="pecas">
+    
+    <!-- Nome Peça Column -->
+    <ng-container matColumnDef="nomePeca">
+    <mat-header-cell *matHeaderCellDef> Nome da Peça</mat-header-cell>
+    <mat-cell *matCellDef="let peca"> {{peca.nomePeca}} </mat-cell>
+    </ng-container>
+
+    <!-- Descricao Column -->
+    <ng-container matColumnDef="descricao">
+    <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+    <mat-cell *matCellDef="let peca"> {{peca.descricao}} </mat-cell>
+    </ng-container>
+
+    <!-- Fornecedor Column -->
+    <ng-container matColumnDef="fornecedor">
+        <mat-header-cell *matHeaderCellDef> Fornecedor </mat-header-cell>
+        <mat-cell *matCellDef="let peca"> {{peca.fornecedorP.nome}} </mat-cell>
+        </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="action-column">
+            <button mat-mini-fab color="primary" aria-label="Adicionar Peça" (click)="onAdd()">
+                <mat-icon fontIcon="add"></mat-icon>
+            </button>
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let peca" class="action-column">
+            <button mat-icon-button style="color: #5BC168;" aria-label="Editar Peça" (click)="onEdit(peca)">
+                <mat-icon fontIcon="edit"></mat-icon>
+            </button>
+
+            <button mat-icon-button style="color: #5BC168;" aria-label="Remover Peça" (click)="onDelete(peca)">
+                <mat-icon fontIcon="delete"></mat-icon>
+            </button>
+        </mat-cell>
+
+
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>

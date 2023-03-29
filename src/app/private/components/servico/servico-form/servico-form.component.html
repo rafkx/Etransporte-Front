@@ -1,0 +1,38 @@
+<mat-card>
+    <mat-card-content>
+        <mat-toolbar class="primary">Cadastro Serviço</mat-toolbar>
+
+        <mat-card-content>
+            <form [formGroup]="form">
+                <mat-form-field class="full-width">
+                    <mat-label>Descrição</mat-label>
+                    <input matInput formControlName="descricao" />
+                    <mat-error *ngIf="descricao.touched && descricao.hasError('required')">Descrição é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Fornecedor</mat-label>
+                    <mat-select formControlName="fornecedor">
+                    <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor.id">
+                        {{fornecedor.nome}}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Veiculo</mat-label>
+                    <mat-select formControlName="veiculo">
+                    <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo">
+                        {{veiculo.placa}}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+            <button mat-raised-button (click)="onCancel()">Cancelar</button>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>

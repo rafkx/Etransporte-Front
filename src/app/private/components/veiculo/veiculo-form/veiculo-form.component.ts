@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { Veiculo } from '../model/veiculo';
-import { VeiculoService } from '../veiculo.service';
+import { Veiculo } from 'src/app/models/veiculo';
+import { VeiculoService } from '../veiculo-service/veiculo.service';
 
 @Component({
   selector: 'app-veiculo-form',
@@ -23,7 +23,7 @@ export class VeiculoFormComponent implements OnInit{
     modelo: ['', [Validators.required]],
     marca: ['', [Validators.required]],
     combustivel: ['', [Validators.required]],
-    ultimaKm: ['', [Validators.required]],
+    ultimaKm: [0, [Validators.required]],
     corInterna: [''],
     corExterna: [''],
     numMotorInterno: [0],
@@ -105,5 +105,4 @@ export class VeiculoFormComponent implements OnInit{
 
     return 'Campo Inválido';
   }
-
 }

@@ -1,0 +1,43 @@
+<mat-table [dataSource]="servicos">
+    <!-- Descrição Column -->
+    <ng-container matColumnDef="descricao">
+    <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+    <mat-cell *matCellDef="let servico"> {{servico.descricao}} </mat-cell>
+    </ng-container>
+
+    <!-- Fornecedor Column -->
+    <ng-container matColumnDef="fornecedor">
+    <mat-header-cell *matHeaderCellDef> Fornecedor </mat-header-cell>
+    <mat-cell *matCellDef="let servico"> {{servico.fornecedor.nome}} </mat-cell>
+    </ng-container>
+
+    <!-- Veiculo Column -->
+    <ng-container matColumnDef="veiculo">
+        <mat-header-cell *matHeaderCellDef> Veículo </mat-header-cell>
+        <mat-cell *matCellDef="let servico"> {{servico.veiculo[0].placa}} </mat-cell>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="action-column">
+            <button mat-mini-fab color="primary" aria-label="Adicionar serviço" (click)="onAdd()">
+                <mat-icon fontIcon="add"></mat-icon>
+            </button>
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let servico" class="action-column">
+            <button mat-icon-button style="color: #5BC168;" aria-label="Editar serviço" (click)="onEdit(servico)">
+                <mat-icon fontIcon="edit"></mat-icon>
+            </button>
+
+            <button mat-icon-button style="color: #5BC168;" aria-label="Remover serviço" (click)="onDelete(servico)">
+                <mat-icon fontIcon="delete"></mat-icon>
+            </button>
+        </mat-cell>
+
+
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>

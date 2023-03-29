@@ -18,6 +18,7 @@ import { AppMaterialModule } from './app-material/app-material.module';
   exports: [
     ErrorDialogComponent,
     ConfirmationDialogComponent,
+    AppMaterialModule,
   ]
 })
 export class SharedModule { }

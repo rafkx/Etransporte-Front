@@ -1,0 +1,41 @@
+<mat-table [dataSource]="quilometros">
+    <!-- Quantidade Km Column -->
+    <ng-container matColumnDef="quantKm">
+        <mat-header-cell *matHeaderCellDef> Quantidade Km </mat-header-cell>
+        <mat-cell *matCellDef="let quilometro"> {{quilometro.quantKm}} </mat-cell>
+    </ng-container>
+
+    <!-- Data Column -->
+    <ng-container matColumnDef="data">
+        <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
+        <mat-cell *matCellDef="let quilometro"> {{quilometro.data}} </mat-cell>
+    </ng-container>
+
+    <!-- Veiculo Column -->
+    <ng-container matColumnDef="veiculo">
+        <mat-header-cell *matHeaderCellDef> Veiculo </mat-header-cell>
+        <mat-cell *matCellDef="let quilometro"> {{quilometro.veiculo}} </mat-cell>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="action-column">
+            <button mat-mini-fab color="primary" aria-label="Adicionar quilometro" (click)="onAdd()">
+                <mat-icon fontIcon="add"></mat-icon>
+            </button>
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let quilometro" class="action-column">
+            <button mat-icon-button style="color: #5BC168;" aria-label="Editar quilometro" (click)="onEdit(quilometro)">
+                <mat-icon fontIcon="edit"></mat-icon>
+            </button>
+
+            <button mat-icon-button style="color: #5BC168;" aria-label="Remover quilometro" (click)="onDelete(quilometro)">
+                <mat-icon fontIcon="delete"></mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>

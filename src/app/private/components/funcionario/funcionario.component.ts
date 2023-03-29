@@ -3,10 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
+import { Funcionario } from 'src/app/models/funcionario';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
-import { FuncionarioService } from './funcionario.service';
-import { Funcionario } from './model/funcionario';
+import { FuncionarioService } from './funcionario-service/funcionario.service';
+
 
 @Component({
   selector: 'app-funcionario',
@@ -31,12 +32,12 @@ export class FuncionarioComponent implements OnInit {
 
   refresh() {
     this.funcionario$ = this.funcionarioService.getFuncionarios()
-    .pipe(
-      catchError(error => {
-        this.onError('Error ao carregar funcionários')
-        return of([])
-      })
-    );
+      .pipe(
+        catchError(error => {
+          this.onError('Error ao carregar funcionários')
+          return of([])
+        })
+      );
   }
 
   onError(errorMsg: string) {
@@ -61,21 +62,21 @@ export class FuncionarioComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.funcionarioService.remove(funcionario.id).subscribe(
-        () => {
-          this.refresh()
-          this.snackBar.open('Funcionário removido com sucesso!', 'X', {
-            duration: 5000,
-            verticalPosition: 'top',
-            horizontalPosition: 'center',
-          })
-        },
-        () => this.onError('Erro ao tentar remover funcionário')
+          () => {
+            this.refresh()
+            this.snackBar.open('Funcionário removido com sucesso!', 'X', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'center',
+            })
+          },
+          () => this.onError('Erro ao tentar remover funcionário')
         )
       }
     })
   }
 
   onRedirect(funcionario: Funcionario) {
-    this.router.navigate([ `detailed/${ funcionario.id }` ], { relativeTo: this.route });
+    this.router.navigate([`detailed/${funcionario.id}`], { relativeTo: this.route });
   }
 }

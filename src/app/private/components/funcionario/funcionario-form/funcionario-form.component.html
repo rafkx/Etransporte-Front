@@ -44,7 +44,7 @@
 
                 <mat-form-field class="full-width">
                     <mat-label>Data Nascimento do Funcionário</mat-label>
-                    <input matInput formControlName="dataNasciFun" />
+                    <input type="date" matInput formControlName="dataNasciFun" />
                     <mat-error *ngIf="form.get('dataNasciFun')?.invalid">
                         {{ getErrorMessage("dataNasciFun") }}
                     </mat-error>
@@ -96,7 +96,7 @@
 
                 <mat-form-field class="full-width">
                     <mat-label>Número da Residência do Funcionário</mat-label>
-                    <input matInput formControlName="numero">
+                    <input type="number" matInput formControlName="numero">
                 </mat-form-field>
 
                 <mat-form-field class="full-width">
@@ -122,7 +122,7 @@
 
                 <mat-form-field class="full-width">
                     <mat-label>Data de Admissão do Funcionário</mat-label>
-                    <input matInput formControlName="dataAdmissao" />
+                    <input type="date" matInput formControlName="dataAdmissao" />
                     <mat-error *ngIf="form.get('dataAdmissao')?.invalid">
                         {{ getErrorMessage("dataAdmissao") }}
                     </mat-error>

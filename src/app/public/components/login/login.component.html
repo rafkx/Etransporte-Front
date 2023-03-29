@@ -1,9 +1,6 @@
 <div class="container">
     <div>
         <div>
-            <button mat-button [routerLink]="['../register']">Registrar-se</button>
-        </div>
-        <div>
             <mat-card style="background-color: #5BC168; color: #ffffff">
                 <mat-card-title>Entrar</mat-card-title>
             
@@ -18,9 +15,10 @@
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>Senha</mat-label>
-                            <input type="password" matInput formControlName="password" />
+                            <input type="password" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$" matInput formControlName="password" />
                             <mat-error *ngIf="password.touched && password.hasError('required')">Senha é obrigatório</mat-error>
-                        </mat-form-field>
+                            <mat-error *ngIf="password.touched && password.hasError('pattern')">A senha deve conter letras maiúsculas, minúsculas, números e caracteres especiais</mat-error>
+                        </mat-form-field><br>
                         
                         <mat-hint *ngIf="!form.valid"><small>Preencha todas as colunas</small></mat-hint>
                         

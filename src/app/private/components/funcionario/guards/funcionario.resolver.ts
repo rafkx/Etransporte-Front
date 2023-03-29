@@ -5,8 +5,8 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { FuncionarioService } from '../funcionario.service';
-import { Funcionario, Funcionario2 } from '../model/funcionario';
+import { Funcionario, Funcionario2 } from 'src/app/models/funcionario';
+import { FuncionarioService } from '../funcionario-service/funcionario.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,7 @@ export class FuncionarioResolver implements Resolve<Funcionario | Funcionario2> 
       rua: '',
       bairro: '',
       cep: '',
-      numero: '',
+      numero: 0,
       city: '',
       funcao: '',
       salario: 0,
