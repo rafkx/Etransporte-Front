@@ -1,6 +1,13 @@
 <mat-card>
     <mat-card-content>
         <mat-toolbar class="primary">Abastecimentos Cadastrados</mat-toolbar>
+        <div class="search-container">
+            <mat-icon fontIcon="search"></mat-icon>
+            <input type="date" [formControl]="queryField" placeholder="Coloque a data do abastecimento...">
+            <div class="button">
+                <button (click)="onSearch()">Pesquisar</button>
+            </div>
+        </div>
 
         <div class="column-flex mat-elevation-z8">
             <app-abastecimento-list *ngIf="abastecimento$ | async as abastecimento; else loading"

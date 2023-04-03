@@ -7,6 +7,7 @@ import { Veiculo } from 'src/app/models/veiculo';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { VeiculoService } from './veiculo-service/veiculo.service';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { VeiculoService } from './veiculo-service/veiculo.service';
 export class VeiculoComponent implements OnInit{
   
   veiculo$: Observable<any> | undefined;
+  queryField = new FormControl();
 
   constructor(
     private veiculoService: VeiculoService,
@@ -38,6 +40,15 @@ export class VeiculoComponent implements OnInit{
         return of([])
       })
     );
+  }
+
+  onSearch() {
+    let value = this.queryField.value;
+    if (value && (value = value.trim()) !== ''){
+      this.veiculo$ = this.veiculoService.getFilter(value)
+    } else {
+      this.refresh()
+    }
   }
 
   onError (errorMsg: string) {

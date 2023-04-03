@@ -16,6 +16,10 @@ export class VeiculoService {
     return this.http.get('http://localhost:3000/veiculo').pipe(first());
   }
 
+  public getFilter(placa: string): Observable<any> {
+    return this.http.get('http://localhost:3000/veiculo/filter', { params: { placa } }).pipe(first());
+  }
+
   public loadById(id: string) {
     return this.http.get<Veiculo>(`http://localhost:3000/veiculo/${id}`);
   }

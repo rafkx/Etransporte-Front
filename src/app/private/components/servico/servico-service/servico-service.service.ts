@@ -16,6 +16,10 @@ export class ServicoServiceService {
     return this.http.get('http://localhost:3000/servico').pipe(first());
   }
 
+  public getFilter(nome: string): Observable<any> {
+    return this.http.get('http://localhost:3000/servico/filter', { params: { nome } }).pipe(first());
+  }
+
   public getServico(id: string) {
     return this.http.get<Servico>(`http://localhost:3000/servico/${id}`).pipe(first());
   }

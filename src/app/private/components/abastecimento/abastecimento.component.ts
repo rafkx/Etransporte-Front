@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { Abastecimento } from 'src/app/models/abastecimento';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { AbastecimentoService } from './abastecimento-service/abastecimento.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-abastecimento',
@@ -16,6 +17,8 @@ import { AbastecimentoService } from './abastecimento-service/abastecimento.serv
 export class AbastecimentoComponent implements OnInit {
 
   abastecimento$: Observable<any> | undefined;
+  queryField = new FormControl();
+  quantLitro: number = 0;
 
   constructor(
     private abastecimentoService: AbastecimentoService,
@@ -37,6 +40,15 @@ export class AbastecimentoComponent implements OnInit {
           return of([])
         })
       );
+  }
+
+  onSearch() {
+    let value = this.queryField.value;
+    if (value && (value = value.trim()) !== ''){
+      this.abastecimento$ = this.abastecimentoService.getFilter(value);
+    } else {
+      this.refresh();
+    }
   }
 
   onError(errorMsg: string) {

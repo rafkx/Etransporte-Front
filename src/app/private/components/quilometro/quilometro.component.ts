@@ -7,6 +7,7 @@ import { Quilometro } from 'src/app/models/quilometro';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { QuilometroService } from './quilometro-service/quilometro.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-quilometro',
@@ -16,6 +17,7 @@ import { QuilometroService } from './quilometro-service/quilometro.service';
 export class QuilometroComponent implements OnInit {
 
   quilometro$: Observable<any> | undefined;
+  queryField = new FormControl();
 
   constructor(
     private quilometroService: QuilometroService,
@@ -37,6 +39,15 @@ export class QuilometroComponent implements OnInit {
           return of([])
         })
       );
+  }
+
+  onSearch() {
+    let value = this.queryField.value;
+    if (value && (value = value.trim()) !== ''){
+      this.quilometro$ = this.quilometroService.getFilter(value);
+    } else {
+      this.refresh();
+    }
   }
 
   onError(errorMsg: string) {

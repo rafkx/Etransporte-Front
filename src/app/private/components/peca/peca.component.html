@@ -1,6 +1,13 @@
 <mat-card>
     <mat-card-content>
         <mat-toolbar class="primary">Peças Cadastradas</mat-toolbar>
+        <div class="search-container">
+                <mat-icon fontIcon="search"></mat-icon>
+                <input type="text" [formControl]="queryField" placeholder="Digite o nome de uma peça...">
+                <div class="button">
+                    <button (click)="onSearch()">Pesquisar</button>
+                </div>
+        </div>
 
         <div class="column-flex mat-elevation-z8">
             <app-peca-list *ngIf="peca$ | async as peca; else loading"

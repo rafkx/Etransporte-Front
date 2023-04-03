@@ -1,20 +1,21 @@
 <mat-table [dataSource]="abastecimentos">
-    <!-- Tipo de Combustivel Column -->
-    <ng-container matColumnDef="tipoComb">
-        <mat-header-cell *matHeaderCellDef> Tipo do Combustível </mat-header-cell>
-        <mat-cell *matCellDef="let abastecimento"> {{abastecimento.tipoComb}} </mat-cell>
-    </ng-container>
 
     <!-- Data Column -->
     <ng-container matColumnDef="data">
-        <mat-header-cell *matHeaderCellDef> Dara do Abastecimento </mat-header-cell>
-        <mat-cell *matCellDef="let abastecimento"> {{abastecimento.data}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef> Data do Abastecimento </mat-header-cell>
+        <mat-cell *matCellDef="let abastecimento"> {{abastecimento.data | date : 'dd/MM/yyyy'}} </mat-cell>
     </ng-container>
 
     <!-- Veiculo Column -->
     <ng-container matColumnDef="veiculo">
         <mat-header-cell *matHeaderCellDef> Veiculo </mat-header-cell>
         <mat-cell *matCellDef="let abastecimento"> {{abastecimento.veiculo.placa}} </mat-cell>
+    </ng-container>
+    
+    <!-- Tipo de Combustivel Column -->
+    <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+        <mat-cell *matCellDef="let abastecimento"> {{(abastecimento.quantLitros * abastecimento.valorLitro) - abastecimento.desconto}} </mat-cell>
     </ng-container>
 
     <!-- Actions Column -->

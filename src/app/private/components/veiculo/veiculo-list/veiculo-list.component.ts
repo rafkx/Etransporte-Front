@@ -13,7 +13,7 @@ export class VeiculoListComponent implements OnInit {
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
-  readonly displayedColumns = ['placa', 'ano', 'modelo', 'actions'];
+  readonly displayedColumns = ['placa', 'ano', 'marca', 'modelo', 'actions'];
 
   constructor () { }
   

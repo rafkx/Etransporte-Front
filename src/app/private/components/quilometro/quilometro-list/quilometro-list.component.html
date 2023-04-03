@@ -1,20 +1,21 @@
 <mat-table [dataSource]="quilometros">
-    <!-- Quantidade Km Column -->
-    <ng-container matColumnDef="quantKm">
-        <mat-header-cell *matHeaderCellDef> Quantidade Km </mat-header-cell>
-        <mat-cell *matCellDef="let quilometro"> {{quilometro.quantKm}} </mat-cell>
-    </ng-container>
 
     <!-- Data Column -->
     <ng-container matColumnDef="data">
         <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
-        <mat-cell *matCellDef="let quilometro"> {{quilometro.data}} </mat-cell>
+        <mat-cell *matCellDef="let quilometro"> {{quilometro.data | date : 'dd/MM/yyyy'}} </mat-cell>
     </ng-container>
 
     <!-- Veiculo Column -->
     <ng-container matColumnDef="veiculo">
         <mat-header-cell *matHeaderCellDef> Veiculo </mat-header-cell>
-        <mat-cell *matCellDef="let quilometro"> {{quilometro.veiculo}} </mat-cell>
+        <mat-cell *matCellDef="let quilometro"> {{quilometro.veiculo.placa}} </mat-cell>
+    </ng-container>
+    
+    <!-- Quantidade Km Column -->
+    <ng-container matColumnDef="quantKm">
+        <mat-header-cell *matHeaderCellDef> Quantidade Km </mat-header-cell>
+        <mat-cell *matCellDef="let quilometro"> {{quilometro.quantKm}} </mat-cell>
     </ng-container>
 
     <!-- Actions Column -->

@@ -10,6 +10,12 @@
     <mat-header-cell *matHeaderCellDef> Ano </mat-header-cell>
     <mat-cell *matCellDef="let veiculo"> {{veiculo.ano}} </mat-cell>
     </ng-container>
+    
+    <!-- Marca Column -->
+    <ng-container matColumnDef="marca">
+    <mat-header-cell *matHeaderCellDef> Marca </mat-header-cell>
+    <mat-cell *matCellDef="let veiculo"> {{veiculo.marca}} </mat-cell>
+    </ng-container>
 
     <!-- Modelo Column -->
     <ng-container matColumnDef="modelo">

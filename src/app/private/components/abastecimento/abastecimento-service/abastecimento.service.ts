@@ -16,6 +16,10 @@ export class AbastecimentoService {
     return this.http.get('http://localhost:3000/abastecimento').pipe(first());
   }
 
+  public getFilter(data: string): Observable<any> {
+    return this.http.get('http://localhost:3000/abastecimento/filter', { params: { data } }).pipe(first());
+  }
+
   public getAbastecimento(id: string) {
     return this.http.get<Abastecimento>(`http://localhost:3000/abastecimento/${id}`).pipe(first());
   }

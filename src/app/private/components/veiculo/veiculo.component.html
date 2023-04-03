@@ -1,7 +1,13 @@
 <mat-card>
     <mat-card-content>
         <mat-toolbar class="primary">Veículos Cadastrados</mat-toolbar>
-
+        <div class="search-container">
+            <mat-icon fontIcon="search"></mat-icon>
+            <input type="text" [formControl]="queryField" placeholder="Digite a placa de algum veículo...">
+            <div class="button">
+                <button (click)="onSearch()">Pesquisar</button>
+            </div>
+        </div>
 
         <div class="column-flex mat-elevation-z8">
             <app-veiculo-list *ngIf="veiculo$ | async as veiculo; else loading"

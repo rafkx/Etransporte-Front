@@ -16,6 +16,10 @@ export class QuilometroService {
     return this.http.get('http://localhost:3000/quilometro').pipe(first());
   }
 
+  public getFilter(data: string): Observable<any> {
+    return this.http.get('http://localhost:3000/quilometro/filter', { params: { data } }).pipe(first());
+  }
+
   public getQuilometro(id: string) {
     return this.http.get<Quilometro>(`http://localhost:3000/quilometro/${id}`).pipe(first());
   }

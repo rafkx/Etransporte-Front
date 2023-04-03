@@ -7,6 +7,7 @@ import { Servico } from 'src/app/models/servico';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { ServicoServiceService } from './servico-service/servico-service.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-servico',
@@ -16,6 +17,7 @@ import { ServicoServiceService } from './servico-service/servico-service.service
 export class ServicoComponent implements OnInit {
   
   servico$: Observable<any> | undefined;
+  queryField = new FormControl();
  
   constructor(
     private servicoService: ServicoServiceService,
@@ -37,6 +39,15 @@ export class ServicoComponent implements OnInit {
         return of([])
       })
     );
+  }
+
+  onSearch() {
+    let value = this.queryField.value;
+    if (value && (value = value.trim()) !== ''){
+      this.servico$ = this.servicoService.getFilter(value)
+    } else {
+      this.refresh()
+    }
   }
 
   onError(errorMsg: string) {

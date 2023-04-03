@@ -7,6 +7,7 @@ import { Peca } from 'src/app/models/peca';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { PecaService } from './peca-service/peca.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-peca',
@@ -16,6 +17,7 @@ import { PecaService } from './peca-service/peca.service';
 export class PecaComponent implements OnInit {
 
   peca$: Observable<any> | undefined;
+  queryField = new FormControl();
 
   constructor(
     private pecaService: PecaService,
@@ -37,6 +39,15 @@ export class PecaComponent implements OnInit {
           return of([])
         })
       );
+  }
+
+  onSearch() {
+    let value = this.queryField.value;
+    if (value && (value = value.trim()) !== ''){
+      this.peca$ = this.pecaService.getFilter(value)
+    } else {
+      this.refresh()
+    }
   }
 
   onError(errorMsg: string) {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { first, Observable } from 'rxjs';
+import { first, map, Observable } from 'rxjs';
 import { Peca } from 'src/app/models/peca';
 
 @Injectable({
@@ -14,6 +14,10 @@ export class PecaService {
 
   public getPecas(): Observable<any> {
     return this.http.get('http://localhost:3000/pecas').pipe(first());
+  }
+
+  public getFilter(nomePeca: string): Observable<any> {
+    return this.http.get('http://localhost:3000/pecas/filter', {params: { nomePeca } }).pipe();
   }
 
   public getPeca(id: string){

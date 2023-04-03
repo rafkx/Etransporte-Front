@@ -12,7 +12,7 @@ export class AbastecimentoListComponent {
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
-  readonly displayedColumns = ['tipoComb', 'data', 'veiculo', 'actions'];
+  readonly displayedColumns = ['data', 'veiculo', 'total', 'actions'];
 
   constructor() { }
 

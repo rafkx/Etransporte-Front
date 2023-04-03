@@ -12,7 +12,7 @@ export class QuilometroListComponent {
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
-  readonly displayedColumns = ['quantKm', 'data', 'veiculo', 'actions'];
+  readonly displayedColumns = ['data', 'veiculo', 'quantKm', 'actions'];
 
   constructor() { }
 

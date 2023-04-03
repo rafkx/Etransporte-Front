@@ -14,7 +14,7 @@
     <!-- Veiculo Column -->
     <ng-container matColumnDef="veiculo">
         <mat-header-cell *matHeaderCellDef> Veículo </mat-header-cell>
-        <mat-cell *matCellDef="let servico"> {{servico.veiculo[0].placa}} </mat-cell>
+        <mat-cell *matCellDef="let servico"> {{servico.veiculo[0].marca + ' | ' + servico.veiculo[0].modelo + ' | ' + servico.veiculo[0].ano}} </mat-cell>
     </ng-container>
 
     <!-- Actions Column -->
