@@ -18,6 +18,8 @@ export class QuilometroComponent implements OnInit {
 
   quilometro$: Observable<any> | undefined;
   queryField = new FormControl();
+  file: File | undefined;
+  
 
   constructor(
     private quilometroService: QuilometroService,
@@ -84,6 +86,16 @@ export class QuilometroComponent implements OnInit {
         )
       }
     })
+  }
+
+  onFileSelected(event: any) {
+    const selectedFiles = <FileList>event.srcElement.files;
+    this.file = selectedFiles[0];
+
+    if (this.file) {
+      this.quilometroService.fileUpload(this.file, 'http://localhost:3000/quilometro/file')
+      .subscribe(response => console.log('Upload Concluído'))
+    }
   }
 
 }

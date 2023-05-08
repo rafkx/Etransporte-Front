@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first, Observable } from 'rxjs';
 import { Quilometro } from 'src/app/models/quilometro';
@@ -11,6 +11,15 @@ export class QuilometroService {
   constructor(
     private http: HttpClient,
   ) { }
+
+  public fileUpload (file: File, url: string) {
+    const formData = new FormData();
+    formData.append('file', file, file.name)
+    //console.log(file)
+    //formData.set('file', file)
+    //console.log(formData)
+    return this.http.post(url, formData)
+  }
 
   public getQuilometros(): Observable<any> {
     return this.http.get('http://localhost:3000/quilometro').pipe(first());

@@ -12,6 +12,7 @@ export class ServicoListComponent implements OnInit {
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
+  @Output() fileSelected = new EventEmitter(false);
   readonly displayedColumns = ['descricao', 'fornecedor', 'veiculo', 'actions'];
 
   constructor() { }
@@ -29,6 +30,10 @@ export class ServicoListComponent implements OnInit {
 
   onDelete(servico: Servico) {
     this.remove.emit(servico);
+  }
+
+  onFileSelected(event: any) {
+    this.fileSelected.emit(event);
   }
 }
 

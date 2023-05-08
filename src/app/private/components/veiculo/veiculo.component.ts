@@ -86,4 +86,8 @@ export class VeiculoComponent implements OnInit{
       }
     })
   }
+
+  onRedirect (veiculo: Veiculo) {
+    this.router.navigate([`detailed/${veiculo.id}`], { relativeTo: this.route })
+  }
 }

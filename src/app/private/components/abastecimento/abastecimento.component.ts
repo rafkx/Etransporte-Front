@@ -19,6 +19,7 @@ export class AbastecimentoComponent implements OnInit {
   abastecimento$: Observable<any> | undefined;
   queryField = new FormControl();
   quantLitro: number = 0;
+  file: File | undefined;
 
   constructor(
     private abastecimentoService: AbastecimentoService,
@@ -85,6 +86,16 @@ export class AbastecimentoComponent implements OnInit {
         )
       }
     })
+  }
+
+  onFileSelected(event: any) {
+    const selectedFiles = <FileList>event.srcElement.files;
+    this.file = selectedFiles[0];
+
+    if (this.file) {
+      this.abastecimentoService.fileUpload(this.file, 'http://localhost:3000/abastecimento/file')
+      .subscribe(response => console.log('Upload Concluído'))
+    }
   }
 
 }

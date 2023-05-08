@@ -15,6 +15,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatDividerModule,
     MatMenuModule,
     MatCheckboxModule,
+    MatListModule
   ]
 })
 export class AppMaterialModule { }

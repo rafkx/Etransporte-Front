@@ -33,6 +33,9 @@
             <button mat-icon-button style="color: #5BC168;" aria-label="Remover serviço" (click)="onDelete(servico)">
                 <mat-icon fontIcon="delete"></mat-icon>
             </button>
+
+            <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload multiple>
+            <button mat-icon-button style="color:#5BC168" (click)="fileUpload.click()"> <mat-icon>attach_file </mat-icon> </button>
         </mat-cell>
 
 

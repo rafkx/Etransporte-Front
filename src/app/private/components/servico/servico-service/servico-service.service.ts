@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first, Observable } from 'rxjs';
 import { Servico } from 'src/app/models/servico';
@@ -11,6 +11,19 @@ export class ServicoServiceService {
   constructor(
     private http: HttpClient,
   ) { }
+
+  public fileUpload (files: File[], url: string) {
+    const formData = new FormData();
+    files.forEach(file => {
+      if (file.name.includes('png' || 'jpg')) {
+        formData.append('image', file, file.name)
+      } else {
+        formData.append('file', file, file.name)
+      }
+    });
+    const request = new HttpRequest('POST', url, formData);
+    return this.http.request(request);
+  }
 
   public getServicos(): Observable<any> {
     return this.http.get('http://localhost:3000/servico').pipe(first());

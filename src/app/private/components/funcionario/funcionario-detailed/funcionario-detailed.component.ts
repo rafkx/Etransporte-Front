@@ -11,7 +11,7 @@ import { FuncionarioService } from '../funcionario-service/funcionario.service';
 })
 export class FuncionarioDetailedComponent implements OnInit {
 
-  funcionario$!: Observable<any>;
+  funcionario: Funcionario | undefined;
 
   constructor( 
     private serviceFuncionario: FuncionarioService,
@@ -19,7 +19,8 @@ export class FuncionarioDetailedComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const funcionario: Funcionario = this.route.snapshot.data['funcionario'];
+     this.funcionario = this.route.snapshot.data['funcionario'];
+     console.log(this.funcionario)
   }
 
 

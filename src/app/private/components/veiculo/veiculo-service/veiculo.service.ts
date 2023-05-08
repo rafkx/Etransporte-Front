@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first, Observable } from 'rxjs';
 import { Veiculo } from 'src/app/models/veiculo';
@@ -11,6 +11,20 @@ export class VeiculoService {
   constructor(
     private http: HttpClient,
   ) { }
+
+  public fileUpload(files: File[], url: string) {
+    const formData = new FormData();
+    files.forEach(file => {
+      if (file.name.includes('png' || 'jpg')) {
+        formData.append('image', file, file.name)
+      } else {
+        formData.append('file', file, file.name)
+      }
+    });
+    const request = new HttpRequest('POST', url, formData);
+    console.log(files)
+    return this.http.request(request);
+  }
 
   public getVeiculos(): Observable<any> {
     return this.http.get('http://localhost:3000/veiculo').pipe(first());

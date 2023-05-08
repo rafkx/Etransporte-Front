@@ -1,0 +1,30 @@
+<mat-card>
+    <mat-card-content class="primary">
+
+        <div>
+            <div *ngIf="peca; else loading">
+                <h1> {{ peca.nomePeca }} </h1>
+                <p><b>Código:</b> {{ peca.codPeca }} </p>
+                <p><b>Descrição:</b> {{ peca.descricao }} </p>
+                <p><b>Marca do Fabricante:</b> {{ peca.marcaFabricante }} </p>
+                <p><b>Modelo:</b> {{ peca.modelo }} </p>
+                <p><b>Peça Pequena:</b> <!-- {{ peca.pequenaPeca[0].nomePeca }} --></p>
+                <p><b>Fornecedor:</b> {{ peca.fornecedorP.nome }} </p>
+                <p><b>Veiculo:</b> <!--{{ peca.veiculo[0].placa }}--> </p>
+            </div>
+
+            <ng-template #loading>
+                <div class="loading-spinner">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </ng-template>
+        </div>
+
+        <div>
+            <input type="file" (change)="onFileSelected($event)" multiple><br>
+
+            <button class="button" (click)="onUpload()" [disabled]="!files">Upload</button>
+        </div>
+
+    </mat-card-content>
+</mat-card>

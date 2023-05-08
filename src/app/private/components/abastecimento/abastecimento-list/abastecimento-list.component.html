@@ -34,6 +34,9 @@
             <button mat-icon-button style="color: #5BC168;" aria-label="Remover abastecimento" (click)="onDelete(abastecimento)">
                 <mat-icon fontIcon="delete"></mat-icon>
             </button>
+
+            <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+            <button mat-icon-button style="color: #5BC168" (click)="fileUpload.click()"> <mat-icon>attach_file</mat-icon> </button>
         </mat-cell>
     </ng-container>
 

@@ -12,6 +12,12 @@ export class AbastecimentoService {
     private http: HttpClient,
   ) { }
 
+  public fileUpload (file: File, url: string) {
+    const formData = new FormData();
+    formData.append('file', file, file.name)
+    return this.http.post(url, formData);
+  }
+
   public getAbastecimentos(): Observable<any> {
     return this.http.get('http://localhost:3000/abastecimento').pipe(first());
   }

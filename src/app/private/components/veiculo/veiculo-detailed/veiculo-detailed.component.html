@@ -1,0 +1,43 @@
+<mat-card>
+    <mat-card-content class="primary">
+
+        <div>
+            <div *ngIf="veiculo; else loading">
+                <h1>{{ veiculo.placa }}</h1>
+                <p> <b>Renavam:</b> {{ veiculo.renavam }}</p>
+                <p> <b>Chassi:</b> {{ veiculo.chassi }}</p>
+                <p> <b>Tipo Chassi:</b> {{ veiculo.tipoChassi }}</p>
+                <p> <b>Ano:</b> {{ veiculo.ano }}</p>
+                <p> <b>Modelo:</b> {{ veiculo.modelo }}</p>
+                <p> <b>Combustivel</b> {{ veiculo.combustivel }}</p>
+                <p> <b>Última Km:</b> {{ veiculo.ultimaKm }}</p>
+                <p> <b>Cor Interna:</b> {{ veiculo.corInterna }}</p>
+                <p> <b>Cor Externa:</b> {{ veiculo.corExterna }}</p>
+                <p> <b>Número Motor Interno:</b> {{ veiculo.numMotorInterno }}</p>
+                <p> <b>Número Motor Externo:</b> {{ veiculo.numMotorExterno }}</p>
+                <p> <b>Rastreador:</b> {{ veiculo.rastreador }}</p>
+                <p> <b>Bloqueador:</b> {{ veiculo.bloqueador }}</p>
+                <p> <b>Data Aquisição:</b> {{ veiculo.dataAquisicao }}</p>
+                <p> <b>Condição:</b> {{ veiculo.condicao }}</p>
+                <p> <b>Valor Compra:</b> {{ veiculo.valorCompra }}</p>
+                <p> <b>Valor Reforma:</b> {{ veiculo.ValorReforma }}</p>
+                <p> <b>Valor Mercado:</b> {{ veiculo.valorMercado }}</p>
+                <p> <b>Nome Vendedor:</b> {{ veiculo.nomeVendedor }}</p>
+                <p> <b>Telefone Vendedor:</b> {{ veiculo.teleVendedor }}</p>
+                <p> <b>Descrição:</b> {{ veiculo.descricao }}</p>
+            </div>
+            <ng-template #loading>
+                <div class="loading-spinner">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </ng-template>
+        </div>
+
+        <div>
+            <input type="file" (change)="onFileSelected($event)" multiple><br>
+
+            <button class="button" (click)="onUpload()" [disabled]="!files">Upload</button>
+        </div>
+
+    </mat-card-content>
+</mat-card>

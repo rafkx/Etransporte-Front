@@ -12,6 +12,7 @@ export class PecaListComponent {
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
+  @Output() redirect = new EventEmitter(false);
   readonly displayedColumns = ['nomePeca', 'descricao', 'fornecedor', 'actions'];
 
   constructor() { }
@@ -26,5 +27,9 @@ export class PecaListComponent {
 
   onDelete(peca: Peca) {
     this.remove.emit(peca);
+  }
+
+  onRedirect(peca: Peca) {
+    this.redirect.emit(peca);
   }
 }

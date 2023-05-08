@@ -13,6 +13,7 @@ export class VeiculoListComponent implements OnInit {
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
+  @Output() redirect = new EventEmitter(false);
   readonly displayedColumns = ['placa', 'ano', 'marca', 'modelo', 'actions'];
 
   constructor () { }
@@ -32,4 +33,7 @@ export class VeiculoListComponent implements OnInit {
     this.remove.emit(veiculo);
   }
 
+  onRedirect(veiculo: Veiculo) {
+    this.redirect.emit(veiculo);
+  }
 }

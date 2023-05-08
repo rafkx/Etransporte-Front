@@ -12,6 +12,7 @@ export class QuilometroListComponent {
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
+  @Output() fileSelected = new EventEmitter(false);
   readonly displayedColumns = ['data', 'veiculo', 'quantKm', 'actions'];
 
   constructor() { }
@@ -26,5 +27,9 @@ export class QuilometroListComponent {
 
   onDelete(quilometro: Quilometro) {
     this.remove.emit(quilometro);
+  }
+
+  onFileSelected(event: any) {
+    this.fileSelected.emit(event)
   }
 }

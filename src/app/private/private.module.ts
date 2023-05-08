@@ -27,6 +27,8 @@ import { QuilometroListComponent } from './components/quilometro/quilometro-list
 import { AbastecimentoComponent } from './components/abastecimento/abastecimento.component';
 import { AbastecimentoFormComponent } from './components/abastecimento/abastecimento-form/abastecimento-form.component';
 import { AbastecimentoListComponent } from './components/abastecimento/abastecimento-list/abastecimento-list.component';
+import { VeiculoDetailedComponent } from './components/veiculo/veiculo-detailed/veiculo-detailed.component';
+import { PecaDetailedComponent } from './components/peca/peca-detailed/peca-detailed.component';
 
 
 @NgModule({
@@ -54,6 +56,8 @@ import { AbastecimentoListComponent } from './components/abastecimento/abastecim
     AbastecimentoComponent,
     AbastecimentoFormComponent,
     AbastecimentoListComponent,
+    VeiculoDetailedComponent,
+    PecaDetailedComponent,
   ],
   imports: [
     CommonModule,

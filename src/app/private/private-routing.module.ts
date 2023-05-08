@@ -22,6 +22,8 @@ import { ServicoComponent } from './components/servico/servico.component';
 import { VeiculoResolver } from './components/veiculo/guards/veiculo.resolver';
 import { VeiculoFormComponent } from './components/veiculo/veiculo-form/veiculo-form.component';
 import { VeiculoComponent } from './components/veiculo/veiculo.component';
+import { VeiculoDetailedComponent } from './components/veiculo/veiculo-detailed/veiculo-detailed.component';
+import { PecaDetailedComponent } from './components/peca/peca-detailed/peca-detailed.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -33,6 +35,7 @@ const routes: Routes = [
   { path: 'veiculo', component: VeiculoComponent },
   { path: 'veiculo/new', component: VeiculoFormComponent, resolve: { veiculo: VeiculoResolver } },
   { path: 'veiculo/:id', component: VeiculoFormComponent, resolve: { veiculo: VeiculoResolver } },
+  { path: 'veiculo/detailed/:id', component: VeiculoDetailedComponent, resolve: { veiculo: VeiculoResolver } },
   { path: 'user', component: UserFormComponent },
   { path: 'user/list', component: RegisterComponent },
   { path: 'servico', component: ServicoComponent },
@@ -41,6 +44,7 @@ const routes: Routes = [
   { path: 'peca', component: PecaComponent },
   { path: 'peca/new', component: PecaFormComponent, resolve: { peca: PecaResolver } },
   { path: 'peca/:id', component: PecaFormComponent, resolve: { peca: PecaResolver } },
+  { path: 'peca/detailed/:id', component: PecaDetailedComponent, resolve: { peca: PecaResolver } },
   { path: 'quilometro', component: QuilometroComponent },
   { path: 'quilometro/new', component: QuilometroFormComponent, resolve: {quilometro: QuilometroResolver } },
   { path: 'quilometro/:id', component: QuilometroFormComponent, resolve: {quilometro: QuilometroResolver } },

@@ -85,4 +85,8 @@ export class PecaComponent implements OnInit {
       }
     })
   }
+
+  onRedirect(peca: Peca) {
+    this.router.navigate([`detailed/${peca.id}`], { relativeTo: this.route })
+  }
 }

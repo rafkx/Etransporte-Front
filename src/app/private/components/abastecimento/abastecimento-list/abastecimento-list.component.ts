@@ -12,6 +12,7 @@ export class AbastecimentoListComponent {
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
+  @Output() fileSelected = new EventEmitter(false);
   readonly displayedColumns = ['data', 'veiculo', 'total', 'actions'];
 
   constructor() { }
@@ -26,6 +27,10 @@ export class AbastecimentoListComponent {
 
   onDelete(abastecimento: Abastecimento) {
     this.remove.emit(abastecimento);
+  }
+
+  onFileSelected(event: any) {
+    this.fileSelected.emit(event);
   }
 
 }
