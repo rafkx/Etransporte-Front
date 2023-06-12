@@ -1,4 +1,10 @@
 <mat-table [dataSource]="servicos">
+    <!-- Código Column -->
+    <ng-container matColumnDef="cod">
+    <mat-header-cell *matHeaderCellDef> Código </mat-header-cell>
+    <mat-cell *matCellDef="let servico"> {{servico.cod}} </mat-cell>
+    </ng-container>
+    
     <!-- Descrição Column -->
     <ng-container matColumnDef="descricao">
     <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
@@ -14,7 +20,9 @@
     <!-- Veiculo Column -->
     <ng-container matColumnDef="veiculo">
         <mat-header-cell *matHeaderCellDef> Veículo </mat-header-cell>
-        <mat-cell *matCellDef="let servico"> {{servico.veiculo[0].marca + ' | ' + servico.veiculo[0].modelo + ' | ' + servico.veiculo[0].ano}} </mat-cell>
+        <mat-cell *matCellDef="let servico"> 
+            <div> {{servico.veiculo[0].placa}} </div>
+        </mat-cell>
     </ng-container>
 
     <!-- Actions Column -->
@@ -34,8 +42,9 @@
                 <mat-icon fontIcon="delete"></mat-icon>
             </button>
 
-            <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload multiple>
-            <button mat-icon-button style="color:#5BC168" (click)="fileUpload.click()"> <mat-icon>attach_file </mat-icon> </button>
+            <button mat-icon-button style="color: #5BC168;" aria-label="Detalhar serviço" (click)="onRedirect(servico)">
+                <mat-icon fontIcon="person"></mat-icon>
+            </button>
         </mat-cell>
 
 

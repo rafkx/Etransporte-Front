@@ -20,7 +20,10 @@ export class AbastecimentoResolver implements Resolve<Abastecimento | Abastecime
       return this.service.getAbastecimento(route.params['id']);
     }
     return of({
-      tipoComb: '',
+      combustivel: {
+        id: '', 
+        nome: '',
+      },
       quantLitros: 0,
       valorLitro: 0,
       desconto: 0,

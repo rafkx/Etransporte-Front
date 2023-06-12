@@ -44,4 +44,8 @@ export class DashboardComponent {
     public goToAbastecimento() {
       this.router.navigateByUrl('/private/abastecimento')
     }
+
+    public goToFornecedor() {
+      this.router.navigateByUrl('/private/fornecedor')
+    }
 }

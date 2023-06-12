@@ -7,6 +7,8 @@ import { Abastecimento } from 'src/app/models/abastecimento';
 import { Veiculo } from 'src/app/models/veiculo';
 import { VeiculoService } from '../../veiculo/veiculo-service/veiculo.service';
 import { AbastecimentoService } from '../abastecimento-service/abastecimento.service';
+import { CombustivelService } from '../../combustivel/combustivel-service/combustivel.service';
+import { Combustivel } from 'src/app/models/combustivel';
 
 @Component({
   selector: 'app-abastecimento-form',
@@ -17,7 +19,10 @@ export class AbastecimentoFormComponent implements OnInit{
 
   form = this.formBuilder.group({
     id: [''],
-    tipoComb: ['', [Validators.required]],
+    combustivel: this.formBuilder.group({
+      id: [''],
+      nome: ['']
+    }),
     quantLitros: [0, [Validators.required]],
     valorLitro: [0, [Validators.required]],
     desconto: [0, [Validators.required]],
@@ -32,11 +37,14 @@ export class AbastecimentoFormComponent implements OnInit{
   })
 
   veiculos: Veiculo[] | undefined;
+  combustiveis: Combustivel[] | undefined;
+  file: File | undefined;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
     private abastecimentoService: AbastecimentoService,
     private veiculoService: VeiculoService,
+    private combustivelService: CombustivelService,
     private snackBar: MatSnackBar,
     private location: Location,
     private route: ActivatedRoute,
@@ -44,10 +52,14 @@ export class AbastecimentoFormComponent implements OnInit{
 
   ngOnInit() {
     this.veiculoService.getVeiculos().subscribe(veiculos => this.veiculos = veiculos);
+    this.combustivelService.getCombustiveis().subscribe(combustiveis =>  this.combustiveis = combustiveis);
     const abastecimento: Abastecimento = this.route.snapshot.data['abastecimento'];
     this.form.patchValue({
       id: abastecimento.id,
-      tipoComb: abastecimento.tipoComb,
+      combustivel: {
+        id: abastecimento.combustivel.id,
+        nome: abastecimento.combustivel.nome,
+      },
       quantLitros: abastecimento.quantLitros,
       valorLitro: abastecimento.valorLitro,
       desconto: abastecimento.desconto,
@@ -65,7 +77,10 @@ export class AbastecimentoFormComponent implements OnInit{
   onSubmit() {
     this.abastecimentoService.save({
       id: this.id.value,
-      tipoComb: this.tipoComb.value,
+      combustivel: {
+        id: this.idC.value,
+        nome: this.nome.value,
+      },
       quantLitros: this.quantLitros.value,
       valorLitro: this.valorLitro.value,
       desconto: this.desconto.value,
@@ -78,6 +93,15 @@ export class AbastecimentoFormComponent implements OnInit{
         veiculo: this.veiculo.value
       }
     }).subscribe({ next: (result => this.onSucces()), error: (error => this.onError()) });
+    if (this.file) {
+      this.abastecimentoService.fileUpload(this.file, 'http://localhost:3000/abastecimento/file')
+      .subscribe(response => console.log('Upload Concluído'))
+    }
+  }
+
+  onFileSelected(event: any) {
+    const selectedFiles = <FileList>event.srcElement.files;
+    this.file = selectedFiles[0];
   }
 
   onCancel() {
@@ -95,9 +119,6 @@ export class AbastecimentoFormComponent implements OnInit{
 
   get id(): FormControl{
     return this.form.get('id') as FormControl;
-  }
-  get tipoComb(): FormControl{
-    return this.form.get('tipoComb') as FormControl;
   }
   get quantLitros(): FormControl{
     return this.form.get('quantLitros') as FormControl;
@@ -125,5 +146,14 @@ export class AbastecimentoFormComponent implements OnInit{
   }
   get km(): FormGroup{
     return this.form.get('km') as FormGroup;
+  }
+  get nome(): FormControl{
+    return this.combustivel.get('nome') as FormControl;
+  }
+  get idC(): FormControl{
+    return this.combustivel.get('id') as FormControl;
+  }
+  get combustivel(): FormGroup{
+    return this.form.get('combustivel') as FormGroup;
   }
 }

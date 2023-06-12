@@ -1,0 +1,24 @@
+<mat-card>
+    <mat-card-content>
+        <mat-toolbar class="primary">Fornecedores Cadastrados</mat-toolbar>
+        <div class="search-container">
+            
+        </div>
+
+        <div class="column-flex mat-elevation-z8">
+            <app-fornecedor-list *ngIf="fornecedor$ | async as fornecedor; else loading"
+            [fornecedores]="fornecedor"
+            (add)="onAdd()"
+            (edit)="onEdit($event)"
+            (remove)="onRemove($event)"
+            (redirect)="onRedirect($event)"
+            ></app-fornecedor-list>
+
+            <ng-template #loading>
+                <div class="loading-spinner">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </ng-template>
+        </div>
+    </mat-card-content>
+</mat-card>

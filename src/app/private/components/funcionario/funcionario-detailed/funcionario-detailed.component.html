@@ -4,6 +4,7 @@
         <div>
             <div *ngIf="funcionario; else loading">
                 <h1> {{ funcionario.nomeFun }} </h1>
+                <mat-divider style="background-color: aliceblue;" class="primary"></mat-divider><br>
                 <p> <b>Cpf:</b> {{ funcionario.cpf }} </p>
                 <p> <b>Rg:</b> {{ funcionario.rg }} </p>
                 <p> <b>Telefone:</b> {{ funcionario.telefone }} </p>

@@ -36,6 +36,7 @@ export class PecaFormComponent implements OnInit {
   pecas: Peca[] | undefined;
   fornecedores: Fornecedor[] | undefined;
   veiculos: Veiculo[] | undefined;
+  files: File[] | undefined;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -78,6 +79,18 @@ export class PecaFormComponent implements OnInit {
       veiculo: [this.veiculo.value]
     })
     .subscribe({ next: (result => this.onSuccess()), error: (error => this.onError()) });
+    if (this.files) {
+      this.servicePeca.fileUpload(this.files, 'http://localhost:3000/pecas/file')
+      .subscribe(response => console.log('Upload Concluído'));
+    }
+  }
+
+  onFileSelected(event: any) {
+    const selectedFiles = <FileList>event.srcElement.files;
+    this.files = new Array();
+    for (let x=0; x < selectedFiles.length; x++) {
+      this.files.push(selectedFiles[x]);
+    }
   }
 
   onCancel() {

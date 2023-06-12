@@ -24,6 +24,13 @@ import { VeiculoFormComponent } from './components/veiculo/veiculo-form/veiculo-
 import { VeiculoComponent } from './components/veiculo/veiculo.component';
 import { VeiculoDetailedComponent } from './components/veiculo/veiculo-detailed/veiculo-detailed.component';
 import { PecaDetailedComponent } from './components/peca/peca-detailed/peca-detailed.component';
+import { FornecedorComponent } from './components/fornecedor/fornecedor.component';
+import { FornecedorFormComponent } from './components/fornecedor/fornecedor-form/fornecedor-form.component';
+import { FornecedorResolver } from './components/fornecedor/guards/fornecedor.resolver';
+import { FornecedorDetailedComponent } from './components/fornecedor/fornecedor-detailed/fornecedor-detailed.component';
+import { ServicoDetailedComponent } from './components/servico/servico-detailed/servico-detailed.component';
+import { QuilometroDetailedComponent } from './components/quilometro/quilometro-detailed/quilometro-detailed.component';
+import { AbastecimentoDetailedComponent } from './components/abastecimento/abastecimento-detailed/abastecimento-detailed.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -32,6 +39,10 @@ const routes: Routes = [
   { path: 'funcionario/new', component: FuncionarioFormComponent, resolve: { funcionario: FuncionarioResolver } },
   { path: 'funcionario/:id', component: FuncionarioFormComponent, resolve: { funcionario: FuncionarioResolver } },
   { path: 'funcionario/detailed/:id', component: FuncionarioDetailedComponent, resolve: { funcionario: FuncionarioResolver } },
+  { path: 'fornecedor', component: FornecedorComponent },
+  { path: 'fornecedor/new', component: FornecedorFormComponent, resolve: { fornecedor: FornecedorResolver } },
+  { path: 'fornecedor/:id', component: FornecedorFormComponent, resolve: { fornecedor: FornecedorResolver } },
+  { path: 'fornecedor/detailed/:id', component: FornecedorDetailedComponent, resolve: { fornecedor: FornecedorResolver } },
   { path: 'veiculo', component: VeiculoComponent },
   { path: 'veiculo/new', component: VeiculoFormComponent, resolve: { veiculo: VeiculoResolver } },
   { path: 'veiculo/:id', component: VeiculoFormComponent, resolve: { veiculo: VeiculoResolver } },
@@ -41,6 +52,7 @@ const routes: Routes = [
   { path: 'servico', component: ServicoComponent },
   { path: 'servico/new', component: ServicoFormComponent, resolve: { servico: ServicoResolver } },
   { path: 'servico/:id', component: ServicoFormComponent, resolve: { servico: ServicoResolver } },
+  { path: 'servico/detailed/:id', component: ServicoDetailedComponent, resolve: { servico: ServicoResolver } },
   { path: 'peca', component: PecaComponent },
   { path: 'peca/new', component: PecaFormComponent, resolve: { peca: PecaResolver } },
   { path: 'peca/:id', component: PecaFormComponent, resolve: { peca: PecaResolver } },
@@ -48,9 +60,11 @@ const routes: Routes = [
   { path: 'quilometro', component: QuilometroComponent },
   { path: 'quilometro/new', component: QuilometroFormComponent, resolve: {quilometro: QuilometroResolver } },
   { path: 'quilometro/:id', component: QuilometroFormComponent, resolve: {quilometro: QuilometroResolver } },
+  { path: 'quilometro/detailed/:id', component: QuilometroDetailedComponent, resolve: {quilometro: QuilometroResolver } },
   { path: 'abastecimento', component: AbastecimentoComponent },
   { path: 'abastecimento/new', component: AbastecimentoFormComponent, resolve: { abastecimento: AbastecimentoResolver } },
   { path: 'abastecimento/:id', component: AbastecimentoFormComponent, resolve: { abastecimento: AbastecimentoResolver } },
+  { path: 'abastecimento/detailed/:id', component: AbastecimentoDetailedComponent, resolve: { abastecimento: AbastecimentoResolver } },
 ];
 
 @NgModule({

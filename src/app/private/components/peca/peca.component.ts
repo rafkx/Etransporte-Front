@@ -50,6 +50,11 @@ export class PecaComponent implements OnInit {
     }
   }
 
+  onReset() {
+    this.queryField.reset();
+    this.refresh();
+  }
+
   onError(errorMsg: string) {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg

@@ -29,6 +29,13 @@ import { AbastecimentoFormComponent } from './components/abastecimento/abastecim
 import { AbastecimentoListComponent } from './components/abastecimento/abastecimento-list/abastecimento-list.component';
 import { VeiculoDetailedComponent } from './components/veiculo/veiculo-detailed/veiculo-detailed.component';
 import { PecaDetailedComponent } from './components/peca/peca-detailed/peca-detailed.component';
+import { FornecedorComponent } from './components/fornecedor/fornecedor.component';
+import { FornecedorListComponent } from './components/fornecedor/fornecedor-list/fornecedor-list.component';
+import { FornecedorDetailedComponent } from './components/fornecedor/fornecedor-detailed/fornecedor-detailed.component';
+import { FornecedorFormComponent } from './components/fornecedor/fornecedor-form/fornecedor-form.component';
+import { AbastecimentoDetailedComponent } from './components/abastecimento/abastecimento-detailed/abastecimento-detailed.component';
+import { QuilometroDetailedComponent } from './components/quilometro/quilometro-detailed/quilometro-detailed.component';
+import { ServicoDetailedComponent } from './components/servico/servico-detailed/servico-detailed.component';
 
 
 @NgModule({
@@ -58,6 +65,13 @@ import { PecaDetailedComponent } from './components/peca/peca-detailed/peca-deta
     AbastecimentoListComponent,
     VeiculoDetailedComponent,
     PecaDetailedComponent,
+    FornecedorComponent,
+    FornecedorFormComponent,
+    FornecedorListComponent,
+    FornecedorDetailedComponent,
+    AbastecimentoDetailedComponent,
+    QuilometroDetailedComponent,
+    ServicoDetailedComponent,
   ],
   imports: [
     CommonModule,

@@ -4,8 +4,10 @@
         <div class="search-container">
             <mat-icon fontIcon="search"></mat-icon>
             <input type="date" [formControl]="queryField" placeholder="Coloque a data do serviço...">
+            <input type="text" [formControl]="queryField2" placeholder="Coloque um texto...">
             <div class="button">
                 <button (click)="onSearch()">Pesquisar</button>
+                <button (click)="onReset()">Limpar</button>
             </div>
         </div>
 
@@ -15,7 +17,7 @@
             (add)="onAdd()"
             (edit)="onEdit($event)"
             (remove)="onRemove($event)"
-            (fileSelected)="onFileSelected($event)"
+            (redirect)="onRedirect($event)"
             ></app-quilometro-list>
 
             <ng-template #loading>

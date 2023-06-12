@@ -11,7 +11,6 @@ import { PecaService } from '../peca-service/peca.service';
 export class PecaDetailedComponent implements OnInit {
 
   peca: Peca | undefined;
-  files: File[] | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,20 +19,5 @@ export class PecaDetailedComponent implements OnInit {
   
   ngOnInit() {
     this.peca = this.route.snapshot.data['peca'];
-  }
-
-  onFileSelected(event: any) {
-    const selectedFiles = <FileList>event.srcElement.files;
-    this.files = new Array();
-    for (let x=0; x < selectedFiles.length; x++) {
-      this.files.push(selectedFiles[x]);
-    }
-  }
-
-  onUpload() {
-    if (this.files) {
-      this.pecaService.fileUpload(this.files, 'http://localhost:3000/pecas/file')
-      .subscribe(response => console.log('Upload Concluído'));
-    }
   }
 }

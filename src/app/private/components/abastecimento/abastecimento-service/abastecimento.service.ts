@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first, Observable } from 'rxjs';
 import { Abastecimento } from 'src/app/models/abastecimento';
@@ -22,8 +22,14 @@ export class AbastecimentoService {
     return this.http.get('http://localhost:3000/abastecimento').pipe(first());
   }
 
-  public getFilter(data: string): Observable<any> {
-    return this.http.get('http://localhost:3000/abastecimento/filter', { params: { data } }).pipe(first());
+  public getFilter(data: string, text: string): Observable<any> {
+    if (text !== null && data !== null) {
+      return this.http.get('http://localhost:3000/abastecimento/filter', { params: {data, text} })
+    } else if (data && data !== null) {
+      return this.http.get(`http://localhost:3000/abastecimento/filter`, { params: { data: data } });
+    } else {
+      return this.http.get(`http://localhost:3000/abastecimento/filter`, { params: {text: text} });
+    }
   }
 
   public getAbastecimento(id: string) {

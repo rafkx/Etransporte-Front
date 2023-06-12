@@ -12,7 +12,7 @@ import { VeiculoService } from '../veiculo-service/veiculo.service';
 export class VeiculoDetailedComponent implements OnInit {
 
   veiculo: Veiculo | undefined;
-  files: File[] | undefined;
+
   
   constructor(
     private route: ActivatedRoute,
@@ -21,21 +21,6 @@ export class VeiculoDetailedComponent implements OnInit {
 
   ngOnInit() {
     this.veiculo = this.route.snapshot.data['veiculo'];
-  }
-
-  onFileSelected(event: any) {
-    const selectedFiles = <FileList>event.srcElement.files;
-    this.files = new Array();
-    for (let x=0; x < selectedFiles.length; x++) {
-      this.files.push(selectedFiles[x]);
-    }
-  }
-
-  onUpload() {
-    if (this.files) {
-      this.veiculoService.fileUpload(this.files, 'http://localhost:3000/veiculo/file')
-      .subscribe(response => console.log('Upload Concluído'));
-    }
   }
 
 }

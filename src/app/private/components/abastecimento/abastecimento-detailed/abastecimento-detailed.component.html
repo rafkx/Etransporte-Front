@@ -1,0 +1,23 @@
+<mat-card>
+    <mat-card-content class="primary">
+
+        <div>
+            <div *ngIf="abastecimento; else loading">
+                <h1> {{ abastecimento.data | date : 'dd/MM/yyyy' }} </h1>
+                <p> <b>Tipo de combustivel:</b> {{ abastecimento.combustivel.nome }} </p>
+                <p> <b>Quantidade de Litros:</b> {{ abastecimento.quantLitros }} </p>
+                <p> <b>Valor do litro:</b> {{ abastecimento.valorLitro }} </p>
+                <p> <b>Desconto:</b> {{ abastecimento.desconto }} </p>
+                <p> <b>Total:</b> {{ (abastecimento.quantLitros * abastecimento.valorLitro) - abastecimento.desconto }} </p>
+                <p> <b>Veiculo:</b> {{ abastecimento.veiculo.placa }} </p>
+                <p> <b>Quilometro:</b> {{ abastecimento.km.quantKm }} </p>
+            </div>
+
+            <ng-template #loading>
+                <div class="loading-spinner">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </ng-template>
+        </div>
+    </mat-card-content>
+</mat-card>

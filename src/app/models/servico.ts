@@ -5,6 +5,7 @@ export interface Servico {
     
     id: string;
     descricao: string;
+    cod: string,
     fornecedor: Fornecedor;
     veiculo: Veiculo[];
 
@@ -13,6 +14,7 @@ export interface Servico {
 export interface ServicoI {
 
     descricao: string;
+    cod: string;
     fornecedor: Fornecedor;
     veiculo: Veiculo[];
 

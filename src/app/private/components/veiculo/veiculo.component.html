@@ -4,8 +4,10 @@
         <div class="search-container">
             <mat-icon fontIcon="search"></mat-icon>
             <input type="text" [formControl]="queryField" placeholder="Digite a placa de algum veículo...">
+            <input type="number" [formControl]="queryField2" placeholder="Coloque um ano...">
             <div class="button">
                 <button (click)="onSearch()">Pesquisar</button>
+                <button (click)="onReset()">Limpar</button>
             </div>
         </div>
 

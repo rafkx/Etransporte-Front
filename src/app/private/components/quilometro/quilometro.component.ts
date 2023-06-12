@@ -18,7 +18,7 @@ export class QuilometroComponent implements OnInit {
 
   quilometro$: Observable<any> | undefined;
   queryField = new FormControl();
-  file: File | undefined;
+  queryField2 = new FormControl();
   
 
   constructor(
@@ -45,11 +45,15 @@ export class QuilometroComponent implements OnInit {
 
   onSearch() {
     let value = this.queryField.value;
-    if (value && (value = value.trim()) !== ''){
-      this.quilometro$ = this.quilometroService.getFilter(value);
-    } else {
-      this.refresh();
-    }
+    let value2 = this.queryField2.value;
+    this.quilometro$ = this.quilometroService.getFilter(value, value2);
+    
+  }
+
+  onReset() {
+    this.queryField.reset();
+    this.queryField2.reset();
+    this.refresh();
   }
 
   onError(errorMsg: string) {
@@ -88,14 +92,8 @@ export class QuilometroComponent implements OnInit {
     })
   }
 
-  onFileSelected(event: any) {
-    const selectedFiles = <FileList>event.srcElement.files;
-    this.file = selectedFiles[0];
-
-    if (this.file) {
-      this.quilometroService.fileUpload(this.file, 'http://localhost:3000/quilometro/file')
-      .subscribe(response => console.log('Upload Concluído'))
-    }
+  onRedirect(quilometragem: Quilometro) {
+    this.router.navigate([`detailed/${quilometragem.id}`], { relativeTo: this.route })
   }
 
 }

@@ -1,10 +1,11 @@
+import { Combustivel } from "./combustivel";
 import { Quilometro, QuilometroI } from "./quilometro";
 import { Veiculo } from "./veiculo";
 
 export interface Abastecimento {
 
     id: string;
-    tipoComb: string;
+    combustivel: Combustivel;
     quantLitros: number;
     valorLitro: number;
     desconto: number;
@@ -16,7 +17,7 @@ export interface Abastecimento {
 
 export interface AbastecimentoI {
 
-    tipoComb: string;
+    combustivel: Combustivel;
     quantLitros: number;
     valorLitro: number;
     desconto: number;

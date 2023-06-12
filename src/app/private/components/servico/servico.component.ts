@@ -18,7 +18,6 @@ export class ServicoComponent implements OnInit {
   
   servico$: Observable<any> | undefined;
   queryField = new FormControl();
-  files: File[] | undefined;
 
   constructor(
     private servicoService: ServicoServiceService,
@@ -40,6 +39,11 @@ export class ServicoComponent implements OnInit {
         return of([])
       })
     );
+  }
+
+  onReset() {
+    this.queryField.reset();
+    this.refresh();
   }
 
   onSearch() {
@@ -87,17 +91,7 @@ export class ServicoComponent implements OnInit {
     })
   }
 
-  onFileSelected(event: any) {
-    const selectedFiles = <FileList>event.srcElement.files;
-    this.files = new Array();
-    for (let x=0; x < selectedFiles.length; x++) {
-      this.files.push(selectedFiles[x]);
-    }
-
-    if (this.files) {
-      this.servicoService.fileUpload(this.files, 'http://localhost:3000/servico/file')
-      .subscribe(response => console.log('Upload Concluído'))
-    }
+  onRedirect (servico: Servico) {
+    this.router.navigate([`detailed/${servico.id}`], { relativeTo: this.route })
   }
-
 }

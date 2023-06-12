@@ -6,9 +6,12 @@
             <form [formGroup]="form">
 
                 <mat-form-field class="full-width">
-                    <mat-label>Tipo do Combustível de Litros</mat-label>
-                    <input matInput formControlName="tipoComb" />
-                    <mat-error *ngIf="tipoComb.touched && tipoComb.hasError('required')">Tipo de combustível é obrigatório</mat-error>
+                    <mat-label>Tipo Combustível</mat-label>
+                    <mat-select formControlName="combustivel">
+                      <mat-option *ngFor="let combustivel of combustiveis" [value]="combustivel">
+                        {{combustivel.nome}}
+                      </mat-option>
+                    </mat-select>
                 </mat-form-field>
 
                 <mat-form-field class="full-width">
@@ -52,6 +55,10 @@
                 
             </form>
         </mat-card-content>
+
+        <div>
+            <input type="file" (change)="onFileSelected($event)" multiple>
+        </div>
 
         <mat-card-actions>
             <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>

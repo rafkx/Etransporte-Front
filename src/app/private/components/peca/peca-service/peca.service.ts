@@ -29,8 +29,8 @@ export class PecaService {
     return this.http.get('http://localhost:3000/pecas').pipe(first());
   }
 
-  public getFilter(nomePeca: string): Observable<any> {
-    return this.http.get('http://localhost:3000/pecas/filter', {params: { nomePeca } }).pipe();
+  public getFilter(text: string): Observable<any> {
+    return this.http.get('http://localhost:3000/pecas/filter', {params: { text } }).pipe();
   }
 
   public getPeca(id: string){

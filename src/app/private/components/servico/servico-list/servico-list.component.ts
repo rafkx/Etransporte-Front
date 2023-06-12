@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Servico } from 'src/app/models/servico';
+import { Veiculo } from 'src/app/models/veiculo';
 
 @Component({
   selector: 'app-servico-list',
@@ -12,8 +13,8 @@ export class ServicoListComponent implements OnInit {
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
-  @Output() fileSelected = new EventEmitter(false);
-  readonly displayedColumns = ['descricao', 'fornecedor', 'veiculo', 'actions'];
+  @Output() redirect = new EventEmitter(false);
+  readonly displayedColumns = ['cod', 'descricao', 'fornecedor', 'veiculo', 'actions'];
 
   constructor() { }
   
@@ -32,8 +33,8 @@ export class ServicoListComponent implements OnInit {
     this.remove.emit(servico);
   }
 
-  onFileSelected(event: any) {
-    this.fileSelected.emit(event);
+  onRedirect(servico: Servico) {
+    this.redirect.emit(servico);
   }
 }
 

@@ -23,6 +23,7 @@ export class QuilometroFormComponent implements OnInit {
   })
 
   veiculos: Veiculo[] | undefined;
+  file: File | undefined;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -51,6 +52,15 @@ export class QuilometroFormComponent implements OnInit {
       data: this.data.value,
       veiculo: this.veiculo.value,
     }).subscribe({ next: (result => this.onSuccess()), error: (error => this.onError()) });
+    if (this.file) {
+      this.quilometroService.fileUpload(this.file, 'http://localhost:3000/quilometro/file')
+      .subscribe(response => console.log('Upload Concluído'))
+    }
+  }
+
+  onFileSelected(event: any) {
+    const selectedFiles = <FileList>event.srcElement.files;
+    this.file = selectedFiles[0];
   }
 
   onCancel() {

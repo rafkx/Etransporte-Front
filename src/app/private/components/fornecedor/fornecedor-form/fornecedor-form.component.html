@@ -1,0 +1,48 @@
+<mat-card>
+    <mat-card-content>
+        <mat-toolbar class="primary">Cadastro Fornecedor</mat-toolbar>
+
+        <mat-card-content>
+            <form [formGroup]="form">
+
+                <mat-form-field class="full-width">
+                    <mat-label>Nome</mat-label>
+                    <input matInput formControlName="nome" />
+                    <mat-error *ngIf="nome.touched && nome.hasError('required')">Nome do fornecedor é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Cnpj</mat-label>
+                    <input matInput formControlName="cnpj" />
+                    <mat-error *ngIf="cnpj.touched && cnpj.hasError('required')">Cnpj do fornecedor é obrigatório</mat-error>
+                </mat-form-field>
+                
+                <mat-form-field class="full-width">
+                    <mat-label>Cpf</mat-label>
+                    <input matInput formControlName="cpf" />
+                </mat-form-field>
+                
+                <mat-form-field class="full-width">
+                    <mat-label>Endereço</mat-label>
+                    <input matInput formControlName="endereco" />
+                    <mat-error *ngIf="endereco.touched && endereco.hasError('required')">Endereço do fornecedor é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Contato</mat-label>
+                    <mat-select formControlName="contatos">
+                      <mat-option *ngFor="let contato of contatos2" [value]="contato">
+                        {{contato.nome}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+            <button mat-raised-button (click)="onCancel()">Cancelar</button>
+        </mat-card-actions>
+        
+    </mat-card-content>
+</mat-card>

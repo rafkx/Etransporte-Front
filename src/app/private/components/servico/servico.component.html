@@ -6,6 +6,7 @@
             <input type="text" [formControl]="queryField" placeholder="Digite o nome do fornecedor...">
             <div class="button">
                 <button (click)="onSearch()">Pesquisar</button>
+                <button (click)="onReset()">Limpar</button>
             </div>
         </div>
 
@@ -15,7 +16,7 @@
             (add)="onAdd()"
             (edit)="onEdit($event)"
             (remove)="onRemove($event)"
-            (fileSelected)="onFileSelected($event)"
+            (redirect)="onRedirect($event)"
             ></app-servico-list>
 
             <ng-template #loading>

@@ -25,8 +25,14 @@ export class QuilometroService {
     return this.http.get('http://localhost:3000/quilometro').pipe(first());
   }
 
-  public getFilter(data: string): Observable<any> {
-    return this.http.get('http://localhost:3000/quilometro/filter', { params: { data } }).pipe(first());
+  public getFilter(data: string, text: string): Observable<any> {
+    if (text !== null && data !== null) {
+      return this.http.get('http://localhost:3000/quilometro/filter', { params: { data, text } });
+    } else if (data && data !== null) {
+      return this.http.get('http://localhost:3000/quilometro/filter', { params: { data: data } });
+    } else {
+      return this.http.get('http://localhost:3000/quilometro/filter', { params: { text: text } });
+    }
   }
 
   public getQuilometro(id: string) {

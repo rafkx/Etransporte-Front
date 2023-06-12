@@ -21,6 +21,7 @@ export class ServicoResolver implements Resolve<Servico | ServicoI> {
     }
     return of ({
       descricao: '',
+      cod: '',
       fornecedor: {
         id: '',
         nome: '',

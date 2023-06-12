@@ -1,0 +1,48 @@
+<mat-table [dataSource]="fornecedores">
+    <!-- Nome Column -->
+    <ng-container matColumnDef="nome">
+        <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+        <mat-cell *matCellDef="let fornecedor"> {{fornecedor.nome}} </mat-cell>
+    </ng-container>
+    
+    <!-- Endereco Column -->
+    <ng-container matColumnDef="endereco">
+        <mat-header-cell *matHeaderCellDef> Endereço </mat-header-cell>
+        <mat-cell *matCellDef="let fornecedor"> {{fornecedor.endereco}} </mat-cell>
+    </ng-container>
+    
+    <!-- Contato(s) Column -->
+    <ng-container matColumnDef="contatos">
+        <mat-header-cell *matHeaderCellDef> Contato(s) </mat-header-cell>
+        <mat-cell *matCellDef="let fornecedor"> 
+            <div> {{fornecedor.contatos[0]}} </div>
+        </mat-cell>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="action-column">
+            <button mat-mini-fab color="primary" aria-label="Adicionar fornecedor" (click)="onAdd()">
+                <mat-icon fontIcon="add">add</mat-icon>
+            </button>
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let fornecedor" class="action-column">
+            <button mat-icon-button style="color: #5BC168;" aria-label="Editar fornecedor" (click)="onEdit(fornecedor)">
+                <mat-icon fontIcon="edit"></mat-icon>
+            </button>
+
+            <button mat-icon-button style="color: #5BC168;" aria-label="Remover fornecedor" (click)="onDelete(fornecedor)">
+                <mat-icon fontIcon="delete"></mat-icon>
+            </button>
+            
+            <button mat-icon-button style="color: #5BC168;" aria-label="Detalhar fornecedor" (click)="onRedirect(fornecedor)">
+                <mat-icon fontIcon="person"></mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+</mat-table>

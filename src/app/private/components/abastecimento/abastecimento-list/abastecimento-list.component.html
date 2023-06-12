@@ -12,10 +12,16 @@
         <mat-cell *matCellDef="let abastecimento"> {{abastecimento.veiculo.placa}} </mat-cell>
     </ng-container>
     
-    <!-- Tipo de Combustivel Column -->
+    <!-- Valor de Combustivel Column -->
     <ng-container matColumnDef="total">
         <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
         <mat-cell *matCellDef="let abastecimento"> {{(abastecimento.quantLitros * abastecimento.valorLitro) - abastecimento.desconto}} </mat-cell>
+    </ng-container>
+
+    <!-- Tipo de Combustivel Column -->
+    <ng-container matColumnDef="combustivel">
+        <mat-header-cell *matHeaderCellDef> Combustivel </mat-header-cell>
+        <mat-cell *matCellDef="let abastecimento"> {{abastecimento.tipoComb}} </mat-cell>
     </ng-container>
 
     <!-- Actions Column -->
@@ -35,8 +41,9 @@
                 <mat-icon fontIcon="delete"></mat-icon>
             </button>
 
-            <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
-            <button mat-icon-button style="color: #5BC168" (click)="fileUpload.click()"> <mat-icon>attach_file</mat-icon> </button>
+            <button mat-icon-button style="color: #5BC168;" aria-label="Detalhar abastecimento" (click)="onRedirect(abastecimento)">
+                <mat-icon>person</mat-icon>
+            </button>
         </mat-cell>
     </ng-container>
 

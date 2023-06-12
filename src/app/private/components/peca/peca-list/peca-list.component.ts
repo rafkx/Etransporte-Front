@@ -13,7 +13,7 @@ export class PecaListComponent {
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
   @Output() redirect = new EventEmitter(false);
-  readonly displayedColumns = ['nomePeca', 'descricao', 'fornecedor', 'actions'];
+  readonly displayedColumns = ['cod', 'nomePeca', 'descricao', 'fornecedor', 'actions'];
 
   constructor() { }
 

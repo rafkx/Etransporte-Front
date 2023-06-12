@@ -30,8 +30,14 @@ export class VeiculoService {
     return this.http.get('http://localhost:3000/veiculo').pipe(first());
   }
 
-  public getFilter(placa: string): Observable<any> {
-    return this.http.get('http://localhost:3000/veiculo/filter', { params: { placa } }).pipe(first());
+  public getFilter(ano: number, text: string): Observable<any> {
+    if (text !== null && ano !== null) {
+      return this.http.get('http://localhost:3000/veiculo/filter', { params: { ano, text } });
+    } else if (ano && ano !== null) {
+      return this.http.get('http://localhost:3000/veiculo/filter', { params: { ano: ano } });
+    } else {
+      return this.http.get('http://localhost:3000/veiculo/filter', { params: { text: text } });
+    }
   }
 
   public loadById(id: string) {

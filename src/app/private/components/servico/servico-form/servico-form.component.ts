@@ -20,13 +20,16 @@ export class ServicoFormComponent implements OnInit {
   form = this.formBuilder.group({
     id: [''],
     descricao: ['', [Validators.required]],
+    cod: ['', [Validators.required]],
     fornecedor: [{}],
     veiculo: [[{
+      id: ''
     }]]
   })
 
   fornecedores: Fornecedor[] | undefined;
   veiculos: Veiculo[] | undefined;
+  files: File[] | undefined;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -45,6 +48,7 @@ export class ServicoFormComponent implements OnInit {
     this.form.patchValue({
       id: servico.id,
       descricao: servico.descricao,
+      cod: servico.cod,
       fornecedor: servico.fornecedor,
       veiculo: servico.veiculo
     })
@@ -54,10 +58,23 @@ export class ServicoFormComponent implements OnInit {
     this.serviceServico.save({
       id: this.id.value,
       descricao: this.descricao.value,
+      cod: this.cod.value,
       fornecedor: this.fornecedor.value,
       veiculo: [this.veiculo.value]
     })
     .subscribe({ next: (_result => this.onSuccess()), error: (_error => this.onError()) });
+    if (this.files) {
+      this.serviceServico.fileUpload(this.files, 'http://localhost:3000/servico/file')
+      .subscribe(response => console.log('Upload Concluído'))
+    }
+  }
+
+  onFileSelected(event: any) {
+    const selectedFiles = <FileList>event.srcElement.files;
+    this.files = new Array();
+    for (let x=0; x < selectedFiles.length; x++) {
+      this.files.push(selectedFiles[x]);
+    }
   }
 
   onCancel() {
@@ -79,6 +96,10 @@ export class ServicoFormComponent implements OnInit {
 
   get descricao(): FormControl{
     return this.form.get('descricao') as FormControl;
+  }
+
+  get cod(): FormControl{
+    return this.form.get('cod') as FormControl;
   }
 
   get fornecedor(): FormControl{

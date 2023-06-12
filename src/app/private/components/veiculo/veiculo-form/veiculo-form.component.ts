@@ -40,6 +40,8 @@ export class VeiculoFormComponent implements OnInit{
     descricao: ['', [Validators.required]],
   });
 
+  files: File[] | undefined;
+
   constructor(
     private formBuilder: NonNullableFormBuilder,
     private serviceVeiculo: VeiculoService,
@@ -81,6 +83,18 @@ export class VeiculoFormComponent implements OnInit{
   onSubmit() {
     this.serviceVeiculo.save(this.form.value)
     .subscribe({ next: (_result => this.onSucces()), error: (_error => this.onError()) });
+    if (this.files) {
+      this.serviceVeiculo.fileUpload(this.files, 'http://localhost:3000/veiculo/file')
+      .subscribe(response => console.log('Upload Concluído'));
+    }
+  }
+
+  onFileSelected(event: any) {
+    const selectedFiles = <FileList>event.srcElement.files;
+    this.files = new Array();
+    for (let x=0; x < selectedFiles.length; x++) {
+      this.files.push(selectedFiles[x]);
+    }
   }
 
   onCancel() {

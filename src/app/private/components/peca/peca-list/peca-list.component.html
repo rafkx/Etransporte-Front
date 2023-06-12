@@ -1,5 +1,11 @@
 <mat-table [dataSource]="pecas">
     
+    <!-- Código Peça Column -->
+    <ng-container matColumnDef="cod">
+    <mat-header-cell *matHeaderCellDef> Código da Peça</mat-header-cell>
+    <mat-cell *matCellDef="let peca"> {{peca.codPeca}} </mat-cell>
+    </ng-container>
+    
     <!-- Nome Peça Column -->
     <ng-container matColumnDef="nomePeca">
     <mat-header-cell *matHeaderCellDef> Nome da Peça</mat-header-cell>

@@ -18,8 +18,7 @@ export class AbastecimentoComponent implements OnInit {
 
   abastecimento$: Observable<any> | undefined;
   queryField = new FormControl();
-  quantLitro: number = 0;
-  file: File | undefined;
+  queryField2 = new FormControl();
 
   constructor(
     private abastecimentoService: AbastecimentoService,
@@ -45,11 +44,14 @@ export class AbastecimentoComponent implements OnInit {
 
   onSearch() {
     let value = this.queryField.value;
-    if (value && (value = value.trim()) !== ''){
-      this.abastecimento$ = this.abastecimentoService.getFilter(value);
-    } else {
-      this.refresh();
-    }
+    let value2 = this.queryField2.value;
+    this.abastecimento$ = this.abastecimentoService.getFilter(value, value2);
+  }
+
+  onReset() {
+    this.queryField.reset();
+    this.queryField2.reset();
+    this.refresh();
   }
 
   onError(errorMsg: string) {
@@ -88,14 +90,8 @@ export class AbastecimentoComponent implements OnInit {
     })
   }
 
-  onFileSelected(event: any) {
-    const selectedFiles = <FileList>event.srcElement.files;
-    this.file = selectedFiles[0];
-
-    if (this.file) {
-      this.abastecimentoService.fileUpload(this.file, 'http://localhost:3000/abastecimento/file')
-      .subscribe(response => console.log('Upload Concluído'))
-    }
+  onRedirect(abastecimento: Abastecimento) {
+    this.router.navigate([`detailed/${abastecimento.id}`], { relativeTo: this.route });
   }
 
 }

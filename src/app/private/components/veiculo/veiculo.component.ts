@@ -19,6 +19,7 @@ export class VeiculoComponent implements OnInit{
   
   veiculo$: Observable<any> | undefined;
   queryField = new FormControl();
+  queryField2 = new FormControl();
 
   constructor(
     private veiculoService: VeiculoService,
@@ -42,13 +43,16 @@ export class VeiculoComponent implements OnInit{
     );
   }
 
+  onReset() {
+    this.queryField.reset();
+    this.queryField2.reset();
+    this.refresh();
+  }
+
   onSearch() {
     let value = this.queryField.value;
-    if (value && (value = value.trim()) !== ''){
-      this.veiculo$ = this.veiculoService.getFilter(value)
-    } else {
-      this.refresh()
-    }
+    let value2 = this.queryField2.value;
+    this.veiculo$ = this.veiculoService.getFilter(value2, value);
   }
 
   onError (errorMsg: string) {
