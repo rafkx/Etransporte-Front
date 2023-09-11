@@ -7,6 +7,7 @@ import { Quilometro } from 'src/app/models/quilometro';
 import { Veiculo } from 'src/app/models/veiculo';
 import { VeiculoService } from '../../veiculo/veiculo-service/veiculo.service';
 import { QuilometroService } from '../quilometro-service/quilometro.service';
+import { FileQuilometro } from 'src/app/models/file_quilometro';
 
 @Component({
   selector: 'app-quilometro-form',
@@ -23,7 +24,8 @@ export class QuilometroFormComponent implements OnInit {
   })
 
   veiculos: Veiculo[] | undefined;
-  file: File | undefined;
+  file: FileQuilometro | undefined;
+  IsDisabled: boolean = true;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -52,15 +54,21 @@ export class QuilometroFormComponent implements OnInit {
       data: this.data.value,
       veiculo: this.veiculo.value,
     }).subscribe({ next: (result => this.onSuccess()), error: (error => this.onError()) });
-    if (this.file) {
-      this.quilometroService.fileUpload(this.file, 'http://localhost:3000/quilometro/file')
-      .subscribe(response => console.log('Upload Concluído'))
-    }
+    
   }
 
   onFileSelected(event: any) {
-    const selectedFiles = <FileList>event.srcElement.files;
-    this.file = selectedFiles[0];
+    const selectedFiles = event.srcElement.files;
+    
+    for (let x=0; x < selectedFiles.length; x++) {
+      this.file = selectedFiles[0];
+    }
+
+    if (this.file) {
+      this.quilometroService.fileUpload(this.file, 'http://localhost:3000/files-quilometro')
+      .subscribe(response => console.log('Upload Concluído'))
+      this.onCancel();
+    }
   }
 
   onCancel() {
@@ -69,7 +77,7 @@ export class QuilometroFormComponent implements OnInit {
 
   private onSuccess() {
     this.snackBar.open('Quilometro cadastrado com sucesso', '', { duration: 2000 });
-    this.onCancel();
+    this.IsDisabled = false;
   }
 
   private onError() {

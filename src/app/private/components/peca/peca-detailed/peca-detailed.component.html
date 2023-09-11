@@ -10,7 +10,7 @@
                 <p><b>Modelo:</b> {{ peca.modelo }} </p>
                 <p><b>Peça Pequena:</b> <!-- {{ peca.pequenaPeca[0].nomePeca }} --></p>
                 <p><b>Fornecedor:</b> {{ peca.fornecedorP.nome }} </p>
-                <p><b>Veiculo:</b> <!--{{ peca.veiculo[0].placa }}--> </p>
+                <p><b>Veiculo:</b> {{ peca.veiculo[0].placa }} </p>
             </div>
 
             <ng-template #loading>
@@ -18,6 +18,22 @@
                     <mat-spinner></mat-spinner>
                 </div>
             </ng-template>
+        </div>
+
+        <div *ngFor="let file of files">
+            <tr>
+                <td>{{ file.fileName }}</td>
+                <td>
+                    <button mat-icon-button style="color: whitesmoke;" (click)="onDelete(file)">
+                        <mat-icon fontIcon="delete"></mat-icon>
+                    </button>
+                </td>
+                <td>
+                    <button mat-icon-button style="color: whitesmoke;" (click)="onDownload(file)">
+                        <mat-icon fontIcon="download"></mat-icon>
+                    </button>
+                </td>
+            </tr>
         </div>
 
     </mat-card-content>

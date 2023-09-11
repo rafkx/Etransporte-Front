@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Funcionario } from 'src/app/models/funcionario';
 import { FuncionarioService } from '../funcionario-service/funcionario.service';
+import { FileFuncionario } from 'src/app/models/file_funcionario';
 
 @Component({
   selector: 'app-funcionario-form',
@@ -41,6 +42,9 @@ export class FuncionarioFormComponent implements OnInit {
     serieCarteiraTrab: [''],
     estadoCarteiraTrab: [''],
   });
+
+  files: FileFuncionario[] | undefined;
+  IsDisabled: boolean = true;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -90,13 +94,28 @@ export class FuncionarioFormComponent implements OnInit {
     
   }
 
+  onFileSelected(event: any) {
+    const selectedFiles = event.srcElement.files;
+    this.files = new Array();
+
+    for (let x=0; x < selectedFiles.length; x++) {
+      this.files.push(selectedFiles[x]);
+    }
+
+    if (this.files) {
+      this.serviceFuncionario.fileUpload(this.files, 'http://localhost:3000/files-funcionario')
+      .subscribe(response => console.log('Upload Concluído'));
+      this.onCancel();
+    }
+  }
+
   onCancel() {
     this.location.back();
   }
 
   private onSuccess() {
     this.snackBar.open('Funcionário Cadastrado com Sucesso', '', { duration: 2000 });
-    this.onCancel();
+    this.IsDisabled = false;
   }
 
   private onError() {

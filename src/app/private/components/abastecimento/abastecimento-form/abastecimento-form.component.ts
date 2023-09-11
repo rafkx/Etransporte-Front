@@ -9,6 +9,7 @@ import { VeiculoService } from '../../veiculo/veiculo-service/veiculo.service';
 import { AbastecimentoService } from '../abastecimento-service/abastecimento.service';
 import { CombustivelService } from '../../combustivel/combustivel-service/combustivel.service';
 import { Combustivel } from 'src/app/models/combustivel';
+import { FileAbastecimento } from 'src/app/models/file_abastecimento';
 
 @Component({
   selector: 'app-abastecimento-form',
@@ -19,10 +20,7 @@ export class AbastecimentoFormComponent implements OnInit{
 
   form = this.formBuilder.group({
     id: [''],
-    combustivel: this.formBuilder.group({
-      id: [''],
-      nome: ['']
-    }),
+    combustivel: [{}, [Validators.required]],
     quantLitros: [0, [Validators.required]],
     valorLitro: [0, [Validators.required]],
     desconto: [0, [Validators.required]],
@@ -38,7 +36,8 @@ export class AbastecimentoFormComponent implements OnInit{
 
   veiculos: Veiculo[] | undefined;
   combustiveis: Combustivel[] | undefined;
-  file: File | undefined;
+  IsDisabled: boolean = true;
+  file: FileAbastecimento | undefined;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -56,10 +55,7 @@ export class AbastecimentoFormComponent implements OnInit{
     const abastecimento: Abastecimento = this.route.snapshot.data['abastecimento'];
     this.form.patchValue({
       id: abastecimento.id,
-      combustivel: {
-        id: abastecimento.combustivel.id,
-        nome: abastecimento.combustivel.nome,
-      },
+      combustivel: abastecimento.combustivel,
       quantLitros: abastecimento.quantLitros,
       valorLitro: abastecimento.valorLitro,
       desconto: abastecimento.desconto,
@@ -77,10 +73,7 @@ export class AbastecimentoFormComponent implements OnInit{
   onSubmit() {
     this.abastecimentoService.save({
       id: this.id.value,
-      combustivel: {
-        id: this.idC.value,
-        nome: this.nome.value,
-      },
+      combustivel: this.combustivel.value,
       quantLitros: this.quantLitros.value,
       valorLitro: this.valorLitro.value,
       desconto: this.desconto.value,
@@ -93,15 +86,21 @@ export class AbastecimentoFormComponent implements OnInit{
         veiculo: this.veiculo.value
       }
     }).subscribe({ next: (result => this.onSucces()), error: (error => this.onError()) });
-    if (this.file) {
-      this.abastecimentoService.fileUpload(this.file, 'http://localhost:3000/abastecimento/file')
-      .subscribe(response => console.log('Upload Concluído'))
-    }
+    
   }
 
   onFileSelected(event: any) {
-    const selectedFiles = <FileList>event.srcElement.files;
-    this.file = selectedFiles[0];
+    const selectedFiles = event.srcElement.files;
+
+    for (let x=0; x < selectedFiles.length; x++) {
+      this.file = selectedFiles[0];
+    }
+    
+    if (this.file) {
+      this.abastecimentoService.fileUpload(this.file, 'http://localhost:3000/files-abastecimento')
+      .subscribe(response => console.log('Upload Concluído'));
+      this.onCancel();
+    } 
   }
 
   onCancel() {
@@ -110,7 +109,7 @@ export class AbastecimentoFormComponent implements OnInit{
 
   private onSucces() {
     this.snackBar.open('Abastecimento casdastrado com sucesso', '', { duration: 2000 });
-    this.onCancel();
+    this.IsDisabled = false;
   }
 
   private onError() {
@@ -147,13 +146,7 @@ export class AbastecimentoFormComponent implements OnInit{
   get km(): FormGroup{
     return this.form.get('km') as FormGroup;
   }
-  get nome(): FormControl{
-    return this.combustivel.get('nome') as FormControl;
-  }
-  get idC(): FormControl{
-    return this.combustivel.get('id') as FormControl;
-  }
-  get combustivel(): FormGroup{
-    return this.form.get('combustivel') as FormGroup;
+  get combustivel(): FormControl{
+    return this.form.get('combustivel') as FormControl;
   }
 }

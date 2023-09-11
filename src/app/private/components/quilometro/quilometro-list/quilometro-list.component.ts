@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Quilometro } from 'src/app/models/quilometro';
+import { Quilometro, QuilometroData } from 'src/app/models/quilometro';
 
 @Component({
   selector: 'app-quilometro-list',
@@ -8,7 +8,7 @@ import { Quilometro } from 'src/app/models/quilometro';
 })
 export class QuilometroListComponent {
 
-  @Input() quilometros: Quilometro[] = [];
+  @Input() quilometros!: QuilometroData;
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);

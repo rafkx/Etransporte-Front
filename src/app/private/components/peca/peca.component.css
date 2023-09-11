@@ -25,6 +25,10 @@ mat-card {
     align-items: center;
   }
 
+  .search-container input {
+    min-width: 17%;
+} 
+
   .search-container mat-icon {
     margin-right: 10px;
   }

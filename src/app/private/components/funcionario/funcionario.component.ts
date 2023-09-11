@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, of } from 'rxjs';
-import { Funcionario } from 'src/app/models/funcionario';
+import { catchError, map, Observable, of } from 'rxjs';
+import { Funcionario, FuncionarioData } from 'src/app/models/funcionario';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { FuncionarioService } from './funcionario-service/funcionario.service';
+import { PageEvent } from '@angular/material/paginator';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -16,7 +18,18 @@ import { FuncionarioService } from './funcionario-service/funcionario.service';
 })
 export class FuncionarioComponent implements OnInit {
 
-  funcionario$: Observable<any> | undefined;
+  funcionarios: FuncionarioData = {
+    data: [],
+    meta: {
+      take: 0,
+      itemCount: 0,
+      pageCount: 0,
+      hasPreviousPage: false,
+      hasNextPage: false
+    }
+  };
+  pageEvent!: PageEvent;
+  queryField = new FormControl();
 
   constructor(
     private funcionarioService: FuncionarioService,
@@ -27,17 +40,38 @@ export class FuncionarioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.funcionario$ = this.funcionarioService.getFuncionarios();
+    this.refresh();
   }
 
   refresh() {
-    this.funcionario$ = this.funcionarioService.getFuncionarios()
+    this.funcionarioService.getFuncionariosPaginated(1, 10)
       .pipe(
+        map((funcionarioData: FuncionarioData) => this.funcionarios = funcionarioData),
         catchError(error => {
           this.onError('Error ao carregar funcionários')
           return of([])
         })
-      );
+      ).subscribe();
+  }
+
+  onPagination(event: PageEvent) {
+    let page = event.pageIndex;
+    let size = event.pageSize;
+    
+    page = page +1;
+    this.funcionarioService.getFuncionariosPaginated(page, size).pipe(
+      map((funcionario: FuncionarioData) => this.funcionarios = funcionario)
+    ).subscribe();
+  }
+
+  onReset() {
+    this.queryField.reset();
+    this.refresh();
+  }
+
+  onSearch() {
+    let value = this.queryField.value ? this.queryField.value : '';
+    this.funcionarioService.getFilter(value, 1, 10).subscribe(funcionarios => this.funcionarios = funcionarios);
   }
 
   onError(errorMsg: string) {

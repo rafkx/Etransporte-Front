@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, of } from 'rxjs';
-import { Peca } from 'src/app/models/peca';
+import { catchError, map, Observable, of } from 'rxjs';
+import { Peca, PecaData } from 'src/app/models/peca';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { PecaService } from './peca-service/peca.service';
 import { FormControl } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-peca',
@@ -16,7 +17,17 @@ import { FormControl } from '@angular/forms';
 })
 export class PecaComponent implements OnInit {
 
-  peca$: Observable<any> | undefined;
+  pecas: PecaData = {
+    data: [],
+    meta: {
+      take: 0,
+      itemCount: 0,
+      pageCount: 0,
+      hasPreviousPage: false,
+      hasNextPage: false
+    }
+  };
+  pageEvent!: PageEvent;
   queryField = new FormControl();
 
   constructor(
@@ -28,26 +39,33 @@ export class PecaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.peca$ = this.pecaService.getPecas();
+    this.refresh();
   }
 
   refresh() {
-    this.peca$ = this.pecaService.getPecas()
+    this.pecaService.getPecasPaginated(1, 10)
       .pipe(
+        map((pecasData: PecaData) => this.pecas = pecasData),
         catchError(error => {
           this.onError('Error ao carregar peças')
           return of([])
         })
-      );
+      ).subscribe();
+  }
+
+  onPagination(event: PageEvent) {
+    let page = event.pageIndex;
+    let size = event.pageSize;
+    
+    page = page +1;
+    this.pecaService.getPecasPaginated(page, size).pipe(
+      map((pecas: PecaData) => this.pecas = pecas)
+    ).subscribe();
   }
 
   onSearch() {
-    let value = this.queryField.value;
-    if (value && (value = value.trim()) !== ''){
-      this.peca$ = this.pecaService.getFilter(value)
-    } else {
-      this.refresh()
-    }
+    let value = this.queryField.value ? this.queryField.value : '';
+    this.pecaService.getFilter(value, 1, 10).subscribe(pecas => this.pecas = pecas);
   }
 
   onReset() {

@@ -1,4 +1,4 @@
-<mat-table [dataSource]="abastecimentos">
+<mat-table [dataSource]="abastecimentos.data">
 
     <!-- Data Column -->
     <ng-container matColumnDef="data">
@@ -21,7 +21,7 @@
     <!-- Tipo de Combustivel Column -->
     <ng-container matColumnDef="combustivel">
         <mat-header-cell *matHeaderCellDef> Combustivel </mat-header-cell>
-        <mat-cell *matCellDef="let abastecimento"> {{abastecimento.tipoComb}} </mat-cell>
+        <mat-cell *matCellDef="let abastecimento"> {{abastecimento.combustivel.nome}} </mat-cell>
     </ng-container>
 
     <!-- Actions Column -->

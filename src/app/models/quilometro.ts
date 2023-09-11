@@ -16,3 +16,14 @@ export interface QuilometroI {
     veiculo: Veiculo
 
 }
+
+export interface QuilometroData {
+    data: Quilometro[],
+    meta: {
+      take: number;
+      itemCount: number;
+      pageCount: number;
+      hasPreviousPage: boolean;
+      hasNextPage: boolean;
+    }
+  };

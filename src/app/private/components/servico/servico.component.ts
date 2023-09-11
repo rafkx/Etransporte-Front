@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, of } from 'rxjs';
-import { Servico } from 'src/app/models/servico';
+import { catchError, map, Observable, of } from 'rxjs';
+import { Servico, ServicoData } from 'src/app/models/servico';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { ServicoServiceService } from './servico-service/servico-service.service';
 import { FormControl } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-servico',
@@ -16,7 +17,17 @@ import { FormControl } from '@angular/forms';
 })
 export class ServicoComponent implements OnInit {
   
-  servico$: Observable<any> | undefined;
+  servicos: ServicoData = {
+    data: [],
+    meta: {
+      take: 0,
+      itemCount: 0,
+      pageCount: 0,
+      hasPreviousPage: false,
+      hasNextPage: false
+    }
+  };
+  pageEvent!: PageEvent;
   queryField = new FormControl();
 
   constructor(
@@ -28,17 +39,28 @@ export class ServicoComponent implements OnInit {
   ) { }
   
   ngOnInit() {
-    this.servico$ = this.servicoService.getServicos();
+    this.refresh();
   }
 
   refresh() {
-    this.servico$ = this.servicoService.getServicos()
+    this.servicoService.getServicosPaginated(1, 10)
     .pipe(
+      map((servicoData: ServicoData) => this.servicos = servicoData),
       catchError(error => {
         this.onError('Error ao carregar serviços')
         return of([])
       })
-    );
+    ).subscribe();
+  }
+
+  onPagination(event: PageEvent) {
+    let page = event.pageIndex;
+    let size = event.pageSize;
+    
+    page = page +1;
+    this.servicoService.getServicosPaginated(page, size).pipe(
+      map((servicos: ServicoData) => this.servicos = servicos)
+    ).subscribe();
   }
 
   onReset() {
@@ -47,12 +69,8 @@ export class ServicoComponent implements OnInit {
   }
 
   onSearch() {
-    let value = this.queryField.value;
-    if (value && (value = value.trim()) !== ''){
-      this.servico$ = this.servicoService.getFilter(value)
-    } else {
-      this.refresh()
-    }
+    let value = this.queryField.value ? this.queryField.value : '';
+    this.servicoService.getFilter(value, 1, 10).subscribe(servicos => this.servicos = servicos);
   }
 
   onError(errorMsg: string) {

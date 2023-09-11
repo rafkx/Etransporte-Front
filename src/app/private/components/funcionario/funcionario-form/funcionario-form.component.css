@@ -12,3 +12,13 @@ mat-card {
     width: 100%;
     min-width: 150px;
 }
+
+.example-section {
+    margin: 12px 0;
+    text-align: left;
+}
+  
+.example-margin {
+    margin: 0 12px;
+    text-align: left;
+}

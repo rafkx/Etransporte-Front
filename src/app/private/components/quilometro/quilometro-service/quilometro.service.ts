@@ -1,6 +1,7 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { first, Observable } from 'rxjs';
+import { first, Observable, tap } from 'rxjs';
+import { FileQuilometro } from 'src/app/models/file_quilometro';
 import { Quilometro } from 'src/app/models/quilometro';
 
 @Injectable({
@@ -12,27 +13,47 @@ export class QuilometroService {
     private http: HttpClient,
   ) { }
 
-  public fileUpload (file: File, url: string) {
+  quilometro: any | undefined;
+
+  public fileUpload (file: FileQuilometro, url: string) {
     const formData = new FormData();
-    formData.append('file', file, file.name)
-    //console.log(file)
-    //formData.set('file', file)
-    //console.log(formData)
-    return this.http.post(url, formData)
+    formData.append('file', file);
+    formData.append('quilometro', this.quilometro);
+    const request = new HttpRequest('POST', url, formData);
+    return this.http.request(request);
+  }
+
+  public getFiles(id: string): Observable<any> {
+    return this.http.get(`http://localhost:3000/files-quilometro/${id}`)
+  }
+
+  public downloadFile(fileName: string) {
+    return this.http.get(`http://localhost:3000/files-quilometro/download/${fileName}`,
+    { observe: 'response', responseType: 'blob' });
+  }
+
+  public removeFile(fileName: string) {
+    return this.http.delete(`http://localhost:3000/files-quilometro/${fileName}`).pipe(first());
   }
 
   public getQuilometros(): Observable<any> {
     return this.http.get('http://localhost:3000/quilometro').pipe(first());
   }
 
-  public getFilter(data: string, text: string): Observable<any> {
-    if (text !== null && data !== null) {
-      return this.http.get('http://localhost:3000/quilometro/filter', { params: { data, text } });
-    } else if (data && data !== null) {
-      return this.http.get('http://localhost:3000/quilometro/filter', { params: { data: data } });
-    } else {
-      return this.http.get('http://localhost:3000/quilometro/filter', { params: { text: text } });
-    }
+  public getQuilometrosPaginated(page: number, take: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('page', String(page));
+    params = params.append('take', String(take));
+    return this.http.get('http://localhost:3000/quilometro/paginate', { params });
+  }
+
+  public getFilter(data: string, text: string, page: number, take: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('data', data);
+    params = params.append('text', text);
+    params = params.append('page', String(page));
+    params = params.append('take', String(take));
+    return this.http.get('http://localhost:3000/quilometro/filter', { params });
   }
 
   public getQuilometro(id: string) {
@@ -47,7 +68,9 @@ export class QuilometroService {
   }
 
   private create (quilometro: Partial<Quilometro>){
-    return this.http.post<Quilometro>('http://localhost:3000/quilometro', quilometro).pipe(first());
+    return this.http.post<Quilometro>('http://localhost:3000/quilometro', quilometro).pipe(
+      tap((res: Quilometro) => this.quilometro = res.id)
+    );
   }
 
   private update (quilometro: Partial<Quilometro>){

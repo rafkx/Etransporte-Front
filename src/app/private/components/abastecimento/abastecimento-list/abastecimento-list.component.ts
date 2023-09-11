@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Abastecimento } from 'src/app/models/abastecimento';
+import { Abastecimento, AbastecimentoData } from 'src/app/models/abastecimento';
 
 @Component({
   selector: 'app-abastecimento-list',
@@ -8,7 +8,7 @@ import { Abastecimento } from 'src/app/models/abastecimento';
 })
 export class AbastecimentoListComponent {
 
-  @Input() abastecimentos: Abastecimento[] = [];
+  @Input() abastecimentos!: AbastecimentoData;
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);

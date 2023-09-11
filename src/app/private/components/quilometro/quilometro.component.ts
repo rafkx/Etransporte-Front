@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { catchError, Observable, of } from 'rxjs';
-import { Quilometro } from 'src/app/models/quilometro';
+import { catchError, map, Observable, of } from 'rxjs';
+import { Quilometro, QuilometroData } from 'src/app/models/quilometro';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { QuilometroService } from './quilometro-service/quilometro.service';
 import { FormControl } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-quilometro',
@@ -16,7 +17,17 @@ import { FormControl } from '@angular/forms';
 })
 export class QuilometroComponent implements OnInit {
 
-  quilometro$: Observable<any> | undefined;
+  quilometros: QuilometroData = {
+    data: [],
+    meta: {
+      take: 0,
+      itemCount: 0,
+      pageCount: 0,
+      hasPreviousPage: false,
+      hasNextPage: false
+    }
+  };
+  pageEvent!: PageEvent;
   queryField = new FormControl();
   queryField2 = new FormControl();
   
@@ -30,24 +41,35 @@ export class QuilometroComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.quilometro$ = this.quilometroService.getQuilometros();
+    this.refresh();
   }
 
   refresh() {
-    this.quilometro$ = this.quilometroService.getQuilometros()
+    this.quilometroService.getQuilometrosPaginated(1, 10)
       .pipe(
+        map((quilometroData: QuilometroData) => this.quilometros = quilometroData),
         catchError(error => {
           this.onError('Error ao carregar quilometos')
           return of([])
         })
-      );
+      ).subscribe();
+  }
+
+  onPagination(event: PageEvent) {
+    let page = event.pageIndex;
+    let size = event.pageSize;
+    
+    page = page +1;
+    this.quilometroService.getQuilometrosPaginated(page, size).pipe(
+      map((quilometros: QuilometroData) => this.quilometros = quilometros)
+    ).subscribe();
   }
 
   onSearch() {
-    let value = this.queryField.value;
-    let value2 = this.queryField2.value;
-    this.quilometro$ = this.quilometroService.getFilter(value, value2);
-    
+    let value = this.queryField.value ? this.queryField.value : '';
+    let value2 = this.queryField2.value ? this.queryField2.value : '';
+
+    this.quilometroService.getFilter(value, value2, 1, 10).subscribe(quilometros => this.quilometros = quilometros);
   }
 
   onReset() {

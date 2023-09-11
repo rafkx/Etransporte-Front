@@ -19,3 +19,14 @@ export interface ServicoI {
     veiculo: Veiculo[];
 
 }
+
+export interface ServicoData {
+    data: Servico[],
+    meta: {
+      take: number;
+      itemCount: number;
+      pageCount: number;
+      hasPreviousPage: boolean;
+      hasNextPage: boolean;
+    }
+};

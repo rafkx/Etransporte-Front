@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { FornecedorService } from './fornecedor-service/fornecedor.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
-import { Fornecedor } from 'src/app/models/fornecedor';
+import { Fornecedor, FornecedorData } from 'src/app/models/fornecedor';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { PageEvent } from '@angular/material/paginator';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-fornecedor',
@@ -15,7 +17,18 @@ import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmat
 })
 export class FornecedorComponent implements OnInit {
 
-  fornecedor$: Observable<any> | undefined;
+  fornecedores: FornecedorData = {
+    data: [],
+    meta: {
+      take: 0,
+      itemCount: 0,
+      pageCount: 0,
+      hasPreviousPage: false,
+      hasNextPage: false
+    }
+  };
+  pageEvent!: PageEvent;
+  queryField = new FormControl();
 
   constructor(
     private fornecedorService: FornecedorService,
@@ -26,17 +39,38 @@ export class FornecedorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.fornecedor$ = this.fornecedorService.getFornecedores();
+    this.refresh();
   }
 
   refresh() {
-    this.fornecedor$ = this.fornecedorService.getFornecedores()
+    this.fornecedorService.getFornecedoresPaginated(1, 10)
     .pipe(
+      map((fornecedorData: FornecedorData) => this.fornecedores = fornecedorData),
       catchError(error => {
         this.onError('Error ao carregar fornecedores')
         return of([])
       })
-    );
+    ).subscribe();
+  }
+
+  onPagination(event: PageEvent) {
+    let page = event.pageIndex;
+    let size = event.pageSize;
+
+    page = page +1;
+    this.fornecedorService.getFornecedoresPaginated(page, size).pipe(
+      map((fornecedores: FornecedorData) => this.fornecedores = fornecedores)
+    ).subscribe();
+  }
+
+  onSearch() {
+    let value = this.queryField.value ? this.queryField.value : '';
+    this.fornecedorService.getFilter(value, 1, 10).subscribe(fornecedores => this.fornecedores = fornecedores);
+  }
+
+  onReset() {
+    this.queryField.reset();
+    this.refresh();
   }
 
   onError(errorMsg: string) {

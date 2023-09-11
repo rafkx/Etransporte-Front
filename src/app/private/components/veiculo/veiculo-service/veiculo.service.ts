@@ -1,7 +1,8 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { first, Observable } from 'rxjs';
-import { Veiculo } from 'src/app/models/veiculo';
+import { delay, first, Observable, pipe, tap } from 'rxjs';
+import { FileVeiculo } from 'src/app/models/file_veiculo';
+import { Veiculo, VeiculoData } from 'src/app/models/veiculo';
 
 @Injectable({
   providedIn: 'root'
@@ -12,32 +13,47 @@ export class VeiculoService {
     private http: HttpClient,
   ) { }
 
-  public fileUpload(files: File[], url: string) {
+  veiculo: any | undefined;
+
+  public fileUpload(files: FileVeiculo[], url: string) {
     const formData = new FormData();
-    files.forEach(file => {
-      if (file.name.includes('png' || 'jpg')) {
-        formData.append('image', file, file.name)
-      } else {
-        formData.append('file', file, file.name)
-      }
-    });
+    files.forEach(file => formData.append('file', file));
+    formData.append('veiculo', this.veiculo);
     const request = new HttpRequest('POST', url, formData);
-    console.log(files)
     return this.http.request(request);
+  }
+
+  public getFiles(id: string): Observable<any> {
+    return this.http.get(`http://localhost:3000/files-veiculo/${id}`);
+  }
+
+  public downloadFile(fileName: string) {
+    return this.http.get(`http://localhost:3000/files-veiculo/download/${fileName}`, 
+    { observe: 'response', responseType: 'blob' });
+  }
+
+  public removeFile(fileName: string) {
+    return this.http.delete(`http://localhost:3000/files-veiculo/${fileName}`).pipe(first());
   }
 
   public getVeiculos(): Observable<any> {
     return this.http.get('http://localhost:3000/veiculo').pipe(first());
   }
 
-  public getFilter(ano: number, text: string): Observable<any> {
-    if (text !== null && ano !== null) {
-      return this.http.get('http://localhost:3000/veiculo/filter', { params: { ano, text } });
-    } else if (ano && ano !== null) {
-      return this.http.get('http://localhost:3000/veiculo/filter', { params: { ano: ano } });
-    } else {
-      return this.http.get('http://localhost:3000/veiculo/filter', { params: { text: text } });
-    }
+  public getVeiculosPaginated(page: number, take: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('page', String(page));
+    params = params.append('take', String(take));
+    return this.http.get('http://localhost:3000/veiculo/paginate', {params});
+  }
+
+  public getFilter(ano: number, text: string, page: number, take: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('ano', ano);
+    params = params.append('text', text);
+    params = params.append('page', String(page));
+    params = params.append('take', String(take));
+    return this.http.get('http://localhost:3000/veiculo/filter', { params });
   }
 
   public loadById(id: string) {
@@ -52,8 +68,9 @@ export class VeiculoService {
   }
 
   private create (veiculo: Partial<Veiculo>) {
-    console.log(veiculo);
-    return this.http.post<Veiculo>('http://localhost:3000/veiculo', veiculo).pipe(first());
+    return this.http.post<Veiculo>('http://localhost:3000/veiculo', veiculo).pipe(
+      tap((res: Veiculo) => this.veiculo = res.id)
+      );
   }
 
   private update (veiculo: Partial<Veiculo>) {

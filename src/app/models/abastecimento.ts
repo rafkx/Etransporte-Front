@@ -26,3 +26,14 @@ export interface AbastecimentoI {
     km: QuilometroI;
 
 }
+
+export interface AbastecimentoData {
+    data: Abastecimento[],
+    meta: {
+        take: number;
+        itemCount: number;
+        pageCount: number;
+        hasPreviousPage: boolean;
+        hasNextPage: boolean;
+    }
+};

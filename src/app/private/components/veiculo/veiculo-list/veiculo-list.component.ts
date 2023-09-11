@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Veiculo } from 'src/app/models/veiculo';
+import { Veiculo, VeiculoData } from 'src/app/models/veiculo';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { Veiculo } from 'src/app/models/veiculo';
 })
 export class VeiculoListComponent implements OnInit {
   
-  @Input() veiculos: Veiculo[] = [];
+  @Input() veiculos!: VeiculoData;
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);

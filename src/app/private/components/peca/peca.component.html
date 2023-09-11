@@ -11,8 +11,8 @@
         </div>
 
         <div class="column-flex mat-elevation-z8">
-            <app-peca-list *ngIf="peca$ | async as peca; else loading"
-            [pecas]="peca"
+            <app-peca-list *ngIf="pecas; else loading"
+            [pecas]="pecas"
             (add)="onAdd()"
             (edit)="onEdit($event)"
             (remove)="onRemove($event)"
@@ -24,6 +24,14 @@
                     <mat-spinner></mat-spinner>
                 </div>
             </ng-template>
+
+            <mat-paginator 
+                [length]="pecas.meta.itemCount" 
+                [pageSize]="pecas.meta.take" 
+                [pageSizeOptions]="[5,10,25,100]"
+                (page)="pageEvent = $event; onPagination($event)"
+                [showFirstLastButtons]="true">
+            </mat-paginator>
         </div>
     </mat-card-content>
 </mat-card>

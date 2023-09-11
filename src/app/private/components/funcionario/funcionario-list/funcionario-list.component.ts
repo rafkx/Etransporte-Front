@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Funcionario } from 'src/app/models/funcionario';
+import { Funcionario, FuncionarioData } from 'src/app/models/funcionario';
 
 @Component({
   selector: 'app-funcionario-list',
@@ -8,7 +8,7 @@ import { Funcionario } from 'src/app/models/funcionario';
 })
 export class FuncionarioListComponent {
 
-  @Input() funcionarios: Funcionario[] = [];
+  @Input() funcionarios!: FuncionarioData;
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);

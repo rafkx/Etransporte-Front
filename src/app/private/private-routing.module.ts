@@ -31,11 +31,13 @@ import { FornecedorDetailedComponent } from './components/fornecedor/fornecedor-
 import { ServicoDetailedComponent } from './components/servico/servico-detailed/servico-detailed.component';
 import { QuilometroDetailedComponent } from './components/quilometro/quilometro-detailed/quilometro-detailed.component';
 import { AbastecimentoDetailedComponent } from './components/abastecimento/abastecimento-detailed/abastecimento-detailed.component';
+import { Role } from '../models/role';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'funcionario', component: FuncionarioComponent },
+  { path: 'funcionario', component: FuncionarioComponent, data: { roles: [Role.Admin]} },
   { path: 'funcionario/new', component: FuncionarioFormComponent, resolve: { funcionario: FuncionarioResolver } },
   { path: 'funcionario/:id', component: FuncionarioFormComponent, resolve: { funcionario: FuncionarioResolver } },
   { path: 'funcionario/detailed/:id', component: FuncionarioDetailedComponent, resolve: { funcionario: FuncionarioResolver } },
@@ -61,10 +63,10 @@ const routes: Routes = [
   { path: 'quilometro/new', component: QuilometroFormComponent, resolve: {quilometro: QuilometroResolver } },
   { path: 'quilometro/:id', component: QuilometroFormComponent, resolve: {quilometro: QuilometroResolver } },
   { path: 'quilometro/detailed/:id', component: QuilometroDetailedComponent, resolve: {quilometro: QuilometroResolver } },
-  { path: 'abastecimento', component: AbastecimentoComponent },
-  { path: 'abastecimento/new', component: AbastecimentoFormComponent, resolve: { abastecimento: AbastecimentoResolver } },
-  { path: 'abastecimento/:id', component: AbastecimentoFormComponent, resolve: { abastecimento: AbastecimentoResolver } },
-  { path: 'abastecimento/detailed/:id', component: AbastecimentoDetailedComponent, resolve: { abastecimento: AbastecimentoResolver } },
+  { path: 'abastecimento', component: AbastecimentoComponent, data: { roles: [Role.Admin]} },
+  { path: 'abastecimento/new', component: AbastecimentoFormComponent, resolve: { abastecimento: AbastecimentoResolver }, data: { roles: [Role.Admin]} },
+  { path: 'abastecimento/:id', component: AbastecimentoFormComponent, resolve: { abastecimento: AbastecimentoResolver }, data: { roles: [Role.Admin]} },
+  { path: 'abastecimento/detailed/:id', component: AbastecimentoDetailedComponent, resolve: { abastecimento: AbastecimentoResolver }, data: { roles: [Role.Admin]} },
 ];
 
 @NgModule({

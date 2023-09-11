@@ -9,6 +9,7 @@ import { Veiculo } from 'src/app/models/veiculo';
 import { FornecedorService } from '../../fornecedor/fornecedor-service/fornecedor.service';
 import { VeiculoService } from '../../veiculo/veiculo-service/veiculo.service';
 import { ServicoServiceService } from '../servico-service/servico-service.service';
+import { FileServico } from 'src/app/models/file_servico';
 
 @Component({
   selector: 'app-servico-form',
@@ -29,7 +30,8 @@ export class ServicoFormComponent implements OnInit {
 
   fornecedores: Fornecedor[] | undefined;
   veiculos: Veiculo[] | undefined;
-  files: File[] | undefined;
+  files: FileServico[] | undefined;
+  IsDisabled: boolean = true;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -63,17 +65,21 @@ export class ServicoFormComponent implements OnInit {
       veiculo: [this.veiculo.value]
     })
     .subscribe({ next: (_result => this.onSuccess()), error: (_error => this.onError()) });
-    if (this.files) {
-      this.serviceServico.fileUpload(this.files, 'http://localhost:3000/servico/file')
-      .subscribe(response => console.log('Upload Concluído'))
-    }
+    
   }
 
   onFileSelected(event: any) {
-    const selectedFiles = <FileList>event.srcElement.files;
+    const selectedFiles = event.srcElement.files;
     this.files = new Array();
+    
     for (let x=0; x < selectedFiles.length; x++) {
       this.files.push(selectedFiles[x]);
+    }
+
+    if (this.files) {
+      this.serviceServico.fileUpload(this.files, 'http://localhost:3000/files-servico')
+      .subscribe(response => console.log('Upload Concluído'))
+      this.onCancel();
     }
   }
 
@@ -83,7 +89,7 @@ export class ServicoFormComponent implements OnInit {
 
   private onSuccess() {
     this.snackBar.open('Serviço cadastrado com sucesso', '', { duration: 2000 });
-    this.onCancel();
+    this.IsDisabled = false;
   }
 
   private onError() {

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Peca } from 'src/app/models/peca';
+import { Peca, PecaData } from 'src/app/models/peca';
 
 @Component({
   selector: 'app-peca-list',
@@ -8,7 +8,7 @@ import { Peca } from 'src/app/models/peca';
 })
 export class PecaListComponent {
 
-  @Input() pecas: Peca[] = [];
+  @Input() pecas!: PecaData;
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);

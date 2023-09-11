@@ -1,1 +1,20 @@
-<p>fornecedor-detailed works!</p>
+<mat-card>
+    <mat-card-content class="primary">
+
+        <div>
+            <div *ngIf="fornecedor; else loading">
+                <h1> {{ fornecedor.nome }} </h1>
+                <p> <b>CPNJ:</b> {{ fornecedor.cnpj }} </p>
+                <p> <b>CPF:</b> {{ fornecedor.cpf }} </p>
+                <p> <b>Endereco:</b> {{ fornecedor.endereco }} </p>
+                <p> <b>Contato:</b> {{ fornecedor.contatos[0].telefone }} </p>
+            </div>
+
+            <ng-template #loading>
+                <div class="loading-spinner">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </ng-template>
+        </div>
+    </mat-card-content>
+</mat-card>

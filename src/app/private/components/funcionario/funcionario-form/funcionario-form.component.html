@@ -170,6 +170,10 @@
             </form>
         </mat-card-content>
 
+        <div>
+            <input type="file" [disabled]="IsDisabled" (change)="onFileSelected($event)" multiple>
+        </div>
+
         <mat-card-actions>
             <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
             <button mat-raised-button (click)="onCancel()">Cancelar</button>

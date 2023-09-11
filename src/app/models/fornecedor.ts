@@ -20,3 +20,14 @@ export interface FornecedorI {
     contatos: Contato[];
     
 }
+
+export interface FornecedorData {
+    data: Fornecedor[],
+    meta: {
+        take: number;
+        itemCount: number;
+        pageCount: number;
+        hasPreviousPage: boolean;
+        hasNextPage: boolean;
+    }
+  };

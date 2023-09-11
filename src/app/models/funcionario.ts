@@ -57,3 +57,13 @@ export interface Funcionario2 {
     estadoCarteiraTrab?: string;
 }
 
+export interface FuncionarioData {
+    data: Funcionario[],
+    meta: {
+      take: number;
+      itemCount: number;
+      pageCount: number;
+      hasPreviousPage: boolean;
+      hasNextPage: boolean;
+    }
+  };

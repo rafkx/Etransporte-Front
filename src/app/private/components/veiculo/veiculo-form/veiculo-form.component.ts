@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Veiculo } from 'src/app/models/veiculo';
 import { VeiculoService } from '../veiculo-service/veiculo.service';
+import { FileVeiculo } from 'src/app/models/file_veiculo';
 
 @Component({
   selector: 'app-veiculo-form',
@@ -40,7 +41,8 @@ export class VeiculoFormComponent implements OnInit{
     descricao: ['', [Validators.required]],
   });
 
-  files: File[] | undefined;
+  files: FileVeiculo[] | undefined;
+  IsDisabled: boolean = true;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -83,18 +85,23 @@ export class VeiculoFormComponent implements OnInit{
   onSubmit() {
     this.serviceVeiculo.save(this.form.value)
     .subscribe({ next: (_result => this.onSucces()), error: (_error => this.onError()) });
-    if (this.files) {
-      this.serviceVeiculo.fileUpload(this.files, 'http://localhost:3000/veiculo/file')
-      .subscribe(response => console.log('Upload Concluído'));
-    }
   }
 
   onFileSelected(event: any) {
-    const selectedFiles = <FileList>event.srcElement.files;
+    const selectedFiles = event.srcElement.files;
     this.files = new Array();
+    
+    console.log(this.files);
     for (let x=0; x < selectedFiles.length; x++) {
       this.files.push(selectedFiles[x]);
     }
+    
+    if (this.files) {
+      this.serviceVeiculo.fileUpload(this.files, 'http://localhost:3000/files-veiculo')
+      .subscribe(response => console.log('Upload Concluído'));
+      this.onCancel();
+    }
+    
   }
 
   onCancel() {
@@ -103,7 +110,7 @@ export class VeiculoFormComponent implements OnInit{
 
   private onSucces() {
     this.snackBar.open('Veículo Cadastrado com Sucesso', '', { duration: 2000 });
-    this.onCancel();
+    this.IsDisabled = false;
   }
 
   private onError() {

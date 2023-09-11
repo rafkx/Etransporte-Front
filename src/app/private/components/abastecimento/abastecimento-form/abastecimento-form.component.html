@@ -57,7 +57,7 @@
         </mat-card-content>
 
         <div>
-            <input type="file" (change)="onFileSelected($event)" multiple>
+            <input type="file" [disabled]="IsDisabled" (change)="onFileSelected($event)">
         </div>
 
         <mat-card-actions>

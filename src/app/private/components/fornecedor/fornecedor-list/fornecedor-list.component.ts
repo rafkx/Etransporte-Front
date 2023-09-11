@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Fornecedor } from 'src/app/models/fornecedor';
+import { Fornecedor, FornecedorData } from 'src/app/models/fornecedor';
 
 @Component({
   selector: 'app-fornecedor-list',
   templateUrl: './fornecedor-list.component.html',
   styleUrls: ['./fornecedor-list.component.css']
 })
-export class FornecedorListComponent implements OnInit {
+export class FornecedorListComponent {
 
-  @Input() fornecedores: Fornecedor[] = [];
+  @Input() fornecedores!: FornecedorData;
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);
@@ -16,9 +16,6 @@ export class FornecedorListComponent implements OnInit {
   readonly displayedColumns = ['nome', 'endereco', 'contatos', 'actions'];
 
   constructor () { }
-
-  ngOnInit(): void {
-  }
 
   onAdd() {
     this.add.emit(true);
@@ -35,5 +32,4 @@ export class FornecedorListComponent implements OnInit {
   onRedirect(fornecedor: Fornecedor) {
     this.redirect.emit(fornecedor);
   }
-
 }

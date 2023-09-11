@@ -1,4 +1,4 @@
-<mat-table [dataSource]="servicos">
+<mat-table [dataSource]="servicos.data">
     <!-- Código Column -->
     <ng-container matColumnDef="cod">
     <mat-header-cell *matHeaderCellDef> Código </mat-header-cell>
@@ -21,7 +21,7 @@
     <ng-container matColumnDef="veiculo">
         <mat-header-cell *matHeaderCellDef> Veículo </mat-header-cell>
         <mat-cell *matCellDef="let servico"> 
-            <div> {{servico.veiculo[0].placa}} </div>
+            <div> {{servico.veiculo[0].modelo}} </div>
         </mat-cell>
     </ng-container>
 

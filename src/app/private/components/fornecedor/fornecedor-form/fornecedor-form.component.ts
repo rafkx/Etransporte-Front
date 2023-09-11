@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { FornecedorService } from '../fornecedor-service/fornecedor.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
@@ -20,31 +20,37 @@ export class FornecedorFormComponent implements OnInit {
     cnpj: ['', [Validators.required]],
     cpf: [''],
     endereco: ['', [Validators.required]],
-    contatos: [[{
-      id: ''
-    }]]
+    contatos: this.formBuilder.group({
+      id: [''],
+      nome: [''],
+      apelido: ['', [Validators.required]],
+      telefone: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]]
+    })
   })
-
-  contatos2: Contato[] | undefined;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
     private fornecedorService: FornecedorService,
-    private contatoService: ContatoService,
     private snackBar: MatSnackBar,
     private location: Location,
     private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.contatoService.getContatos().subscribe(contato => this.contatos2 = contato);
     const fornecedor = this.route.snapshot.data['fornecedor'];
     this.form.patchValue({
       id: fornecedor.id,
       nome: fornecedor.nome,
       cnpj: fornecedor.cnpj,
       endereco: fornecedor.endereco,
-      contatos: fornecedor.contatos,
+      contatos: {
+        id: fornecedor.contatos.id,
+        nome: fornecedor.nome,
+        apelido: fornecedor.contatos.apelido,
+        telefone: fornecedor.contatos.telefone,
+        email: fornecedor.contatos.email,
+      },
     })
   }
 
@@ -55,7 +61,13 @@ export class FornecedorFormComponent implements OnInit {
       cnpj: this.cnpj.value,
       cpf: this.cpf.value,
       endereco: this.endereco.value,
-      contatos: [this.contatos.value],
+      contatos: [{
+        id: this.idContato.value,
+        nome: this.nome.value,
+        apelido: this.apelido.value,
+        telefone: this.telefone.value,
+        email: this.email.value,
+      }],
     })
     .subscribe({ next: (result => this.onSuccess()), error: (error => this.onError()) });
   }
@@ -88,8 +100,22 @@ export class FornecedorFormComponent implements OnInit {
   get endereco(): FormControl{
     return this.form.get('endereco') as FormControl;
   }
-  get contatos(): FormControl{
-    return this.form.get('contatos') as FormControl;
+  get contatos(): FormGroup{
+    return this.form.get('contatos') as FormGroup;
   }
-
+  get idContato(): FormControl{
+    return this.contatos.get('id') as FormControl;
+  }
+  get nomeContato(): FormControl{
+    return this.contatos.get('nome') as FormControl;
+  }
+  get apelido(): FormControl{
+    return this.contatos.get('apelido') as FormControl;
+  }
+  get telefone(): FormControl{
+    return this.contatos.get('telefone') as FormControl;
+  }
+  get email(): FormControl{
+    return this.contatos.get('email') as FormControl;
+  }
 }

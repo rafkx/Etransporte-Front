@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Servico } from 'src/app/models/servico';
+import { Servico, ServicoData } from 'src/app/models/servico';
 import { Veiculo } from 'src/app/models/veiculo';
 
 @Component({
@@ -9,7 +9,7 @@ import { Veiculo } from 'src/app/models/veiculo';
 })
 export class ServicoListComponent implements OnInit {
   
-  @Input() servicos: Servico[] = [];
+  @Input() servicos!: ServicoData;
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);

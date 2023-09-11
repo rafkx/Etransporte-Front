@@ -6,7 +6,7 @@
                 <h1> {{ servico.cod }} </h1>
                 <p> <b>Descrição:</b> {{ servico.descricao }} </p>
                 <p> <b>Fornecedor:</b> {{ servico.fornecedor.nome }} </p>
-                <p> <b>Veiculo:</b>  </p>
+                <p> <b>Veiculo:</b> {{ servico.veiculo[0].placa }} </p>
             </div>
 
             <ng-template #loading>
@@ -14,6 +14,22 @@
                     <mat-spinner></mat-spinner>
                 </div>
             </ng-template>
+        </div>
+
+        <div *ngFor="let file of files">
+            <tr>
+                <td>{{ file.fileName }}</td>
+                <td>
+                    <button mat-icon-button style="color: whitesmoke" (click)="onDelete(file)">
+                        <mat-icon fontIcon="delete"></mat-icon>
+                    </button>
+                </td>
+                <td>
+                    <button mat-icon-button style="color: whitesmoke" (click)="onDownload(file)">
+                        <mat-icon fontIcon="download"></mat-icon>
+                    </button>
+                </td>
+            </tr>
         </div>
     </mat-card-content>
 </mat-card>

@@ -6,3 +6,7 @@
 .action-column {
     flex: 0 0 200px;
 }
+
+.file-input {
+    display: none;
+}

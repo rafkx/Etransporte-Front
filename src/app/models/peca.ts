@@ -27,3 +27,14 @@ export interface PecaI {
     veiculo: Veiculo[];
     
 }
+
+export interface PecaData {
+    data: Peca[],
+    meta: {
+      take: number;
+      itemCount: number;
+      pageCount: number;
+      hasPreviousPage: boolean;
+      hasNextPage: boolean;
+    }
+  };

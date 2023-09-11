@@ -3,8 +3,8 @@
         <mat-toolbar class="primary">Veículos Cadastrados</mat-toolbar>
         <div class="search-container">
             <mat-icon fontIcon="search"></mat-icon>
+            <input type="number" [formControl]="queryField2" placeholder="Ano...">
             <input type="text" [formControl]="queryField" placeholder="Digite a placa de algum veículo...">
-            <input type="number" [formControl]="queryField2" placeholder="Coloque um ano...">
             <div class="button">
                 <button (click)="onSearch()">Pesquisar</button>
                 <button (click)="onReset()">Limpar</button>
@@ -12,8 +12,8 @@
         </div>
 
         <div class="column-flex mat-elevation-z8">
-            <app-veiculo-list *ngIf="veiculo$ | async as veiculo; else loading"
-            [veiculos]="veiculo"
+            <app-veiculo-list *ngIf="veiculos; else loading"
+            [veiculos]="veiculos"
             (add)="onAdd()"
             (edit)="onEdit($event)"
             (remove)="onRemove($event)"
@@ -25,6 +25,16 @@
                     <mat-spinner></mat-spinner>
                 </div>
             </ng-template>
+            
+            <mat-paginator 
+                [length]="veiculos.meta.itemCount" 
+                [pageSize]="veiculos.meta.take" 
+                [pageSizeOptions]="[5,10,25,100]"
+                (page)="pageEvent = $event; onPagination($event)"
+                [showFirstLastButtons]="true">
+            </mat-paginator>
         </div>
+
+        
     </mat-card-content>
 </mat-card>

@@ -1,4 +1,4 @@
-<mat-table [dataSource]="fornecedores">
+<mat-table [dataSource]="fornecedores.data">
     <!-- Nome Column -->
     <ng-container matColumnDef="nome">
         <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
@@ -15,7 +15,7 @@
     <ng-container matColumnDef="contatos">
         <mat-header-cell *matHeaderCellDef> Contato(s) </mat-header-cell>
         <mat-cell *matCellDef="let fornecedor"> 
-            <div> {{fornecedor.contatos[0]}} </div>
+            <div> {{fornecedor.contatos[0].telefone}} </div>
         </mat-cell>
     </ng-container>
 

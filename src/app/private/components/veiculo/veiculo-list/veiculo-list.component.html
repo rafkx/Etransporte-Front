@@ -1,4 +1,4 @@
-<mat-table [dataSource]="veiculos">
+<mat-table [dataSource]="veiculos.data">
     <!-- Placa Column -->
     <ng-container matColumnDef="placa">
     <mat-header-cell *matHeaderCellDef> Placa </mat-header-cell>
@@ -43,9 +43,7 @@
             <button mat-icon-button style="color: #5BC168;" aria-label="Detalhar veiculo" (click)="onRedirect(veiculo)">
                 <mat-icon fontIcon="person"></mat-icon>
             </button>
-        </mat-cell>
-
-
+        </mat-cell>        
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

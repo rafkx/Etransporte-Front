@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { delay, first, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { delay, first, Observable, tap } from 'rxjs';
+import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
 import { Funcionario } from 'src/app/models/funcionario';
+import { FileFuncionario } from 'src/app/models/file_funcionario';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,46 @@ export class FuncionarioService {
     private http: HttpClient,
   ) { }
 
+  funcionario: any | undefined;
+
+  public fileUpload(files: FileFuncionario[], url: string) {
+    const formData = new FormData();
+    files.forEach(file => formData.append('file', file));
+    formData.append('funcionario', this.funcionario);
+    const request = new HttpRequest('POST', url, formData);
+    return this.http.request(request);
+  }
+
+  public getFiles(id: string): Observable<any> {
+    return this.http.get(`http://localhost:3000/files-funcionario/${id}`);
+  }
+
+  public downloadFile(fileName: string) {
+    return this.http.get(`http://localhost:3000/files-funcionario/download/${fileName}`,
+    { observe: 'response', responseType: 'blob'});
+  }
+
+  public removeFile(fileName: string) {
+    return this.http.delete(`http://localhost:3000/files-funcionario/${fileName}`).pipe(first());
+  }
+
   public getFuncionarios(): Observable<any>{
-    return this.http.get('http://localhost:3000/funcionario').pipe(first()
-    //, delay(5000)
-    );
+    return this.http.get('http://localhost:3000/funcionario').pipe(first());
+  }
+
+  public getFuncionariosPaginated(page: number, take: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('page', String(page));
+    params = params.append('take', String(take));
+    return this.http.get('http://localhost:3000/funcionario/paginate', { params });
+  }
+
+  public getFilter(text: string, page: number, take: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('text', text);
+    params = params.append('page', String(page));
+    params = params.append('take', String(take));
+    return this.http.get('http://localhost:3000/funcionario/filter', { params });
   }
 
   public loadById(id: string){
@@ -30,7 +67,9 @@ export class FuncionarioService {
   }
 
   private create (funcionario: Partial<Funcionario>){
-    return this.http.post<Funcionario>('http://localhost:3000/funcionario', funcionario).pipe(first());
+    return this.http.post<Funcionario>('http://localhost:3000/funcionario', funcionario).pipe(
+      tap((res: Funcionario) => this.funcionario = res.id)
+    );
   }
 
   private update (funcionario: Partial<Funcionario>){

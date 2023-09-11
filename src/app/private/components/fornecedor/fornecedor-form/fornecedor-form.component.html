@@ -28,13 +28,23 @@
                     <mat-error *ngIf="endereco.touched && endereco.hasError('required')">Endereço do fornecedor é obrigatório</mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="full-width">
-                    <mat-label>Contato</mat-label>
-                    <mat-select formControlName="contatos">
-                      <mat-option *ngFor="let contato of contatos2" [value]="contato">
-                        {{contato.nome}}
-                      </mat-option>
-                    </mat-select>
+                <mat-form-field class="full-width" formGroupName="contatos">
+                    <mat-label>Apelido</mat-label>
+                    <input matInput formControlName="apelido"/>
+                    <mat-error *ngIf="apelido.touched && apelido.hasError('required')">Apelido do fornecedor é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width" formGroupName="contatos">
+                    <mat-label>Telefone</mat-label>
+                    <input matInput formControlName="telefone"/>
+                    <mat-error *ngIf="telefone.touched && telefone.hasError('required')">Telefone do fornecedor é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width" formGroupName="contatos">
+                    <mat-label>E-mail</mat-label>
+                    <input matInput formControlName="email"/>
+                    <mat-error *ngIf="email.touched && email.hasError('email')">E-mail tem que ser válido</mat-error>
+                    <mat-error *ngIf="email.touched && email.hasError('required')">E-mail do fornecedor é obrigatório</mat-error>
                 </mat-form-field>
             </form>
         </mat-card-content>

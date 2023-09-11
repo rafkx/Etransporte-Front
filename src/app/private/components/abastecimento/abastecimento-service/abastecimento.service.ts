@@ -1,7 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { first, Observable } from 'rxjs';
+import { first, Observable, tap } from 'rxjs';
 import { Abastecimento } from 'src/app/models/abastecimento';
+import { FileAbastecimento } from 'src/app/models/file_abastecimento';
 
 @Injectable({
   providedIn: 'root'
@@ -12,24 +13,47 @@ export class AbastecimentoService {
     private http: HttpClient,
   ) { }
 
-  public fileUpload (file: File, url: string) {
+  abastecimento: any | undefined;
+
+  public fileUpload (file: FileAbastecimento, url: string) {
     const formData = new FormData();
-    formData.append('file', file, file.name)
-    return this.http.post(url, formData);
+    formData.append('file', file)
+    formData.append('abastecimento', this.abastecimento);
+    const request = new HttpRequest('POST', url, formData);
+    return this.http.request(request);
+  }
+
+  public getFiles(id: string): Observable<any> {
+    return this.http.get(`http://localhost:3000/files-abastecimento/${id}`);
+  }
+
+  public downloadFile(fileName: string) {
+    return this.http.get(`http://localhost:3000/files-abastecimento/download/${fileName}`,
+    { observe: 'response', responseType: 'blob'});
+  }
+
+  public removeFile(fileName: string) {
+    return this.http.delete(`http://localhost:3000/files-abastecimento/${fileName}`).pipe(first());
   }
 
   public getAbastecimentos(): Observable<any> {
     return this.http.get('http://localhost:3000/abastecimento').pipe(first());
   }
 
-  public getFilter(data: string, text: string): Observable<any> {
-    if (text !== null && data !== null) {
-      return this.http.get('http://localhost:3000/abastecimento/filter', { params: {data, text} })
-    } else if (data && data !== null) {
-      return this.http.get(`http://localhost:3000/abastecimento/filter`, { params: { data: data } });
-    } else {
-      return this.http.get(`http://localhost:3000/abastecimento/filter`, { params: {text: text} });
-    }
+  public getAbastecimentoPaginated(page: number, take: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('page', String(page));
+    params = params.append('take', String(take));
+    return this.http.get('http://localhost:3000/abastecimento/paginate', {params});
+  }
+
+  public getFilter(data: string, text: string, page: number, take: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('ano', data);
+    params = params.append('text', text);
+    params = params.append('page', String(page));
+    params = params.append('take', String(take));
+    return this.http.get('http://localhost:3000/abastecimento/filter', {params})
   }
 
   public getAbastecimento(id: string) {
@@ -44,7 +68,9 @@ export class AbastecimentoService {
   }
 
   private create (abastecimento: Partial<Abastecimento>) {
-    return this.http.post<Abastecimento>('http://localhost:3000/abastecimento', abastecimento).pipe(first());
+    return this.http.post<Abastecimento>('http://localhost:3000/abastecimento', abastecimento).pipe(
+      tap((res: Abastecimento) => this.abastecimento = res.id)
+    );
   }
 
   private update (abastecimento: Partial<Abastecimento>) {

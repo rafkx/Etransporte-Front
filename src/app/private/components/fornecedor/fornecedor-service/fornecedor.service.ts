@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first, Observable } from 'rxjs';
 import { Fornecedor } from 'src/app/models/fornecedor';
@@ -14,6 +14,21 @@ export class FornecedorService {
 
   public getFornecedores(): Observable<any> {
     return this.http.get('http://localhost:3000/fornecedor').pipe(first());
+  }
+
+  public getFornecedoresPaginated(page: number, take: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('page', String(page));
+    params = params.append('take', String(take));
+    return this.http.get('http://localhost:3000/fornecedor/paginate', {params});
+  }
+
+  public getFilter(text: string, page: number, take: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('text', text);
+    params = params.append('page', String(page));
+    params = params.append('take', String(take));
+    return this.http.get('http://localhost:3000/fornecedor/filter', {params});
   }
 
   public getFornecedor(id: string) {

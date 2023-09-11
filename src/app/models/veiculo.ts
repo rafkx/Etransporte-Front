@@ -52,3 +52,14 @@ export interface Veiculo2 {
     teleVendedor: string;
     descricao: string;
 }
+
+export interface VeiculoData {
+    data: Veiculo[],
+    meta: {
+      take: number;
+      itemCount: number;
+      pageCount: number;
+      hasPreviousPage: boolean;
+      hasNextPage: boolean;
+    }
+  };

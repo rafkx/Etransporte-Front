@@ -2,12 +2,17 @@
     <mat-card-content>
         <mat-toolbar class="primary">Fornecedores Cadastrados</mat-toolbar>
         <div class="search-container">
-            
+            <mat-icon fontIcon="search"></mat-icon>
+            <input type="text" [formControl]="queryField" placeholder="Coloque um texto...">
+            <div class="button">
+                <button (click)="onSearch()">Pesquisar</button>
+                <button (click)="onReset()">Limpar</button>
+            </div>
         </div>
 
         <div class="column-flex mat-elevation-z8">
-            <app-fornecedor-list *ngIf="fornecedor$ | async as fornecedor; else loading"
-            [fornecedores]="fornecedor"
+            <app-fornecedor-list *ngIf="fornecedores; else loading"
+            [fornecedores]="fornecedores"
             (add)="onAdd()"
             (edit)="onEdit($event)"
             (remove)="onRemove($event)"
@@ -19,6 +24,14 @@
                     <mat-spinner></mat-spinner>
                 </div>
             </ng-template>
+
+            <mat-paginator 
+                [length]="fornecedores.meta.itemCount" 
+                [pageSize]="fornecedores.meta.take" 
+                [pageSizeOptions]="[5,10,25,100]"
+                (page)="pageEvent = $event; onPagination($event)"
+                [showFirstLastButtons]="true">
+            </mat-paginator>
         </div>
     </mat-card-content>
 </mat-card>

@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, of } from 'rxjs';
-import { Veiculo } from 'src/app/models/veiculo';
+import { catchError, map, Observable, of } from 'rxjs';
+import { Veiculo, VeiculoData } from 'src/app/models/veiculo';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { VeiculoService } from './veiculo-service/veiculo.service';
 import { FormControl } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
@@ -17,7 +18,17 @@ import { FormControl } from '@angular/forms';
 })
 export class VeiculoComponent implements OnInit{
   
-  veiculo$: Observable<any> | undefined;
+  veiculos: VeiculoData = {
+    data: [],
+    meta: {
+      take: 0,
+      itemCount: 0,
+      pageCount: 0,
+      hasPreviousPage: false,
+      hasNextPage: false
+    }
+  };
+  pageEvent!: PageEvent;
   queryField = new FormControl();
   queryField2 = new FormControl();
 
@@ -30,17 +41,28 @@ export class VeiculoComponent implements OnInit{
   ) { } 
 
   ngOnInit() {
-    this.veiculo$ = this.veiculoService.getVeiculos();
+    this.refresh();
   }
 
   refresh() {
-    this.veiculo$ = this.veiculoService.getVeiculos()
+    this.veiculoService.getVeiculosPaginated(1, 10)
     .pipe(
+      map((veiculoData: VeiculoData) => this.veiculos = veiculoData),
       catchError(error => {
         this.onError('Error ao carregar veículos')
         return of([])
       })
-    );
+    ).subscribe();
+  }
+
+  onPagination(event: PageEvent) {
+    let page = event.pageIndex;
+    let size = event.pageSize;
+    
+    page = page +1;
+    this.veiculoService.getVeiculosPaginated(page, size).pipe(
+      map((veiculos: VeiculoData) => this.veiculos = veiculos)
+    ).subscribe();
   }
 
   onReset() {
@@ -50,9 +72,9 @@ export class VeiculoComponent implements OnInit{
   }
 
   onSearch() {
-    let value = this.queryField.value;
-    let value2 = this.queryField2.value;
-    this.veiculo$ = this.veiculoService.getFilter(value2, value);
+    let value = this.queryField.value ? this.queryField.value : '';
+    let value2 = this.queryField2.value ? this.queryField2.value : '';
+    this.veiculoService.getFilter(value2, value, 1, 10).subscribe(veiculos => this.veiculos = veiculos);
   }
 
   onError (errorMsg: string) {

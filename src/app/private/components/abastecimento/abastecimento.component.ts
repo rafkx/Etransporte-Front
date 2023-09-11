@@ -3,11 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, map, Observable, of } from 'rxjs';
-import { Abastecimento } from 'src/app/models/abastecimento';
+import { Abastecimento, AbastecimentoData } from 'src/app/models/abastecimento';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { AbastecimentoService } from './abastecimento-service/abastecimento.service';
 import { FormControl } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-abastecimento',
@@ -16,7 +17,17 @@ import { FormControl } from '@angular/forms';
 })
 export class AbastecimentoComponent implements OnInit {
 
-  abastecimento$: Observable<any> | undefined;
+  abastecimentos: AbastecimentoData = {
+    data: [],
+    meta: {
+      take: 0,
+      itemCount: 0,
+      pageCount: 0,
+      hasPreviousPage: false,
+      hasNextPage: false
+    }
+  };
+  pageEvent!: PageEvent;
   queryField = new FormControl();
   queryField2 = new FormControl();
 
@@ -29,23 +40,34 @@ export class AbastecimentoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.abastecimento$ = this.abastecimentoService.getAbastecimentos();
+    this.refresh();
   }
 
   refresh() {
-    this.abastecimento$ = this.abastecimentoService.getAbastecimentos()
+    this.abastecimentoService.getAbastecimentoPaginated(1, 10)
       .pipe(
+        map((abastecimentoData: AbastecimentoData) => this.abastecimentos = abastecimentoData),
         catchError(error => {
           this.onError('Error ao carregar abastecimentos')
           return of([])
         })
-      );
+      ).subscribe();
+  }
+
+  onPagination(event: PageEvent) {
+    let page = event.pageIndex;
+    let size = event.pageSize;
+
+    page = page +1;
+    this.abastecimentoService.getAbastecimentoPaginated(page, size).pipe(
+      map((abastecimentos: AbastecimentoData) => this.abastecimentos = abastecimentos)
+    ).subscribe();
   }
 
   onSearch() {
-    let value = this.queryField.value;
-    let value2 = this.queryField2.value;
-    this.abastecimento$ = this.abastecimentoService.getFilter(value, value2);
+    let value = this.queryField.value ? this.queryField.value : '';
+    let value2 = this.queryField2.value ? this.queryField2.value : '';
+    this.abastecimentoService.getFilter(value, value2, 1, 10).subscribe(abastecimentos => this.abastecimentos = abastecimentos);
   }
 
   onReset() {

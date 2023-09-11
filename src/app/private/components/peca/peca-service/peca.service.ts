@@ -1,6 +1,7 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { first, map, Observable } from 'rxjs';
+import { first, map, Observable, tap } from 'rxjs';
+import { FilePeca } from 'src/app/models/file_peca';
 import { Peca } from 'src/app/models/peca';
 
 @Injectable({
@@ -12,25 +13,46 @@ export class PecaService {
     private http: HttpClient
   ) { }
 
-  public fileUpload(files: File[], url: string) {
+  peca: any | undefined;
+
+  public fileUpload(files: FilePeca[], url: string) {
     const formData = new FormData();
-    files.forEach(file => {
-      if (file.name.includes('png' || 'jpg')){
-        formData.append('image', file, file.name)
-      } else {
-        formData.append('file', file, file.name)
-      }
-    });
+    files.forEach(file => formData.append('file', file, file.name));
+    formData.append('peca', this.peca);
     const request = new HttpRequest('POST', url, formData);
     return this.http.request(request);
+  }
+
+  public getFiles(id: string): Observable<any> {
+    return this.http.get(`http://localhost:3000/files-peca/${id}`);
+  }
+
+  public downloadFile(fileName: string) {
+    return this.http.get(`http://localhost:3000/files-peca/download/${fileName}`,
+    { observe: 'response', responseType: 'blob' });
+  }
+
+  public removeFile(fileName: string) {
+    return this.http.delete(`http://localhost:3000/files-peca/${fileName}`).pipe(first());
   }
 
   public getPecas(): Observable<any> {
     return this.http.get('http://localhost:3000/pecas').pipe(first());
   }
 
-  public getFilter(text: string): Observable<any> {
-    return this.http.get('http://localhost:3000/pecas/filter', {params: { text } }).pipe();
+  public getPecasPaginated(page: number, take: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('page', String(page));
+    params = params.append('take', String(take));
+    return this.http.get('http://localhost:3000/pecas/paginate', { params });
+  }
+
+  public getFilter(text: string, page: number, take: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('text', text);
+    params = params.append('page', String(page));
+    params = params.append('take', String(take));
+    return this.http.get('http://localhost:3000/pecas/filter', { params }).pipe();
   }
 
   public getPeca(id: string){
@@ -45,7 +67,9 @@ export class PecaService {
   }
 
   private create (peca: Partial<Peca>){
-    return this.http.post<Peca>('http://localhost:3000/pecas', peca).pipe(first());
+    return this.http.post<Peca>('http://localhost:3000/pecas', peca).pipe(
+      tap((res: Peca) => this.peca = res.id)
+    );
   }
 
   private update (peca: Partial<Peca>){
