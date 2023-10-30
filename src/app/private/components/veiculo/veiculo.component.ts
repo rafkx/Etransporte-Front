@@ -6,9 +6,11 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { Veiculo, VeiculoData } from 'src/app/models/veiculo';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
-import { VeiculoService } from './veiculo-service/veiculo.service';
+import { VeiculoService } from '../../services/veiculo-service/veiculo.service';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+import { AuthService } from 'src/app/public/auth-service/auth.service';
+import { JWTUser } from 'src/app/models/user';
 
 
 @Component({
@@ -28,20 +30,32 @@ export class VeiculoComponent implements OnInit{
       hasNextPage: false
     }
   };
+  user: JWTUser;
   pageEvent!: PageEvent;
   queryField = new FormControl();
   queryField2 = new FormControl();
 
   constructor(
     private veiculoService: VeiculoService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-  ) { } 
+  ) {
+    this.user = <JWTUser>this.authService.userValue;
+  } 
 
   ngOnInit() {
     this.refresh();
+  }
+
+  get isAdmin() {
+    return this.user.role === 'admin';
+  }
+
+  get isGerente() {
+    return this.user.role === 'gerente';
   }
 
   refresh() {

@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Quilometro, QuilometroI } from 'src/app/models/quilometro';
-import { QuilometroService } from '../quilometro-service/quilometro.service';
+import { QuilometroService } from '../../../services/quilometro-service/quilometro.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,10 @@ export class QuilometroResolver implements Resolve<Quilometro | QuilometroI> {
         ano: 0,
         modelo: '',
         marca: '',
-        combustivel: '',
+        combustivel: {
+          id: '',
+          nome: '',
+        },
         ultimaKm: 0,
         corInterna: '',
         corExterna: '',

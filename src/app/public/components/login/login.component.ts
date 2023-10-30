@@ -4,6 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { AuthService } from '../../auth-service/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +22,7 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private snackBar: MatSnackBar,
+    private dialog: MatDialog,
     private route: Router,
   ) { }
 
@@ -28,7 +31,7 @@ export class LoginComponent {
       email: this.email.value,
       password: this.password.value
     }).pipe(tap(() => this.route.navigate(['../../private/dashboard'])))
-    .subscribe({ next: (_result => this.onSucces()), error: (_error => this.onError()) });
+    .subscribe({ next: (_result => this.onSucces()), error: (_error) => this.onError(_error) });
   }
 
   private onSucces() {
@@ -39,11 +42,9 @@ export class LoginComponent {
     });
   }
 
-  private onError() {
-    this.snackBar.open('Erro ao entrar!', '', {
-      duration: 2000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
+  private onError(errorMsg: string) {
+    this.dialog.open(ErrorDialogComponent, {
+      data: errorMsg
     })
   }
 

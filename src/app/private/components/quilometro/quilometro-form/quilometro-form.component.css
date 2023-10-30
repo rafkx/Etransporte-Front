@@ -22,3 +22,13 @@ mat-form-field {
     width: 100%;
     min-width: 300px;
 }
+
+.file-section {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: left;
+}
+
+li {
+    text-align: left;
+}

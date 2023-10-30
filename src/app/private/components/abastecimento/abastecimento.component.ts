@@ -6,9 +6,11 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { Abastecimento, AbastecimentoData } from 'src/app/models/abastecimento';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
-import { AbastecimentoService } from './abastecimento-service/abastecimento.service';
+import { AbastecimentoService } from '../../services/abastecimento-service/abastecimento.service';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+import { AuthService } from 'src/app/public/auth-service/auth.service';
+import { JWTUser } from 'src/app/models/user';
 
 @Component({
   selector: 'app-abastecimento',
@@ -27,17 +29,21 @@ export class AbastecimentoComponent implements OnInit {
       hasNextPage: false
     }
   };
+  user: JWTUser;
   pageEvent!: PageEvent;
   queryField = new FormControl();
   queryField2 = new FormControl();
 
   constructor(
     private abastecimentoService: AbastecimentoService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-  ) { }
+  ) {
+    this.user = <JWTUser>this.authService.userValue;
+  }
 
   ngOnInit() {
     this.refresh();
@@ -80,6 +86,14 @@ export class AbastecimentoComponent implements OnInit {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg
     });
+  }
+
+  get isAdmin() {
+    return this.user?.role === 'admin';
+  }
+
+  get isGerente() {
+    return this.user?.role === 'gerente';
   }
 
   onAdd() {

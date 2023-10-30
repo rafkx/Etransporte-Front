@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Abastecimento, AbastecimentoI } from 'src/app/models/abastecimento';
-import { AbastecimentoService } from '../abastecimento-service/abastecimento.service';
+import { AbastecimentoService } from '../../../services/abastecimento-service/abastecimento.service';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,10 @@ export class AbastecimentoResolver implements Resolve<Abastecimento | Abastecime
         ano: 0,
         modelo: '',
         marca: '',
-        combustivel: '',
+        combustivel: {
+          id: '',
+          nome: ''
+        },
         ultimaKm: 0,
         corInterna: '',
         corExterna: '',
@@ -66,7 +69,10 @@ export class AbastecimentoResolver implements Resolve<Abastecimento | Abastecime
           ano: 0,
           modelo: '',
           marca: '',
-          combustivel: '',
+          combustivel: {
+            id: '',
+            nome: '',
+          },
           ultimaKm: 0,
           corInterna: '',
           corExterna: '',

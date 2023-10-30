@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models/user';
+import { Role } from 'src/app/models/role';
+import { JWTUser, User } from 'src/app/models/user';
 import { AuthService } from 'src/app/public/auth-service/auth.service';
 
 @Component({
@@ -9,18 +10,31 @@ import { AuthService } from 'src/app/public/auth-service/auth.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-    user: User;
+    user: JWTUser;
+    IsDisabled: boolean = true;
     
     constructor(
         private router: Router,
         private AuthService: AuthService,
     ) { 
-      this.user = <User>this.AuthService.userValue;
+      this.user = <JWTUser>this.AuthService.userValue;
+      console.log(this.user);
+    }
+
+    get isAdmin() {
+      return this.user?.role === 'admin';
+    }
+
+    get isUser() {
+      return this.user?.role === 'user';
+    }
+
+    get isGerente() {
+      return this.user.role === 'gerente';
     }
 
     public logOut() {
-    localStorage.removeItem('token');
-    this.router.navigate(['']);
+      this.AuthService.logout();
     }
 
     public goToFuncionario() {
@@ -53,5 +67,13 @@ export class DashboardComponent {
 
     public goToFornecedor() {
       this.router.navigateByUrl('/private/fornecedor')
+    }
+
+    public goToEditPassword() {
+      this.router.navigateByUrl('/private/passwordChange')
+    }
+
+    public goToAssociation() {
+      this.router.navigateByUrl('/private/associate');
     }
 }

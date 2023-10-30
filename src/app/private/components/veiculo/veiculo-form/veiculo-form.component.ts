@@ -4,8 +4,10 @@ import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Veiculo } from 'src/app/models/veiculo';
-import { VeiculoService } from '../veiculo-service/veiculo.service';
+import { VeiculoService } from '../../../services/veiculo-service/veiculo.service';
 import { FileVeiculo } from 'src/app/models/file_veiculo';
+import { CombustivelService } from 'src/app/private/services/combustivel-service/combustivel.service';
+import { Combustivel } from 'src/app/models/combustivel';
 
 @Component({
   selector: 'app-veiculo-form',
@@ -23,7 +25,10 @@ export class VeiculoFormComponent implements OnInit{
     ano: [0, [Validators.required]],
     modelo: ['', [Validators.required]],
     marca: ['', [Validators.required]],
-    combustivel: ['', [Validators.required]],
+    combustivel: [{
+      id: '',
+      nome: ''
+    }, [Validators.required]],
     ultimaKm: [0, [Validators.required]],
     corInterna: [''],
     corExterna: [''],
@@ -41,18 +46,22 @@ export class VeiculoFormComponent implements OnInit{
     descricao: ['', [Validators.required]],
   });
 
-  files: FileVeiculo[] | undefined;
+  combustiveis: Combustivel[] | undefined;
+  files: FileVeiculo[] = [];
   IsDisabled: boolean = true;
+  IsFormDisabled: boolean = false;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
     private serviceVeiculo: VeiculoService,
+    private combustivelService: CombustivelService,
     private snackBar: MatSnackBar,
     private location: Location,
     private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+    this.combustivelService.getCombustiveis().subscribe(combustiveis =>  this.combustiveis = combustiveis);
     const veiculo: Veiculo = this.route.snapshot.data['veiculo'];
     this.form.patchValue({
       id: veiculo.id,
@@ -63,7 +72,10 @@ export class VeiculoFormComponent implements OnInit{
       ano: veiculo.ano,
       modelo: veiculo.modelo,
       marca: veiculo.marca,
-      combustivel: veiculo.combustivel,
+      combustivel: {
+        id: veiculo.combustivel.id,
+        nome: veiculo.combustivel.nome,
+      },
       ultimaKm: veiculo.ultimaKm,
       corInterna: veiculo.corInterna,
       corExterna: veiculo.corExterna,
@@ -95,13 +107,18 @@ export class VeiculoFormComponent implements OnInit{
     for (let x=0; x < selectedFiles.length; x++) {
       this.files.push(selectedFiles[x]);
     }
-    
+  }
+
+  onDeleteFile(index: any) {  
+    this.files.splice(index, 1);
+  }
+
+  onSaveFile() {
     if (this.files) {
       this.serviceVeiculo.fileUpload(this.files, 'http://localhost:3000/files-veiculo')
-      .subscribe(response => console.log('Upload Concluído'));
+      .subscribe(response => this.snackBar.open('Arquivo adicionado com sucesso!', '', { duration: 2000 }));
       this.onCancel();
     }
-    
   }
 
   onCancel() {
@@ -111,6 +128,8 @@ export class VeiculoFormComponent implements OnInit{
   private onSucces() {
     this.snackBar.open('Veículo Cadastrado com Sucesso', '', { duration: 2000 });
     this.IsDisabled = false;
+    this.IsFormDisabled = true;
+    this.form.disable();
   }
 
   private onError() {

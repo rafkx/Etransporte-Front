@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Funcionario, Funcionario2 } from 'src/app/models/funcionario';
-import { FuncionarioService } from '../funcionario-service/funcionario.service';
+import { FuncionarioService } from '../../../services/funcionario-service/funcionario.service';
 
 @Injectable({
   providedIn: 'root'

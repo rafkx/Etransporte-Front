@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Veiculo } from 'src/app/models/veiculo';
-import { VeiculoService } from '../veiculo-service/veiculo.service';
+import { VeiculoService } from '../../../services/veiculo-service/veiculo.service';
 import { FileV } from 'src/app/models/file_veiculo';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';

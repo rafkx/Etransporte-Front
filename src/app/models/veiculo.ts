@@ -1,3 +1,5 @@
+import { Combustivel } from "./combustivel";
+
 export interface Veiculo {
 
     id: string;
@@ -8,7 +10,7 @@ export interface Veiculo {
     ano: number;
     modelo: string;
     marca: string;
-    combustivel: string;
+    combustivel: Combustivel;
     ultimaKm: number;
     corInterna?: string;
     corExterna?: string;
@@ -35,7 +37,7 @@ export interface Veiculo2 {
     ano: number;
     modelo: string;
     marca: string;
-    combustivel: string;
+    combustivel: Combustivel;
     ultimaKm: number;
     corInterna?: string;
     corExterna?: string;

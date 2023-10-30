@@ -7,42 +7,45 @@
                     <form [formGroup]="form" (ngSubmit)="register()">
                         <mat-form-field>
                             <mat-label>Nome do Funcionário</mat-label>
-                            <mat-select formControlName="name">
-                            <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario.nomeFun">
+                            <mat-select formControlName="funcionario">
+                            <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario.id">
                                 {{funcionario.nomeFun}}
                             </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="name.touched && name.hasError('required')">Nome é obrigatório</mat-error>
+                            <mat-error *ngIf="funcionario.touched && funcionario.hasError('required')">Funcionario é obrigatório</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Nome do usuário</mat-label>
+                            <input type="text" matInput formControlName="name" />
+                            <mat-error *ngIf="name.touched && name.hasError('required')">Nome do usuário é obrigatório</mat-error>
                         </mat-form-field>
                         
                         <mat-form-field>
-                            <mat-label>É administrador?</mat-label>
+                            <mat-label>Qual é o papel do usuário?</mat-label>
                             <mat-select formControlName="role">
-                                <mat-option value="user">Não</mat-option>
-                                <mat-option value="admin">Sim</mat-option>
+                                <mat-option value="user">Funcionário</mat-option>
+                                <mat-option value="admin">administrador</mat-option>
+                                <mat-option value="gerente">Gerente</mat-option>
                             </mat-select>
-                            <!--<mat-error *ngIf="role.touched && role.hasError('required')">É obrigatório</mat-error>-->
+                            <mat-error *ngIf="role.touched && role.hasError('required')">É obrigatório</mat-error>
                         </mat-form-field>
+
                         <mat-form-field>
                             <mat-label>E-mail</mat-label>
                             <input type="email" matInput formControlName="email" />
                             <mat-error *ngIf="email.touched && email.hasError('required')">E-mail é obrigatório</mat-error>
                             <mat-error *ngIf="email.touched && email.hasError('email')">E-mail tem que ser válido</mat-error>
                         </mat-form-field>
+                        
                         <mat-form-field>
                             <mat-label>Senha</mat-label>
                             <input type="password" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$" matInput formControlName="password" />
                             <mat-error *ngIf="password.touched && password.hasError('required')">Senha é obrigatório</mat-error>
                             <mat-error *ngIf="password.touched && password.hasError('pattern')">A senha deve conter letras maiúsculas, minúsculas, números e caracteres especiais</mat-error>
                         </mat-form-field><br>
-                        <!--<mat-form-field>
-                            <mat-label>Confirmação de Senha</mat-label>
-                            <input type="password" matInput formControlName="passwordConfirm" />
-                        </mat-form-field>-->
-                        
-                        <!-- <mat-error *ngIf="passwordConfirm.touched && form.hasError('passwordsNotMatching')"><small>Senhas estão diferentes</small></mat-error> -->
+
                         <mat-hint *ngIf="!form.valid"><small>Preencha todas as colunas</small></mat-hint>
-                        
 
                         <div class="button">
                             <button mat-raised-button type="submit" [disabled]="!form.valid">Registrar</button>

@@ -6,9 +6,11 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { Peca, PecaData } from 'src/app/models/peca';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
-import { PecaService } from './peca-service/peca.service';
+import { PecaService } from '../../services/peca-service/peca.service';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+import { AuthService } from 'src/app/public/auth-service/auth.service';
+import { JWTUser } from 'src/app/models/user';
 
 @Component({
   selector: 'app-peca',
@@ -27,19 +29,31 @@ export class PecaComponent implements OnInit {
       hasNextPage: false
     }
   };
+  user: JWTUser
   pageEvent!: PageEvent;
   queryField = new FormControl();
 
   constructor(
     private pecaService: PecaService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-  ) { }
+  ) { 
+    this.user = <JWTUser>this.authService.userValue;
+  }
 
   ngOnInit() {
     this.refresh();
+  }
+
+  get isAdmin() {
+    return this.user.role === 'admin';
+  }
+
+  get isGerente() {
+    return this.user.role === 'gerente';
   }
 
   refresh() {

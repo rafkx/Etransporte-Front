@@ -5,9 +5,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Abastecimento } from 'src/app/models/abastecimento';
 import { Veiculo } from 'src/app/models/veiculo';
-import { VeiculoService } from '../../veiculo/veiculo-service/veiculo.service';
-import { AbastecimentoService } from '../abastecimento-service/abastecimento.service';
-import { CombustivelService } from '../../combustivel/combustivel-service/combustivel.service';
+import { VeiculoService } from '../../../services/veiculo-service/veiculo.service';
+import { AbastecimentoService } from '../../../services/abastecimento-service/abastecimento.service';
+import { CombustivelService } from '../../../services/combustivel-service/combustivel.service';
 import { Combustivel } from 'src/app/models/combustivel';
 import { FileAbastecimento } from 'src/app/models/file_abastecimento';
 
@@ -37,7 +37,8 @@ export class AbastecimentoFormComponent implements OnInit{
   veiculos: Veiculo[] | undefined;
   combustiveis: Combustivel[] | undefined;
   IsDisabled: boolean = true;
-  file: FileAbastecimento | undefined;
+  IsFormDisabled: boolean = false;
+  file: FileAbastecimento | undefined | null;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -95,12 +96,20 @@ export class AbastecimentoFormComponent implements OnInit{
     for (let x=0; x < selectedFiles.length; x++) {
       this.file = selectedFiles[0];
     }
-    
+  }
+
+  onDeleteFile() {
+    this.file = null;
+  }
+
+  onSaveFile() {
     if (this.file) {
       this.abastecimentoService.fileUpload(this.file, 'http://localhost:3000/files-abastecimento')
-      .subscribe(response => console.log('Upload Concluído'));
+      .subscribe(response => this.snackBar.open('Arquivo adicionado com sucesso!', '', { duration: 2000 }));
       this.onCancel();
-    } 
+    } else {
+      this.snackBar.open('Sem nenhum arquivo! Selecione um arquivo diferente!', 'X', { duration: 5000 });
+    }
   }
 
   onCancel() {
@@ -110,6 +119,8 @@ export class AbastecimentoFormComponent implements OnInit{
   private onSucces() {
     this.snackBar.open('Abastecimento casdastrado com sucesso', '', { duration: 2000 });
     this.IsDisabled = false;
+    this.IsFormDisabled = true;
+    this.form.disable();
   }
 
   private onError() {

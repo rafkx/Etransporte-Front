@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Funcionario } from 'src/app/models/funcionario';
-import { FuncionarioService } from '../funcionario-service/funcionario.service';
+import { FuncionarioService } from '../../../services/funcionario-service/funcionario.service';
 import { FileF } from 'src/app/models/file_funcionario';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';

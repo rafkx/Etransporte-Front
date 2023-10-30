@@ -1,10 +1,18 @@
 <mat-card>
     <mat-card-content>
         <mat-toolbar class="primary">Usuários cadastrados</mat-toolbar>
+        <div class="search-container">
+            <mat-icon fontIcon="search"></mat-icon>
+            <input type="text" [formControl]="queryField" placeholder="Digite o nome do usuário...">
+            <div class="button">
+                <button (click)="onSearch()">Pesquisar</button>
+                <button (click)="onReset()">Limpar</button>
+            </div>
+        </div>
 
         <div class="column-flex mat-elevation-z8">
-            <app-users-list *ngIf="user$ | async as user; else loading"
-            [users]="user"
+            <app-users-list *ngIf="users; else loading"
+            [users]="users"
             (add)="onAdd()"
             (remove)="onRemove($event)"
             ></app-users-list>
@@ -14,6 +22,14 @@
                     <mat-spinner></mat-spinner>
                 </div>
             </ng-template>
+
+            <mat-paginator 
+                [length]="users.meta.itemCount" 
+                [pageSize]="users.meta.take" 
+                [pageSizeOptions]="[5,10,25,100]"
+                (page)="pageEvent = $event; onPagination($event)"
+                [showFirstLastButtons]="true">
+            </mat-paginator>
         </div>
     </mat-card-content>
 </mat-card>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Abastecimento } from 'src/app/models/abastecimento';
 import { FileA } from 'src/app/models/file_abastecimento';
-import { AbastecimentoService } from '../abastecimento-service/abastecimento.service';
+import { AbastecimentoService } from '../../../services/abastecimento-service/abastecimento.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';

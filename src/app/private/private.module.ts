@@ -36,7 +36,19 @@ import { FornecedorFormComponent } from './components/fornecedor/fornecedor-form
 import { AbastecimentoDetailedComponent } from './components/abastecimento/abastecimento-detailed/abastecimento-detailed.component';
 import { QuilometroDetailedComponent } from './components/quilometro/quilometro-detailed/quilometro-detailed.component';
 import { ServicoDetailedComponent } from './components/servico/servico-detailed/servico-detailed.component';
+import { UserEditComponent } from './components/register/user-edit/user-edit.component';
+import { AssociationComponent } from './components/association/association.component';
+import { CurrencyMaskConfig, CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
 
+export const customCurrencyMaskConfig: CurrencyMaskConfig = {
+  align: 'left',
+  allowNegative: true,
+  decimal: ',',
+  precision: 2,
+  prefix: '',
+  suffix: '',
+  thousands: '.'
+}
 
 @NgModule({
   declarations: [
@@ -72,12 +84,18 @@ import { ServicoDetailedComponent } from './components/servico/servico-detailed/
     AbastecimentoDetailedComponent,
     QuilometroDetailedComponent,
     ServicoDetailedComponent,
+    UserEditComponent,
+    AssociationComponent,
   ],
   imports: [
     CommonModule,
     PrivateRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    CurrencyMaskModule
+  ],
+  providers: [
+    { provide: CURRENCY_MASK_CONFIG, useValue: customCurrencyMaskConfig }
   ]
 })
 export class PrivateModule { }

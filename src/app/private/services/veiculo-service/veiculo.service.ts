@@ -40,6 +40,10 @@ export class VeiculoService {
     return this.http.get('http://localhost:3000/veiculo').pipe(first());
   }
 
+  public getVeiculosAvailable(id: string): Observable<any> {
+    return this.http.get(`http://localhost:3000/veiculo/available/${id}`).pipe(first());
+  }
+
   public getVeiculosPaginated(page: number, take: number): Observable<any> {
     let params = new HttpParams();
     params = params.append('page', String(page));

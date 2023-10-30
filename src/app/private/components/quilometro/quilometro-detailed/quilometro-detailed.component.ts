@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FileQ } from 'src/app/models/file_quilometro';
 import { Quilometro } from 'src/app/models/quilometro';
-import { QuilometroService } from '../quilometro-service/quilometro.service';
+import { QuilometroService } from '../../../services/quilometro-service/quilometro.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';

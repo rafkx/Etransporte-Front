@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-content>
         <mat-toolbar class="primary">Peças Cadastradas</mat-toolbar>
-        <div class="search-container">
+        <div class="search-container" *ngIf="isAdmin || isGerente">
                 <mat-icon fontIcon="search"></mat-icon>
                 <input type="text" [formControl]="queryField" placeholder="Digite o nome de uma peça...">
                 <div class="button">
@@ -13,6 +13,8 @@
         <div class="column-flex mat-elevation-z8">
             <app-peca-list *ngIf="pecas; else loading"
             [pecas]="pecas"
+            [isAdmin]="isAdmin"
+            [isGerente]="isGerente"
             (add)="onAdd()"
             (edit)="onEdit($event)"
             (remove)="onRemove($event)"

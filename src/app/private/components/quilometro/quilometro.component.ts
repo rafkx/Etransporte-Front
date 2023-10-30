@@ -6,9 +6,11 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { Quilometro, QuilometroData } from 'src/app/models/quilometro';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
-import { QuilometroService } from './quilometro-service/quilometro.service';
+import { QuilometroService } from '../../services/quilometro-service/quilometro.service';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+import { JWTUser } from 'src/app/models/user';
+import { AuthService } from 'src/app/public/auth-service/auth.service';
 
 @Component({
   selector: 'app-quilometro',
@@ -27,6 +29,7 @@ export class QuilometroComponent implements OnInit {
       hasNextPage: false
     }
   };
+  user: JWTUser;
   pageEvent!: PageEvent;
   queryField = new FormControl();
   queryField2 = new FormControl();
@@ -34,14 +37,25 @@ export class QuilometroComponent implements OnInit {
 
   constructor(
     private quilometroService: QuilometroService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) { }
+  ) {
+    this.user = <JWTUser>this.authService.userValue;
+   }
 
   ngOnInit() {
     this.refresh();
+  }
+
+  get isAdmin() {
+    return this.user?.role === 'admin';
+  }
+
+  get isGerente() {
+    return this.user?.role === 'gerente';
   }
 
   refresh() {

@@ -6,7 +6,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { Funcionario, FuncionarioData } from 'src/app/models/funcionario';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
-import { FuncionarioService } from './funcionario-service/funcionario.service';
+import { FuncionarioService } from '../../services/funcionario-service/funcionario.service';
 import { PageEvent } from '@angular/material/paginator';
 import { FormControl } from '@angular/forms';
 

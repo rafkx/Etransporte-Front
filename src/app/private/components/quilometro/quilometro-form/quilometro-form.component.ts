@@ -5,8 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Quilometro } from 'src/app/models/quilometro';
 import { Veiculo } from 'src/app/models/veiculo';
-import { VeiculoService } from '../../veiculo/veiculo-service/veiculo.service';
-import { QuilometroService } from '../quilometro-service/quilometro.service';
+import { VeiculoService } from '../../../services/veiculo-service/veiculo.service';
+import { QuilometroService } from '../../../services/quilometro-service/quilometro.service';
 import { FileQuilometro } from 'src/app/models/file_quilometro';
 
 @Component({
@@ -20,12 +20,13 @@ export class QuilometroFormComponent implements OnInit {
     id: [''], 
     quantKm: [0, [Validators.required]],
     data: ['', [Validators.required]],
-    veiculo: [{}]
+    veiculo: [{}, [Validators.required]]
   })
 
   veiculos: Veiculo[] | undefined;
-  file: FileQuilometro | undefined;
+  file: FileQuilometro | null | undefined;
   IsDisabled: boolean = true;
+  IsFormDisabled: boolean = false;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -63,11 +64,20 @@ export class QuilometroFormComponent implements OnInit {
     for (let x=0; x < selectedFiles.length; x++) {
       this.file = selectedFiles[0];
     }
+  }
 
+  onDeleteFile() {
+    this.file = null;
+    console.log(this.file);
+  }
+
+  onSaveFile() {
     if (this.file) {
       this.quilometroService.fileUpload(this.file, 'http://localhost:3000/files-quilometro')
-      .subscribe(response => console.log('Upload Concluído'))
+      .subscribe(response => this.snackBar.open('Arquivo adicionado com sucesso!', '', { duration: 2000 }))
       this.onCancel();
+    } else {
+      this.snackBar.open('Sem nenhum arquivo! Selecione um arquivo diferente!', 'X', { duration: 5000 });
     }
   }
 
@@ -78,6 +88,8 @@ export class QuilometroFormComponent implements OnInit {
   private onSuccess() {
     this.snackBar.open('Quilometro cadastrado com sucesso', '', { duration: 2000 });
     this.IsDisabled = false;
+    this.IsFormDisabled = true;
+    this.form.disable();
   }
 
   private onError() {

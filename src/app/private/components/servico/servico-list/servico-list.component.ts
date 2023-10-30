@@ -10,6 +10,8 @@ import { Veiculo } from 'src/app/models/veiculo';
 export class ServicoListComponent implements OnInit {
   
   @Input() servicos!: ServicoData;
+  @Input() isAdmin!: boolean;
+  @Input() isGerente!: boolean;
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);

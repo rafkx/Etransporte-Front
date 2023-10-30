@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
-import { catchError, Observable, of } from 'rxjs';
-import { User } from 'src/app/models/user';
+import { catchError, map, Observable, of } from 'rxjs';
+import { User, UserData } from 'src/app/models/user';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
-import { UserService } from './user-service/user.service';
+import { UserService } from '../../services/user-service/user.service';
+import { FormControl } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +17,18 @@ import { UserService } from './user-service/user.service';
 })
 export class RegisterComponent implements OnInit {
   
-  user$: Observable<any> | undefined;
+  users: UserData = {
+    data: [],
+    meta: {
+      take: 0,
+      itemCount: 0,
+      pageCount: 0,
+      hasPreviousPage: false,
+      hasNextPage: false
+    }
+  };
+  pageEvent!: PageEvent;
+  queryField = new FormControl();
   
   constructor(
     private userService: UserService,
@@ -26,17 +39,38 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user$ = this.userService.getUsers();
+    this.refresh();
   }
 
   refresh() {
-    this.user$ = this.userService.getUsers()
+    this.userService.getUsersPaginated(1, 10)
       .pipe(
+        map((userData: UserData) => this.users = userData),
         catchError(error => {
           this.onError('Error ao carregar users')
           return of([])
         })
       );
+  }
+
+  onPagination(event: PageEvent) {
+    let page = event.pageIndex;
+    let size = event.pageSize;
+    
+    page = page +1;
+    this.userService.getUsersPaginated(page, size).pipe(
+      map((users: UserData) => this.users = users)
+    ).subscribe();
+  }
+
+  onReset() {
+    this.queryField.reset();
+    this.refresh();
+  }
+
+  onSearch() {
+    let value = this.queryField.value ? this.queryField.value : '';
+    this.userService.getFilter(value, 1, 10).subscribe(users => this.users = users);
   }
 
   onError(errorMsg: string) {
@@ -71,6 +105,4 @@ export class RegisterComponent implements OnInit {
     });
   }
   
-  
-
 }

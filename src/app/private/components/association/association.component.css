@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    justify-content: center;
+    margin: 100px;
+    min-width: 350px;
+}
+
+mat-card-title {
+    margin: 10px;
+}
+
+mat-card mat-card-content form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+mat-form-field {
+    width: 100%;
+    min-width: 300px;
+}
+
+.button {
+    margin-right: 0.5cm;
+}
+
+.mat-stepper-horizontal {
+    margin-top: 8px;
+  }
+  
+.mat-mdc-form-field {
+margin-top: 16px;
+}
+
+::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}

@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Veiculo, Veiculo2 } from 'src/app/models/veiculo';
-import { VeiculoService } from '../veiculo-service/veiculo.service';
+import { VeiculoService } from '../../../services/veiculo-service/veiculo.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,10 @@ export class VeiculoResolver implements Resolve<Veiculo | Veiculo2> {
       ano: 0,
       modelo: '',
       marca: '',
-      combustivel: '',
+      combustivel: {
+        id: '',
+        nome: '',
+      },
       ultimaKm: 0,
       corInterna: '',
       corExterna: '',

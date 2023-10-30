@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Servico, ServicoI } from 'src/app/models/servico';
-import { ServicoServiceService } from '../servico-service/servico-service.service';
+import { ServicoServiceService } from '../../../services/servico-service/servico-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +45,10 @@ export class ServicoResolver implements Resolve<Servico | ServicoI> {
         ano: 0,
         modelo: '',
         marca: '',
-        combustivel: '',
+        combustivel: {
+          id: '',
+          nome: '',
+        },
         ultimaKm: 0,
         corInterna: '',
         corExterna: '',

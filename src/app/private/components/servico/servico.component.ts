@@ -6,9 +6,11 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { Servico, ServicoData } from 'src/app/models/servico';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
-import { ServicoServiceService } from './servico-service/servico-service.service';
+import { ServicoServiceService } from '../../services/servico-service/servico-service.service';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+import { JWTUser } from 'src/app/models/user';
+import { AuthService } from 'src/app/public/auth-service/auth.service';
 
 @Component({
   selector: 'app-servico',
@@ -27,19 +29,31 @@ export class ServicoComponent implements OnInit {
       hasNextPage: false
     }
   };
+  user: JWTUser;
   pageEvent!: PageEvent;
   queryField = new FormControl();
 
   constructor(
     private servicoService: ServicoServiceService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) { }
+  ) {
+    this.user = <JWTUser>this.authService.userValue;
+   }
   
   ngOnInit() {
     this.refresh();
+  }
+
+  get isAdmin() {
+    return this.user.role === 'admin';
+  }
+
+  get isGerente() {
+    return this.user.role === 'gerente';
   }
 
   refresh() {

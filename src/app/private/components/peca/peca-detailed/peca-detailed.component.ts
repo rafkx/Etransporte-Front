@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Peca } from 'src/app/models/peca';
-import { PecaService } from '../peca-service/peca.service';
+import { PecaService } from '../../../services/peca-service/peca.service';
 import { FileP } from 'src/app/models/file_peca';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';

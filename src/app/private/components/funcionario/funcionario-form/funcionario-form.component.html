@@ -170,12 +170,26 @@
             </form>
         </mat-card-content>
 
-        <div>
-            <input type="file" [disabled]="IsDisabled" (change)="onFileSelected($event)" multiple>
+        
+        <input type="file" class="file-section" [disabled]="IsDisabled" (change)="onFileSelected($event)" multiple>
+        <div *ngIf="files.length">
+            <span class="file-section">Arquivos Selecionados:</span>
+            <section *ngFor="let file of files; let index = index">
+                <ul>
+                    <li>
+                        {{file.name}}
+                        <button mat-icon-button style="color: #5BC168;" (click)="onDeleteFile(index)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </li>
+                </ul>
+            </section>
         </div>
+        
 
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+            <button mat-raised-button color="primary" (click)="onSubmit()" [hidden]="IsFormDisabled">Salvar</button>
+            <button mat-raided-button color="primary" (click)="onSaveFile()" [hidden]="IsDisabled">Adicionar Arquivos</button>
             <button mat-raised-button (click)="onCancel()">Cancelar</button>
         </mat-card-actions>
     </mat-card-content>

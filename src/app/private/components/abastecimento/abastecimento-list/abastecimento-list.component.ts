@@ -9,6 +9,8 @@ import { Abastecimento, AbastecimentoData } from 'src/app/models/abastecimento';
 export class AbastecimentoListComponent {
 
   @Input() abastecimentos!: AbastecimentoData;
+  @Input() isAdmin!: boolean;
+  @Input() isGerente!: boolean;
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);

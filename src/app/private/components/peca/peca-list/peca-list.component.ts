@@ -9,6 +9,8 @@ import { Peca, PecaData } from 'src/app/models/peca';
 export class PecaListComponent {
 
   @Input() pecas!: PecaData;
+  @Input() isAdmin!: boolean;
+  @Input() isGerente!: boolean;
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);

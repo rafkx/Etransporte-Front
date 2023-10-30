@@ -1,0 +1,45 @@
+<div class="container">
+    <div>
+        <div>
+            <mat-card style="background-color: #5BC168; color: #ffffff;">
+                <mat-card-title>Associação de Veículo e Funcionário</mat-card-title>
+                <mat-card-content>
+                    <mat-stepper #stepper>
+                        <mat-step [stepControl]="firstFormGroup" label="Selecione o funcionário">
+                        <form [formGroup]="firstFormGroup">
+                            <mat-form-field>
+                            <mat-label>Funcionario</mat-label>
+                                <mat-select formControlName="funcionario">
+                                    <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario.id">
+                                    {{funcionario.nomeFun}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div>
+                            <button mat-button matStepperNext (click)="onNext()">Próximo</button>
+                            </div>
+                        </form>
+                        </mat-step>
+                        <mat-step [stepControl]="secondFormGroup" label="Selecione os veículos">
+                        <form [formGroup]="secondFormGroup">
+                            <mat-form-field>
+                                <mat-label>Veiculos</mat-label>
+                                <mat-select formControlName="veiculos" multiple>
+                                    <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo.id">
+                                    {{veiculo.placa}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div>
+                            <button mat-button matStepperPrevious>Voltar</button>
+                            <button mat-button matStepperNext (click)="associate()">Finalizar</button>
+                            <button mat-button (click)="onCancel()">Cancelar</button>
+                            </div>
+                        </form>
+                        </mat-step>
+                    </mat-stepper>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

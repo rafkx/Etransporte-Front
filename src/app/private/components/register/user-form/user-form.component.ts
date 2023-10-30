@@ -4,8 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { Funcionario } from 'src/app/models/funcionario';
-import { FuncionarioService } from '../../funcionario/funcionario-service/funcionario.service';
-import { UserService } from '../user-service/user.service';
+import { FuncionarioService } from '../../../services/funcionario-service/funcionario.service';
+import { UserService } from '../../../services/user-service/user.service';
 
 @Component({
   selector: 'app-user-form',
@@ -18,7 +18,8 @@ export class UserFormComponent implements OnInit {
     name: new FormControl(null, [Validators.required]),
     role: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.email, Validators.required]),
-    password: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$')])
+    password: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$')]),
+    funcionario: new FormControl(null, [Validators.required])
   });
 
   funcionarios: Funcionario[] | undefined;
@@ -39,7 +40,8 @@ export class UserFormComponent implements OnInit {
       name: this.name.value,
       role: this.role.value,
       email: this.email.value,
-      password: this.password.value
+      password: this.password.value,
+      funcionario: this.funcionario.value
     }).pipe(tap(() => this.route.navigateByUrl('/private/user/list')))
     .subscribe({ next: (_result => this.onSucces()), error: (_error => this.onError()) });
 
@@ -75,5 +77,9 @@ export class UserFormComponent implements OnInit {
 
   get password(): FormControl{
     return this.form.get('password') as FormControl;
+  }
+
+  get funcionario(): FormControl{
+    return this.form.get('funcionario') as FormControl;
   }
 }

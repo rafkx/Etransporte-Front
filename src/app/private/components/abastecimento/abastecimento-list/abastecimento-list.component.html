@@ -3,7 +3,7 @@
     <!-- Data Column -->
     <ng-container matColumnDef="data">
         <mat-header-cell *matHeaderCellDef> Data do Abastecimento </mat-header-cell>
-        <mat-cell *matCellDef="let abastecimento"> {{abastecimento.data | date : 'dd/MM/yyyy'}} </mat-cell>
+        <mat-cell *matCellDef="let abastecimento"> {{abastecimento.data | date : "dd/MM/yyyy 'às' hh :mm a"}} </mat-cell>
     </ng-container>
 
     <!-- Veiculo Column -->

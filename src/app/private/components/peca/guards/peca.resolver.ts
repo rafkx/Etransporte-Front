@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Peca, PecaI } from 'src/app/models/peca';
-import { PecaService } from '../peca-service/peca.service';
+import { PecaService } from '../../../services/peca-service/peca.service';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +49,10 @@ export class PecaResolver implements Resolve<Peca | PecaI> {
         ano: 0,
         modelo: '',
         marca: '',
-        combustivel: '',
+        combustivel: {
+          id: '',
+          nome: '',
+        },
         ultimaKm: 0,
         corInterna: '',
         corExterna: '',

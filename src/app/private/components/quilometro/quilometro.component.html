@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-content>
         <mat-toolbar class="primary">Quilometragens Cadastradas</mat-toolbar>
-        <div class="search-container">
+        <div class="search-container" *ngIf="isAdmin || isGerente">
             <mat-icon fontIcon="search"></mat-icon>
             <input type="date" [formControl]="queryField" placeholder="Coloque a data do serviço...">
             <input type="text" [formControl]="queryField2" placeholder="Coloque um texto...">
@@ -14,6 +14,8 @@
         <div class="column-flex mat-elevation-z8">
             <app-quilometro-list *ngIf="quilometros; else loading"
             [quilometros]="quilometros"
+            [isAdmin]="isAdmin"
+            [isGerente]="isGerente"
             (add)="onAdd()"
             (edit)="onEdit($event)"
             (remove)="onRemove($event)"

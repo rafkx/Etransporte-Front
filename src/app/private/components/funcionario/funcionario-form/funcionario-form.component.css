@@ -22,3 +22,13 @@ mat-card {
     margin: 0 12px;
     text-align: left;
 }
+
+.file-section {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: left;
+}
+
+li {
+    text-align: left;
+}

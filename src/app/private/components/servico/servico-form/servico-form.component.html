@@ -23,25 +23,39 @@
                         {{fornecedor.nome}}
                     </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="fornecedor.touched && fornecedor.hasError('required')">Fornecedor é obrigatório</mat-error>
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Veiculo</mat-label>
-                    <mat-select formControlName="veiculo">
+                    <mat-select formControlName="veiculo" multiple>
                     <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo">
                         {{veiculo.placa}}
                     </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="veiculo.touched && veiculo.hasError('required')">Veiculo é obrigatório</mat-error>
                 </mat-form-field>
             </form>
         </mat-card-content>
-
-        <div>
-            <input type="file" [disabled]="IsDisabled" (change)="onFileSelected($event)" multiple>
+        
+        <input type="file" class="file-section" [disabled]="IsDisabled" (change)="onFileSelected($event)" multiple>
+        <div *ngIf="files.length">
+            <span class="file-section">Arquivos Selecionados:</span>
+            <section *ngFor="let file of files; let index = index">
+                <ul>
+                    <li>
+                        {{file.name}}
+                        <button mat-icon-button style="color: #5BC168;" (click)="onDeleteFile(index)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </li>
+                </ul>
+            </section>
         </div>
 
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+            <button mat-raised-button color="primary" (click)="onSubmit()" [hidden]="IsFormDisabled">Salvar</button>
+            <button mat-raised-button color="primary" (click)="onSaveFile()" [hidden]="IsDisabled">Adicionar Arquivo</button>
             <button mat-raised-button (click)="onCancel()">Cancelar</button>
         </mat-card-actions>
     </mat-card-content>

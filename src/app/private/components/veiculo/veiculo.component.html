@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-content>
         <mat-toolbar class="primary">Veículos Cadastrados</mat-toolbar>
-        <div class="search-container">
+        <div class="search-container" *ngIf="isAdmin || isGerente">
             <mat-icon fontIcon="search"></mat-icon>
             <input type="number" [formControl]="queryField2" placeholder="Ano...">
             <input type="text" [formControl]="queryField" placeholder="Digite a placa de algum veículo...">
@@ -14,6 +14,8 @@
         <div class="column-flex mat-elevation-z8">
             <app-veiculo-list *ngIf="veiculos; else loading"
             [veiculos]="veiculos"
+            [isAdmin]="isAdmin"
+            [isGerente]="isGerente"
             (add)="onAdd()"
             (edit)="onEdit($event)"
             (remove)="onRemove($event)"
@@ -34,7 +36,6 @@
                 [showFirstLastButtons]="true">
             </mat-paginator>
         </div>
-
         
     </mat-card-content>
 </mat-card>

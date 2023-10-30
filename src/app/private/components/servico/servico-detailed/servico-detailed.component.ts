@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FileS } from 'src/app/models/file_servico';
 import { Servico } from 'src/app/models/servico';
-import { ServicoServiceService } from '../servico-service/servico-service.service';
+import { ServicoServiceService } from '../../../services/servico-service/servico-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';

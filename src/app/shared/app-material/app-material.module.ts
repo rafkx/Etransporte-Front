@@ -17,6 +17,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatListModule} from '@angular/material/list';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 @NgModule({
@@ -39,6 +41,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatCheckboxModule,
     MatListModule,
     MatPaginatorModule,
+    MatTreeModule,
+    MatStepperModule,
   ]
 })
 export class AppMaterialModule { }

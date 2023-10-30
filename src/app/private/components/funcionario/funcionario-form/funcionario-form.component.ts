@@ -4,7 +4,7 @@ import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Funcionario } from 'src/app/models/funcionario';
-import { FuncionarioService } from '../funcionario-service/funcionario.service';
+import { FuncionarioService } from '../../../services/funcionario-service/funcionario.service';
 import { FileFuncionario } from 'src/app/models/file_funcionario';
 
 @Component({
@@ -43,8 +43,9 @@ export class FuncionarioFormComponent implements OnInit {
     estadoCarteiraTrab: [''],
   });
 
-  files: FileFuncionario[] | undefined;
+  files: FileFuncionario[] = [];
   IsDisabled: boolean = true;
+  IsFormDisabled: boolean = false;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -101,10 +102,16 @@ export class FuncionarioFormComponent implements OnInit {
     for (let x=0; x < selectedFiles.length; x++) {
       this.files.push(selectedFiles[x]);
     }
+  }
 
+  onDeleteFile(index: any) {
+    this.files.splice(index, 1);
+  }
+
+  onSaveFile() {
     if (this.files) {
       this.serviceFuncionario.fileUpload(this.files, 'http://localhost:3000/files-funcionario')
-      .subscribe(response => console.log('Upload Concluído'));
+      .subscribe(response => this.snackBar.open('Arquivo adicionado com sucesso!', '', { duration: 2000 }));
       this.onCancel();
     }
   }
@@ -116,6 +123,8 @@ export class FuncionarioFormComponent implements OnInit {
   private onSuccess() {
     this.snackBar.open('Funcionário Cadastrado com Sucesso', '', { duration: 2000 });
     this.IsDisabled = false;
+    this.IsFormDisabled = true;
+    this.form.disable();
   }
 
   private onError() {

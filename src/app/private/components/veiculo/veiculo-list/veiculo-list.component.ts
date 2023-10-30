@@ -10,6 +10,8 @@ import { Veiculo, VeiculoData } from 'src/app/models/veiculo';
 export class VeiculoListComponent implements OnInit {
   
   @Input() veiculos!: VeiculoData;
+  @Input() isAdmin!: boolean;
+  @Input() isGerente!: boolean;
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);

@@ -1,3 +1,5 @@
+import { Veiculo } from "./veiculo";
+
 export interface Funcionario {
     
     id: string,
@@ -26,6 +28,10 @@ export interface Funcionario {
     numCarteiraTrab?: string;
     serieCarteiraTrab?: string;
     estadoCarteiraTrab?: string;
+}
+
+export interface FuncionarioAssociate {
+    veiculos: Veiculo[];
 }
 
 export interface Funcionario2 {

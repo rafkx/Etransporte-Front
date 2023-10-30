@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-content>
         <mat-toolbar class="primary">Serviços Cadastrados</mat-toolbar>
-        <div class="search-container">
+        <div class="search-container" *ngIf="isAdmin || isGerente">
             <mat-icon fontIcon="search"></mat-icon>
             <input type="text" [formControl]="queryField" placeholder="Digite o nome do fornecedor...">
             <div class="button">
@@ -13,6 +13,8 @@
         <div class="column-flex mat-elevation-z8">
             <app-servico-list *ngIf="servicos; else loading"
             [servicos]="servicos"
+            [isAdmin]="isAdmin"
+            [isGerente]="isGerente"
             (add)="onAdd()"
             (edit)="onEdit($event)"
             (remove)="onRemove($event)"

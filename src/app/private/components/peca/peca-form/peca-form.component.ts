@@ -6,9 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Fornecedor } from 'src/app/models/fornecedor';
 import { Peca } from 'src/app/models/peca';
 import { Veiculo } from 'src/app/models/veiculo';
-import { FornecedorService } from '../../fornecedor/fornecedor-service/fornecedor.service';
-import { VeiculoService } from '../../veiculo/veiculo-service/veiculo.service';
-import { PecaService } from '../peca-service/peca.service';
+import { FornecedorService } from '../../../services/fornecedor-service/fornecedor.service';
+import { VeiculoService } from '../../../services/veiculo-service/veiculo.service';
+import { PecaService } from '../../../services/peca-service/peca.service';
 import { FilePeca } from 'src/app/models/file_peca';
 
 @Component({
@@ -28,17 +28,18 @@ export class PecaFormComponent implements OnInit {
     pequenaPeca: [[{
       id: ''
     }]],
-    fornecedorP: [{}],
+    fornecedorP: [{}, [Validators.required]],
     veiculo: [[{
       id: ''
-    }]]
+    }], [Validators.required]]
   })
 
   pecas: Peca[] | undefined;
   fornecedores: Fornecedor[] | undefined;
   veiculos: Veiculo[] | undefined;
-  files: FilePeca[] | undefined;
+  files: FilePeca[] = [];
   IsDisabled: boolean = true;
+  IsFormDisabled: boolean = false;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -91,12 +92,18 @@ export class PecaFormComponent implements OnInit {
     for (let x=0; x < selectedFiles.length; x++) {
       this.files.push(selectedFiles[x]);
     }
-    
+  }
+
+  onDeleteFile(index: any) {
+    this.files.splice(index, 1);
+  }
+
+  onSaveFile() {
     if (this.files) {
       this.servicePeca.fileUpload(this.files, 'http://localhost:3000/files-peca')
-      .subscribe(response => console.log('Upload Concluído'));
+      .subscribe(response => this.snackBar.open('Arquivo adicionado com sucesso!', '', { duration: 2000 }));
       this.onCancel();
-    }
+    } 
   }
 
   onCancel() {
@@ -106,6 +113,8 @@ export class PecaFormComponent implements OnInit {
   private onSuccess() {
     this.snackBar.open('Peça cadastrada com sucesso', '', { duration: 2000 });
     this.IsDisabled = false;
+    this.IsFormDisabled = true;
+    this.form.disable();
   }
 
   private onError() {

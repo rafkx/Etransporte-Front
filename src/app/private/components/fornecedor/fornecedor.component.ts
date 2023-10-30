@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
-import { FornecedorService } from './fornecedor-service/fornecedor.service';
+import { FornecedorService } from '../../services/fornecedor-service/fornecedor.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -9,6 +9,8 @@ import { Fornecedor, FornecedorData } from 'src/app/models/fornecedor';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { PageEvent } from '@angular/material/paginator';
 import { FormControl } from '@angular/forms';
+import { JWTUser } from 'src/app/models/user';
+import { AuthService } from 'src/app/public/auth-service/auth.service';
 
 @Component({
   selector: 'app-fornecedor',
@@ -27,19 +29,31 @@ export class FornecedorComponent implements OnInit {
       hasNextPage: false
     }
   };
+  user: JWTUser;
   pageEvent!: PageEvent;
   queryField = new FormControl();
 
   constructor(
     private fornecedorService: FornecedorService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-  ) { }
+  ) {
+    this.user = <JWTUser>this.authService.userValue;
+   }
 
   ngOnInit() {
     this.refresh();
+  }
+
+  get isAdmin() {
+    return this.user.role === 'admin';
+  }
+
+  get isGerente() {
+    return this.user.role === 'gerente';
   }
 
   refresh() {

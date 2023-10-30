@@ -7,13 +7,13 @@
 
                 <mat-form-field class="full-width">
                     <mat-label>Quantidade de Km</mat-label>
-                    <input type="number" matInput formControlName="quantKm" />
+                    <input currencyMask matInput formControlName="quantKm" />
                     <mat-error *ngIf="quantKm.touched && quantKm.hasError('required')">Quantidade de Km é obrigatório</mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="full-width">
                     <mat-label>Data</mat-label>
-                    <input type="date" matInput formControlName="data" />
+                    <input type="datetime-local" matInput formControlName="data" />
                     <mat-error *ngIf="data.touched && data.hasError('required')">Data é obrigatório</mat-error>
                 </mat-form-field>
 
@@ -24,17 +24,31 @@
                         {{veiculo.placa}}
                       </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="veiculo.touched && veiculo.hasError('required')">Veiculo é obrigatório</mat-error>
                 </mat-form-field>
 
             </form>
         </mat-card-content>
 
-        <div>
-            <input type="file" [disabled]="IsDisabled" (change)="onFileSelected($event)">
+        
+        <input type="file" [disabled]="IsDisabled" (change)="onFileSelected($event)" class="file-section">
+        <div *ngIf="file">
+            <span class="file-section">Arquivo Selecionado:</span>
+            <ul>
+                <li>
+                    {{file.name}}
+                    <button mat-icon-button style="color: #5BC168;" (click)="onDeleteFile()">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </li>
+            </ul>
         </div>
 
+        
+
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+            <button mat-raised-button color="primary" (click)="onSubmit()" [hidden]="IsFormDisabled">Salvar</button>
+            <button mat-raised-button color="primary" (click)="onSaveFile()" [hidden]="IsDisabled">Adicionar Arquivo</button>
             <button mat-raised-button (click)="onCancel()">Cancelar</button>
         </mat-card-actions>
     </mat-card-content>
