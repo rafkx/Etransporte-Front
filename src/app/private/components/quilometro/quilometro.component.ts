@@ -69,6 +69,10 @@ export class QuilometroComponent implements OnInit {
       ).subscribe();
   }
 
+  goBack() {
+    this.router.navigateByUrl('/private/dashboard')
+  }
+
   onPagination(event: PageEvent) {
     let page = event.pageIndex;
     let size = event.pageSize;

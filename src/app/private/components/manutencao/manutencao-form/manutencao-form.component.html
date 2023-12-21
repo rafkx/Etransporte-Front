@@ -1,0 +1,157 @@
+<div class="button-back">
+    <button mat-fab (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+</div>
+
+<mat-card>
+    <mat-card-content>
+        <mat-toolbar class="primary">Cadastro Manutenção</mat-toolbar>
+
+        <mat-card-content>
+            <form [formGroup]="form">
+
+                <mat-form-field class="full-width">
+                    <mat-label>Descrição Manutenção</mat-label>
+                    <input matInput type="text" formControlName="descricao">
+                    <mat-error *ngIf="descricao.touched && descricao.hasError('required')">Descrição é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Data Manutenção</mat-label>
+                    <input matInput type="date" formControlName="data">
+                    <mat-error *ngIf="data.touched && data.hasError('required')">Data é obrigatório</mat-error>
+                </mat-form-field>
+                
+                <mat-form-field class="full-width" formGroupName="km">
+                    <mat-label>Quilometragem Manutenção</mat-label>
+                    <input type="number" matInput formControlName="quantKm">
+                    <mat-error *ngIf="quantKm.touched && quantKm.hasError('required')">Quilometragem é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Tipagem Manutenção</mat-label>
+                    <mat-select formControlName="tipo">
+                        <mat-option [value]="'preventiva'">Preventiva</mat-option>
+                        <mat-option [value]="'corretiva'">Corretiva</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="tipo.touched && tipo.hasError('required')">Tipagem é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Veiculo</mat-label>
+                    <mat-select formControlName="veiculo">
+                      <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo">
+                        {{veiculo.placa}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="veiculo.touched && veiculo.hasError('required')">Veiculo é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Manutenção com serviço ou peça?</mat-label>
+                    <mat-select [(value)]="selectedValue">
+                        <mat-option [value]="'peca'">Peça</mat-option>
+                        <mat-option [value]="'servico'">Servico</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                
+                <div *ngIf="selectedValue == 'peca'">
+                    <mat-form-field class="full-width" formGroupName="itensPeca">
+                        <mat-label>Descrição Peça</mat-label>
+                        <input matInput type="text" formControlName="descricao">
+                        <mat-error *ngIf="descricaoItem.touched && descricaoItem.hasError('required')">Descrição é obrigatório</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" formGroupName="itensPeca">
+                        <mat-label>Prazo em Km Peça</mat-label>
+                        <input matInput type="number" formControlName="prazoKm">
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" formGroupName="itensPeca">
+                        <mat-label>Prazo em Meses Peça</mat-label>
+                        <input matInput type="number" formControlName="prazoMeses">
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" formGroupName="itensPeca">
+                        <mat-label>Valor Peça</mat-label>
+                        <input matInput type="number" formControlName="valor">
+                        <mat-error *ngIf="valorItem.touched && valorItem.hasError('required')">Valor da Peça é obrigatório</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" formGroupName="itensPeca">
+                        <mat-label>Fornecedor Peça</mat-label>
+                        <mat-select formControlName="fornecedor">
+                          <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor">
+                            {{fornecedor.nome}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="fornecedorItem.touched && fornecedorItem.hasError('required')">Fornecedor é obrigatório</mat-error>
+                    </mat-form-field>
+                    
+                    <mat-form-field class="full-width" formGroupName="itensPeca">
+                        <mat-label>Peça</mat-label>
+                        <mat-select formControlName="peca">
+                          <mat-option *ngFor="let peca of pecas" [value]="peca">
+                            {{peca.codPeca}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="pecaItem.touched && pecaItem.hasError('required')">Peça é obrigatório</mat-error>
+                    </mat-form-field>
+                
+                </div>
+               
+                <div *ngIf="selectedValue == 'servico'">
+                    <mat-form-field class="full-width" formGroupName="itensServico">
+                        <mat-label>Descrição Serviço</mat-label>
+                        <input matInput type="text" formControlName="descricao">
+                        <mat-error *ngIf="descricaoServico.touched && descricaoServico.hasError('required')">Descrição é obrigatório</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" formGroupName="itensServico">
+                        <mat-label>Prazo em Km Serviço</mat-label>
+                        <input matInput type="number" formControlName="prazoKm">
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" formGroupName="itensServico">
+                        <mat-label>Prazo em Meses Serviço</mat-label>
+                        <input matInput type="number" formControlName="prazoMeses">
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" formGroupName="itensServico">
+                        <mat-label>Valor Serviço</mat-label>
+                        <input matInput type="number" formControlName="valor">
+                        <mat-error *ngIf="valorServico.touched && valorServico.hasError('required')">Valor do Serviço é obrigatório</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" formGroupName="itensServico">
+                        <mat-label>Fornecedor Serviço</mat-label>
+                        <mat-select formControlName="fornecedor">
+                          <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor">
+                            {{fornecedor.nome}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="fornecedorServico.touched && fornecedorServico.hasError('required')">Fornecedor é obrigatório</mat-error>
+                    </mat-form-field>
+                    
+                    <mat-form-field class="full-width" formGroupName="itensServico">
+                        <mat-label>Serviço</mat-label>
+                        <mat-select formControlName="servico">
+                          <mat-option *ngFor="let servico of servicos" [value]="servico">
+                            {{servico.cod}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="servicoServico.touched && servicoServico.hasError('required')">Fornecedor é obrigatório</mat-error>
+                    </mat-form-field>
+                </div>
+
+            </form>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+            <button mat-raised-button (click)="onCancel()">Cancelar</button>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>

@@ -74,6 +74,10 @@ export class DashboardComponent {
     }
 
     public goToAssociation() {
-      this.router.navigateByUrl('/private/associate');
+      this.router.navigateByUrl('/private/associate/list');
+    }
+
+    public goToManutencao() {
+      this.router.navigateByUrl('/private/manutencao');
     }
 }

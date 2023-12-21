@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Fornecedor } from 'src/app/models/fornecedor';
 
 @Component({
@@ -12,10 +12,15 @@ export class FornecedorDetailedComponent implements OnInit {
   fornecedor!: Fornecedor;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.fornecedor = this.route.snapshot.data['fornecedor'];
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/fornecedor')
   }
 }

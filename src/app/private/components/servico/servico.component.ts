@@ -56,6 +56,10 @@ export class ServicoComponent implements OnInit {
     return this.user.role === 'gerente';
   }
 
+  goBack() {
+    this.router.navigateByUrl('/private/dashboard')
+  }
+
   refresh() {
     this.servicoService.getServicosPaginated(1, 10)
     .pipe(

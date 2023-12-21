@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Quilometro } from 'src/app/models/quilometro';
 import { Veiculo } from 'src/app/models/veiculo';
 import { VeiculoService } from '../../../services/veiculo-service/veiculo.service';
@@ -35,6 +35,7 @@ export class QuilometroFormComponent implements OnInit {
     private snackBar: MatSnackBar,
     private location: Location,
     private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -83,6 +84,10 @@ export class QuilometroFormComponent implements OnInit {
 
   onCancel() {
     this.location.back()
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/quilometro')
   }
 
   private onSuccess() {

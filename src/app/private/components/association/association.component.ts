@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Veiculo } from 'src/app/models/veiculo';
 import { Funcionario } from 'src/app/models/funcionario';
+import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-association',
@@ -20,7 +21,7 @@ export class AssociationComponent implements OnInit {
     funcionario: new FormControl({}, Validators.required),
   });
   secondFormGroup = this.formBuilder.group({
-    veiculos: new FormControl([], [Validators.required])
+    veiculo: new FormControl({}, [Validators.required])
   });
   veiculos: Veiculo[] = [];
   funcionarios: Funcionario[] = [];
@@ -36,34 +37,35 @@ export class AssociationComponent implements OnInit {
 
   ngOnInit() {
     this.funcionarioService.getFuncionarios().subscribe(funcionarios => this.funcionarios = funcionarios);
+    this.veiculoService.getVeiculos().subscribe(veiculos => this.veiculos = veiculos);
   }
 
   associate() {
-    this.funcionarioService.associate(
-      this.getFuncionario.value,
-      {veiculos: this.getVeiculos.value})
-      .subscribe({ next: (_result => this.onSuccess()), error: (_error => this.onError()) })
-  }
-
-  onNext() {
-    this.veiculoService.getVeiculosAvailable(this.getFuncionario.value).subscribe(veiculos => this.veiculos = veiculos);
+    this.veiculoService.autorizarVeiculo({
+      funcionario: this.getFuncionario.value,
+      veiculo: this.getVeiculo.value
+      })
+      .subscribe({ next: (_result => this.onSuccess()), error: (_error => this.onError(_error)) })
   }
 
   onCancel() {
-    this.route.navigateByUrl('/private/dashboard');
+    this.route.navigateByUrl('/private/associate/list');
   }
 
   private onSuccess() {
     this.snackBar.open('Associação feita com sucesso', '', { duration: 2000 });
-    this.onCancel();
+    this.route.navigateByUrl('/private/associate/list');
   }
 
-  private onError() {
-    this.snackBar.open('Erro ao associar veículo e funcionário', '', { duration: 5000 });
+  private onError(errorMsg: string) {
+    this.dialog.open(ErrorDialogComponent, {
+      data: errorMsg
+    });
+    //this.snackBar.open('Erro ao associar veículo e funcionário', '', { duration: 5000 });
   }
 
-  get getVeiculos(): FormControl {
-    return this.secondFormGroup.get('veiculos') as FormControl;
+  get getVeiculo(): FormControl {
+    return this.secondFormGroup.get('veiculo') as FormControl;
   }
 
   get getFuncionario(): FormControl {

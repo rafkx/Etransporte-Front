@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Veiculo } from 'src/app/models/veiculo';
 import { VeiculoService } from '../../../services/veiculo-service/veiculo.service';
 import { FileV } from 'src/app/models/file_veiculo';
@@ -24,11 +24,16 @@ export class VeiculoDetailedComponent implements OnInit {
     private veiculoService: VeiculoService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.veiculo = this.route.snapshot.data['veiculo'];
     this.veiculoService.getFiles(this.veiculo?.id).subscribe(files => this.files = files);
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/veiculo')
   }
 
   onError (errorMsg: string) {

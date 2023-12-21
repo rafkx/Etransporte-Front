@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Peca } from 'src/app/models/peca';
 import { PecaService } from '../../../services/peca-service/peca.service';
 import { FileP } from 'src/app/models/file_peca';
@@ -23,11 +23,16 @@ export class PecaDetailedComponent implements OnInit {
     private pecaService: PecaService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private router: Router
   ) { }
   
   ngOnInit() {
     this.peca = this.route.snapshot.data['peca'];
     this.pecaService.getFiles(this.peca.id).subscribe(files => this.files = files);
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/peca')
   }
 
   onError (errorMsg: string) {

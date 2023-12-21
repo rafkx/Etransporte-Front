@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Veiculo } from 'src/app/models/veiculo';
 import { VeiculoService } from '../../../services/veiculo-service/veiculo.service';
 import { FileVeiculo } from 'src/app/models/file_veiculo';
@@ -58,6 +58,7 @@ export class VeiculoFormComponent implements OnInit{
     private snackBar: MatSnackBar,
     private location: Location,
     private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -72,10 +73,7 @@ export class VeiculoFormComponent implements OnInit{
       ano: veiculo.ano,
       modelo: veiculo.modelo,
       marca: veiculo.marca,
-      combustivel: {
-        id: veiculo.combustivel.id,
-        nome: veiculo.combustivel.nome,
-      },
+      combustivel: veiculo.combustivel,
       ultimaKm: veiculo.ultimaKm,
       corInterna: veiculo.corInterna,
       corExterna: veiculo.corExterna,
@@ -123,6 +121,10 @@ export class VeiculoFormComponent implements OnInit{
 
   onCancel() {
     this.location.back();
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/veiculo')
   }
 
   private onSucces() {

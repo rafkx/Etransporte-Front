@@ -1,3 +1,9 @@
+<div class="button-back">
+    <button mat-fab (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+</div>
+
 <mat-card>
     <mat-card-content class="primary">
         
@@ -5,8 +11,7 @@
             <div *ngIf="servico; else loading">
                 <h1> {{ servico.cod }} </h1>
                 <p> <b>Descrição:</b> {{ servico.descricao }} </p>
-                <p> <b>Fornecedor:</b> {{ servico.fornecedor.nome }} </p>
-                <p> <b>Veiculo:</b> {{ servico.veiculo[0].placa }} </p>
+                <p> <b>Fornecedor:</b> {{ servico.fornecedor[0].nome }} </p>
             </div>
 
             <ng-template #loading>

@@ -30,10 +30,6 @@ export interface Funcionario {
     estadoCarteiraTrab?: string;
 }
 
-export interface FuncionarioAssociate {
-    veiculos: Veiculo[];
-}
-
 export interface Funcionario2 {
     
     nomeFun: string;  

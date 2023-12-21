@@ -1,6 +1,12 @@
 <div class="container">
     <div>
         <div>
+            <div class="button-back">
+                <button mat-fab (click)="onCancel()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </div>
+            
             <mat-card style="background-color: #5BC168; color: #ffffff;">
                 <mat-card-title>Associação de Veículo e Funcionário</mat-card-title>
                 <mat-card-content>
@@ -10,13 +16,13 @@
                             <mat-form-field>
                             <mat-label>Funcionario</mat-label>
                                 <mat-select formControlName="funcionario">
-                                    <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario.id">
+                                    <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario">
                                     {{funcionario.nomeFun}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <div>
-                            <button mat-button matStepperNext (click)="onNext()">Próximo</button>
+                            <button mat-button matStepperNext>Próximo</button>
                             </div>
                         </form>
                         </mat-step>
@@ -24,8 +30,8 @@
                         <form [formGroup]="secondFormGroup">
                             <mat-form-field>
                                 <mat-label>Veiculos</mat-label>
-                                <mat-select formControlName="veiculos" multiple>
-                                    <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo.id">
+                                <mat-select formControlName="veiculo">
+                                    <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo">
                                     {{veiculo.placa}}
                                     </mat-option>
                                 </mat-select>

@@ -34,10 +34,14 @@ import { AbastecimentoDetailedComponent } from './components/abastecimento/abast
 import { Role } from '../models/role';
 import { UserEditComponent } from './components/register/user-edit/user-edit.component';
 import { AssociationComponent } from './components/association/association.component';
+import { ListComponent } from './components/association/list/list.component';
+import { ManutencaoComponent } from './components/manutencao/manutencao.component';
+import { ManutencaoFormComponent } from './components/manutencao/manutencao-form/manutencao-form.component';
+import { ManutencaoResolver } from './components/manutencao/guards/manutencao.resolver';
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent, data: { roles: [Role.Admin, Role.User]} },
+  { path: 'dashboard', component: DashboardComponent, data: { roles: [Role.Admin, Role.User, Role.Gerente]} },
   { path: 'funcionario', component: FuncionarioComponent, data: { roles: [Role.Admin]} },
   { path: 'funcionario/new', component: FuncionarioFormComponent, resolve: { funcionario: FuncionarioResolver }, data: { roles: [Role.Admin]} },
   { path: 'funcionario/:id', component: FuncionarioFormComponent, resolve: { funcionario: FuncionarioResolver }, data: { roles: [Role.Admin]} },
@@ -69,7 +73,11 @@ const routes: Routes = [
   { path: 'abastecimento/new', component: AbastecimentoFormComponent, resolve: { abastecimento: AbastecimentoResolver }, data: { roles: [Role.Admin, Role.User, Role.Gerente]} },
   { path: 'abastecimento/:id', component: AbastecimentoFormComponent, resolve: { abastecimento: AbastecimentoResolver }, data: { roles: [Role.Admin, Role.User, Role.Gerente]} },
   { path: 'abastecimento/detailed/:id', component: AbastecimentoDetailedComponent, resolve: { abastecimento: AbastecimentoResolver }, data: { roles: [Role.Admin, Role.User, Role.Gerente]} },
+  { path: 'associate/list', component: ListComponent, data: { roles: [Role.Admin, Role.Gerente] } },
   { path: 'associate', component: AssociationComponent, data: { roles: [Role.Admin, Role.Gerente] } },
+  { path: 'manutencao', component: ManutencaoComponent, data: { roles: [Role.Admin, Role.Gerente] } },
+  { path: 'manutencao/new', component: ManutencaoFormComponent, resolve: { manutencao: ManutencaoResolver }, data: { roles: [Role.Admin, Role.Gerente] } },
+  { path: 'manutencao/:id', component: ManutencaoFormComponent, resolve: { manutencao: ManutencaoResolver }, data: { roles: [Role.Admin, Role.Gerente] } },
 ];
 
 @NgModule({

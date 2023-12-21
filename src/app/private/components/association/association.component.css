@@ -35,3 +35,14 @@ margin-top: 16px;
 ::ng-deep .mat-horizontal-stepper-header{
     pointer-events: none !important;
 }
+
+.button-back {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: left;
+}
+
+.button-back button{
+    background-color: #5BC168;
+    color: #ffffff;
+}

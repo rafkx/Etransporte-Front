@@ -1,3 +1,9 @@
+<div class="button-back">
+    <button mat-fab (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+</div>
+
 <mat-card>
     <mat-card-content>
         <mat-toolbar class="primary">Cadastro Serviço</mat-toolbar>
@@ -19,7 +25,7 @@
                 <mat-form-field>
                     <mat-label>Fornecedor</mat-label>
                     <mat-select formControlName="fornecedor">
-                    <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor.id">
+                    <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor">
                         {{fornecedor.nome}}
                     </mat-option>
                     </mat-select>
@@ -28,7 +34,7 @@
 
                 <mat-form-field>
                     <mat-label>Veiculo</mat-label>
-                    <mat-select formControlName="veiculo" multiple>
+                    <mat-select formControlName="veiculo">
                     <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo">
                         {{veiculo.placa}}
                     </mat-option>
@@ -56,7 +62,8 @@
         <mat-card-actions>
             <button mat-raised-button color="primary" (click)="onSubmit()" [hidden]="IsFormDisabled">Salvar</button>
             <button mat-raised-button color="primary" (click)="onSaveFile()" [hidden]="IsDisabled">Adicionar Arquivo</button>
-            <button mat-raised-button (click)="onCancel()">Cancelar</button>
+            <button mat-raised-button (click)="onCancel()" [hidden]="IsDisabled">Finalizar</button>
+            <button mat-raised-button (click)="onCancel()" [hidden]="IsFormDisabled">Cancelar</button>
         </mat-card-actions>
     </mat-card-content>
 </mat-card>

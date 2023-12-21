@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FileQ } from 'src/app/models/file_quilometro';
 import { Quilometro } from 'src/app/models/quilometro';
 import { QuilometroService } from '../../../services/quilometro-service/quilometro.service';
@@ -20,6 +20,7 @@ export class QuilometroDetailedComponent implements OnInit {
     private kmService: QuilometroService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private router: Router
   ) { }
 
   quilometro!: Quilometro;
@@ -28,6 +29,10 @@ export class QuilometroDetailedComponent implements OnInit {
   ngOnInit() {
     this.quilometro = this.route.snapshot.data['quilometro'];
     this.kmService.getFiles(this.quilometro.id).subscribe(files => this.files = files);
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/quilometro')
   }
 
   onError (errorMsg: string) {

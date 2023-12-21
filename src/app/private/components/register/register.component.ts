@@ -42,6 +42,10 @@ export class RegisterComponent implements OnInit {
     this.refresh();
   }
 
+  goBack() {
+    this.router.navigateByUrl('/private/dashboard')
+  }
+
   refresh() {
     this.userService.getUsersPaginated(1, 10)
       .pipe(
@@ -50,7 +54,8 @@ export class RegisterComponent implements OnInit {
           this.onError('Error ao carregar users')
           return of([])
         })
-      );
+      ).subscribe();
+      console.log(this.users)
   }
 
   onPagination(event: PageEvent) {

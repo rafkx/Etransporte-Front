@@ -1,0 +1,42 @@
+<div class="button-back">
+    <button mat-fab (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+</div>
+
+<mat-card>
+    <mat-card-content>
+        <mat-toolbar class="primary">Manutenções Cadastradas</mat-toolbar>
+        <div class="search-container">
+            <mat-icon fontIcon="search"></mat-icon>
+            <input type="date" [formControl]="queryField" placeholder="Data da manutenção">
+            <div class="button">
+                <button (click)="onSearch()">Pesquisar</button>
+                <button (click)="onReset()">Limpar</button>
+            </div>
+        </div>
+
+        <div class="column-flex mat-elevation-z8">
+            <app-manutencao-list *ngIf="manutencoes; else loading"
+            [manutencoes]="manutencoes"
+            (add)="onAdd()"
+            (edit)="onEdit($event)"
+            (remove)="onRemove($event)"
+            ></app-manutencao-list>
+
+            <ng-template #loading>
+                <div class="loading-spinner">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </ng-template>
+
+            <mat-paginator 
+                [length]="manutencoes.meta.itemCount" 
+                [pageSize]="manutencoes.meta.take" 
+                [pageSizeOptions]="[5,10,25,100]"
+                (page)="pageEvent = $event; onPagination($event)"
+                [showFirstLastButtons]="true">
+            </mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

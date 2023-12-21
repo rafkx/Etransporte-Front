@@ -22,7 +22,7 @@ export class ServicoResolver implements Resolve<Servico | ServicoI> {
     return of ({
       descricao: '',
       cod: '',
-      fornecedor: {
+      fornecedor: [{
         id: '',
         nome: '',
         cnpj: '',
@@ -35,7 +35,7 @@ export class ServicoResolver implements Resolve<Servico | ServicoI> {
           telefone: '',
           email: '',
         }],
-      },
+      }],
       veiculo: [{
         id: '',
         placa: '',

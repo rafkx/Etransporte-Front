@@ -56,6 +56,10 @@ export class PecaComponent implements OnInit {
     return this.user.role === 'gerente';
   }
 
+  goBack() {
+    this.router.navigateByUrl('/private/dashboard')
+  }
+
   refresh() {
     this.pecaService.getPecasPaginated(1, 10)
       .pipe(

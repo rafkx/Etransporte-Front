@@ -24,3 +24,14 @@ mat-form-field {
     display: flex;
     justify-content: flex-end;
 }
+
+.button-back {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: left;
+}
+
+.button-back button{
+    background-color: #5BC168;
+    color: #ffffff;
+}

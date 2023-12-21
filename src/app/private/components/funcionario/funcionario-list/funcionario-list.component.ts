@@ -9,6 +9,7 @@ import { Funcionario, FuncionarioData } from 'src/app/models/funcionario';
 export class FuncionarioListComponent {
 
   @Input() funcionarios!: FuncionarioData;
+  @Input() isAdmin!: boolean;
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
   @Output() remove = new EventEmitter(false);

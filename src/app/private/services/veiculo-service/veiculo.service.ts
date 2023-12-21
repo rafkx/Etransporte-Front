@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { delay, first, Observable, pipe, tap } from 'rxjs';
+import { AutorizacaoVeiculo } from 'src/app/models/autorizacao-veiculo';
 import { FileVeiculo } from 'src/app/models/file_veiculo';
 import { Veiculo, VeiculoData } from 'src/app/models/veiculo';
 
@@ -36,12 +37,17 @@ export class VeiculoService {
     return this.http.delete(`http://localhost:3000/files-veiculo/${fileName}`).pipe(first());
   }
 
-  public getVeiculos(): Observable<any> {
-    return this.http.get('http://localhost:3000/veiculo').pipe(first());
+  public autorizarVeiculo(autorizacao: AutorizacaoVeiculo) {
+    console.log(autorizacao);
+    return this.http.post('http://localhost:3000/veiculo/autorizacao', autorizacao).pipe(first());
   }
 
-  public getVeiculosAvailable(id: string): Observable<any> {
-    return this.http.get(`http://localhost:3000/veiculo/available/${id}`).pipe(first());
+  public getAutorizacoes(): Observable<any> {
+    return this.http.get('http://localhost:3000/veiculo/autorizacao').pipe(first());
+  }
+
+  public getVeiculos(): Observable<any> {
+    return this.http.get('http://localhost:3000/veiculo').pipe(first());
   }
 
   public getVeiculosPaginated(page: number, take: number): Observable<any> {

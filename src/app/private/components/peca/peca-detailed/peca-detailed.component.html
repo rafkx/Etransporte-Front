@@ -1,3 +1,9 @@
+<div class="button-back">
+    <button mat-fab (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+</div>
+
 <mat-card>
     <mat-card-content class="primary">
 
@@ -9,8 +15,6 @@
                 <p><b>Marca do Fabricante:</b> {{ peca.marcaFabricante }} </p>
                 <p><b>Modelo:</b> {{ peca.modelo }} </p>
                 <p><b>Peça Pequena:</b> <!-- {{ peca.pequenaPeca[0].nomePeca }} --></p>
-                <p><b>Fornecedor:</b> {{ peca.fornecedorP.nome }} </p>
-                <p><b>Veiculo:</b> {{ peca.veiculo[0].placa }} </p>
             </div>
 
             <ng-template #loading>

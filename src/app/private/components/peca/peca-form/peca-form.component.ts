@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Fornecedor } from 'src/app/models/fornecedor';
 import { Peca } from 'src/app/models/peca';
 import { Veiculo } from 'src/app/models/veiculo';
@@ -49,6 +49,7 @@ export class PecaFormComponent implements OnInit {
     private snackBar: MatSnackBar,
     private location: Location,
     private route: ActivatedRoute,
+    private router: Router
   ) { }
   
   ngOnInit() {
@@ -108,6 +109,10 @@ export class PecaFormComponent implements OnInit {
 
   onCancel() {
     this.location.back();
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/peca')
   }
 
   private onSuccess() {

@@ -49,7 +49,7 @@ export class AbastecimentoService {
 
   public getFilter(data: string, text: string, page: number, take: number): Observable<any> {
     let params = new HttpParams();
-    params = params.append('ano', data);
+    params = params.append('data', data);
     params = params.append('text', text);
     params = params.append('page', String(page));
     params = params.append('take', String(take));

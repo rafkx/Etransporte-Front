@@ -1,0 +1,35 @@
+<div class="button-back">
+    <button mat-fab (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+</div>
+
+<mat-card>
+    <mat-card-content>
+        <mat-toolbar class="primary">Veículos Autorizados</mat-toolbar>
+
+        <div class="demo-button-container">
+            <button mat-raised-button (click)="onAdd()" class="demo-button">
+              Nova Autorização
+            </button>
+        </div>
+
+        <div class="column-flex mat-elevation-z8">
+            <mat-table [dataSource]="autorizacoes">
+    
+                <ng-container matColumnDef="funcionario">
+                <mat-header-cell *matHeaderCellDef> Funcionario </mat-header-cell>
+                <mat-cell *matCellDef="let autorizacao"> {{autorizacao.funcionario.nomeFun}} </mat-cell>
+                </ng-container>
+                
+                <ng-container matColumnDef="veiculo">
+                <mat-header-cell *matHeaderCellDef> Veiculo </mat-header-cell>
+                <mat-cell *matCellDef="let autorizacao"> {{autorizacao.veiculo.placa}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </mat-card-content>
+</mat-card>

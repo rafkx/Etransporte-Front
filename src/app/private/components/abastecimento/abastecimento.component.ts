@@ -88,6 +88,10 @@ export class AbastecimentoComponent implements OnInit {
     });
   }
 
+  goBack() {
+    this.router.navigateByUrl('/private/dashboard')
+  }
+
   get isAdmin() {
     return this.user?.role === 'admin';
   }

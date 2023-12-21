@@ -39,6 +39,12 @@ import { ServicoDetailedComponent } from './components/servico/servico-detailed/
 import { UserEditComponent } from './components/register/user-edit/user-edit.component';
 import { AssociationComponent } from './components/association/association.component';
 import { CurrencyMaskConfig, CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
+import { ListComponent } from './components/association/list/list.component';
+import { ManutencaoComponent } from './components/manutencao/manutencao.component';
+import { ManutencaoFormComponent } from './components/manutencao/manutencao-form/manutencao-form.component';
+import { ManutencaoListComponent } from './components/manutencao/manutencao-list/manutencao-list.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 export const customCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'left',
@@ -86,13 +92,17 @@ export const customCurrencyMaskConfig: CurrencyMaskConfig = {
     ServicoDetailedComponent,
     UserEditComponent,
     AssociationComponent,
+    ListComponent,
+    ManutencaoComponent,
+    ManutencaoFormComponent,
+    ManutencaoListComponent,
   ],
   imports: [
     CommonModule,
     PrivateRoutingModule,
     SharedModule,
     ReactiveFormsModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
   ],
   providers: [
     { provide: CURRENCY_MASK_CONFIG, useValue: customCurrencyMaskConfig }

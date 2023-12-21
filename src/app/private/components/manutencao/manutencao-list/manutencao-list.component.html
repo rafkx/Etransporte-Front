@@ -1,0 +1,47 @@
+<mat-table [dataSource]="manutencoes.data">
+    <!-- Data Column -->
+    <ng-container matColumnDef="data">
+        <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
+        <mat-cell *matCellDef="let manutencao"> {{manutencao.data | date : "dd/MM/yyyy"}} </mat-cell>
+        </ng-container>
+
+    <!-- Descricao Column -->
+    <ng-container matColumnDef="descricao">
+        <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+        <mat-cell *matCellDef="let manutencao"> {{manutencao.descricao}} </mat-cell>
+        </ng-container>
+    
+    <!-- Tipo Column -->
+    <ng-container matColumnDef="tipo">
+        <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
+        <mat-cell *matCellDef="let manutencao"> {{manutencao.tipo}} </mat-cell>
+        </ng-container>
+    
+    <!-- Veiculo Column -->
+    <ng-container matColumnDef="veiculo">
+        <mat-header-cell *matHeaderCellDef> Veículo </mat-header-cell>
+        <mat-cell *matCellDef="let manutencao"> {{manutencao.veiculo.placa}} </mat-cell>
+        </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="action-column">
+            <button mat-mini-fab color="primary" aria-label="Adicionar veiculo" (click)="onAdd()">
+                <mat-icon fontIcon="add">add</mat-icon>
+            </button>
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let manutencao" class="action-column">
+            <button mat-icon-button style="color: #5BC168;" aria-label="Editar veiculo" (click)="onEdit(manutencao)">
+                <mat-icon fontIcon="edit"></mat-icon>
+            </button>
+
+            <button mat-icon-button style="color: #5BC168;" aria-label="Remover veiculo" (click)="onDelete(manutencao)">
+                <mat-icon fontIcon="delete"></mat-icon>
+            </button>
+        </mat-cell>        
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

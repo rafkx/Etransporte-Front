@@ -18,12 +18,6 @@
     <mat-cell *matCellDef="let peca"> {{peca.descricao}} </mat-cell>
     </ng-container>
 
-    <!-- Fornecedor Column -->
-    <ng-container matColumnDef="fornecedor">
-        <mat-header-cell *matHeaderCellDef> Fornecedor </mat-header-cell>
-        <mat-cell *matCellDef="let peca"> {{peca.fornecedorP.nome}} </mat-cell>
-        </ng-container>
-
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef class="action-column">

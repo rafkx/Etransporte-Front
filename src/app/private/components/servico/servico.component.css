@@ -36,3 +36,13 @@ mat-card {
   .button {
     margin-left: 1em;
   }
+
+  .button-back {
+    margin-top: 0.5cm;
+    margin-left: 4cm;
+}
+
+.button-back button{
+    background-color: #5BC168;
+    color: #ffffff;
+}

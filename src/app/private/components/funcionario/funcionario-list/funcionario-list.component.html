@@ -14,21 +14,21 @@
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef class="action-column">
-            <button mat-mini-fab color="primary" aria-label="Adicionar funcionario" (click)="onAdd()">
+            <button mat-mini-fab color="primary" aria-label="Adicionar funcionario" (click)="onAdd()" *ngIf="isAdmin">
                 <mat-icon fontIcon="add"></mat-icon>
             </button>
         </mat-header-cell>
 
         <mat-cell *matCellDef="let funcionario" class="action-column">
-            <button mat-icon-button style="color: #5BC168;" aria-label="Editar funcionario" (click)="onEdit(funcionario)">
+            <button mat-icon-button style="color: #5BC168;" aria-label="Editar funcionario" (click)="onEdit(funcionario)" *ngIf="isAdmin">
                 <mat-icon fontIcon="edit"></mat-icon>
             </button>
 
-            <button mat-icon-button style="color: #5BC168;" aria-label="Remover funcionario" (click)="onDelete(funcionario)">
+            <button mat-icon-button style="color: #5BC168;" aria-label="Remover funcionario" (click)="onDelete(funcionario)" *ngIf="isAdmin">
                 <mat-icon fontIcon="delete"></mat-icon>
             </button>
 
-            <button mat-icon-button style="color: #5BC168;" aria-label="Detalhar funcionario" (click)="onClick(funcionario)">
+            <button mat-icon-button style="color: #5BC168;" aria-label="Detalhar funcionario" (click)="onClick(funcionario)" *ngIf="isAdmin">
                 <mat-icon>person</mat-icon>
             </button>
         </mat-cell>

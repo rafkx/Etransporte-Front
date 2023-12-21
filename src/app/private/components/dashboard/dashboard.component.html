@@ -5,7 +5,7 @@
         <button mat-menu-item [matMenuTriggerFor]="financeiro">Financeiro</button>
         <button mat-menu-item [matMenuTriggerFor]="estoque">Estoque</button>
         <button mat-menu-item [matMenuTriggerFor]="rastreamento">Rastreamento</button>
-        <button mat-menu-item [matMenuTriggerFor]="config">Configurações</button>
+        <button mat-menu-item *ngIf="isAdmin || isGerente" [matMenuTriggerFor]="config">Configurações</button>
     </mat-menu>
     
     <mat-menu #frotas="matMenu">
@@ -14,10 +14,11 @@
         <button mat-menu-item (click)="goToAbastecimento()">Abastecimento</button>
         <button mat-menu-item (click)="goToServico()">Serviço</button>
         <button mat-menu-item (click)="goToPeca()">Peça</button>
+        <button mat-menu-item *ngIf="isAdmin || isGerente" (click)="goToManutencao()">Manutenção</button>
     </mat-menu>
 
     <mat-menu #financeiro="matMenu">
-        <button mat-menu-item *ngIf="isAdmin" (click)="goToFuncionario()">Funcionário</button>
+        <button mat-menu-item *ngIf="isAdmin || isGerente" (click)="goToFuncionario()">Funcionário</button>
         <button mat-menu-item (click)="goToFornecedor()">Fornecedor</button>
     </mat-menu>
 
@@ -30,7 +31,7 @@
     </mat-menu>
 
     <mat-menu #config="matMenu">
-        <button mat-menu-item *ngIf="isAdmin || isGerente" (click)="goToAssociation()">Autorização</button>
+        <button mat-menu-item (click)="goToAssociation()">Autorização</button>
         <button mat-menu-item *ngIf="isAdmin" (click)="goToAutentication()">Autenticação</button>
     </mat-menu>
 

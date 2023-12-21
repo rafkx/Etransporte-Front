@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { FornecedorService } from '../../../services/fornecedor-service/fornecedor.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Contato } from 'src/app/models/contato';
 import { ContatoService } from '../../../services/contato-service/contato.service';
@@ -35,6 +35,7 @@ export class FornecedorFormComponent implements OnInit {
     private snackBar: MatSnackBar,
     private location: Location,
     private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -74,6 +75,10 @@ export class FornecedorFormComponent implements OnInit {
 
   onCancel() {
     this.location.back();
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/fornecedor')
   }
 
   private onSuccess() {

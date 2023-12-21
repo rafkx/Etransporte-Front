@@ -97,6 +97,10 @@ export class VeiculoComponent implements OnInit{
     });
   }
 
+  goBack() {
+    this.router.navigateByUrl('/private/dashboard')
+  }
+
   onAdd() {
     this.router.navigate(['new'], { relativeTo: this.route });
   }

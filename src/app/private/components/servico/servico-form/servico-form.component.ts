@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Fornecedor } from 'src/app/models/fornecedor';
 import { Servico } from 'src/app/models/servico';
 import { Veiculo } from 'src/app/models/veiculo';
@@ -22,7 +22,9 @@ export class ServicoFormComponent implements OnInit {
     id: [''],
     descricao: ['', [Validators.required]],
     cod: ['', [Validators.required]],
-    fornecedor: [{}, [Validators.required]],
+    fornecedor: [[{
+      id: ''
+    }], [Validators.required]],
     veiculo: [[{
       id: ''
     }], [Validators.required]]
@@ -41,7 +43,8 @@ export class ServicoFormComponent implements OnInit {
     private serviceFornecedor: FornecedorService,
     private snackBar: MatSnackBar,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -62,7 +65,7 @@ export class ServicoFormComponent implements OnInit {
       id: this.id.value,
       descricao: this.descricao.value,
       cod: this.cod.value,
-      fornecedor: this.fornecedor.value,
+      fornecedor: [this.fornecedor.value],
       veiculo: [this.veiculo.value]
     })
     .subscribe({ next: (_result => this.onSuccess()), error: (_error => this.onError()) });
@@ -92,6 +95,10 @@ export class ServicoFormComponent implements OnInit {
 
   onCancel() {
     this.location.back();
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/servico')
   }
 
   private onSuccess() {

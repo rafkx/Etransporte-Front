@@ -9,6 +9,8 @@ import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/err
 import { FuncionarioService } from '../../services/funcionario-service/funcionario.service';
 import { PageEvent } from '@angular/material/paginator';
 import { FormControl } from '@angular/forms';
+import { JWTUser } from 'src/app/models/user';
+import { AuthService } from 'src/app/public/auth-service/auth.service';
 
 
 @Component({
@@ -28,16 +30,24 @@ export class FuncionarioComponent implements OnInit {
       hasNextPage: false
     }
   };
+  user: JWTUser;
   pageEvent!: PageEvent;
   queryField = new FormControl();
 
   constructor(
     private funcionarioService: FuncionarioService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-  ) { }
+  ) { 
+    this.user = <JWTUser>this.authService.userValue;
+  }
+
+  get isAdmin() {
+    return this.user?.role === 'admin';
+  }
 
   ngOnInit() {
     this.refresh();
@@ -78,6 +88,10 @@ export class FuncionarioComponent implements OnInit {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg
     });
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/dashboard')
   }
 
   onAdd() {

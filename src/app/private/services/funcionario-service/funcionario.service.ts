@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { delay, first, Observable, tap } from 'rxjs';
 import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
-import { Funcionario, FuncionarioAssociate } from 'src/app/models/funcionario';
 import { FileFuncionario } from 'src/app/models/file_funcionario';
+import { Funcionario } from 'src/app/models/funcionario';
 
 @Injectable({
   providedIn: 'root'
@@ -74,10 +74,6 @@ export class FuncionarioService {
 
   private update (funcionario: Partial<Funcionario>){
     return this.http.patch<Funcionario>(`http://localhost:3000/funcionario/${funcionario.id}`, funcionario).pipe(first());
-  }
-
-  public associate(id: string, funcionario: FuncionarioAssociate) {
-    return this.http.patch<FuncionarioAssociate>(`http://localhost:3000/funcionario/association/${id}`, funcionario).pipe(first());
   }
 
   public remove(id: string) {

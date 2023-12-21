@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Abastecimento } from 'src/app/models/abastecimento';
 import { FileA } from 'src/app/models/file_abastecimento';
 import { AbastecimentoService } from '../../../services/abastecimento-service/abastecimento.service';
@@ -23,6 +23,7 @@ export class AbastecimentoDetailedComponent implements OnInit {
     private abastecimentoService: AbastecimentoService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -34,6 +35,10 @@ export class AbastecimentoDetailedComponent implements OnInit {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg
     });
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/abastecimento')
   }
 
   onDownload (file: FileA) {

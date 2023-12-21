@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Funcionario } from 'src/app/models/funcionario';
 import { FuncionarioService } from '../../../services/funcionario-service/funcionario.service';
 import { FileFuncionario } from 'src/app/models/file_funcionario';
@@ -53,6 +53,7 @@ export class FuncionarioFormComponent implements OnInit {
     private snackBar: MatSnackBar,
     private location: Location,
     private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   
@@ -118,6 +119,10 @@ export class FuncionarioFormComponent implements OnInit {
 
   onCancel() {
     this.location.back();
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/funcionario')
   }
 
   private onSuccess() {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FileS } from 'src/app/models/file_servico';
 import { Servico } from 'src/app/models/servico';
 import { ServicoServiceService } from '../../../services/servico-service/servico-service.service';
@@ -23,11 +23,16 @@ export class ServicoDetailedComponent implements OnInit {
     private servicoService: ServicoServiceService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private router: Router
   ) { }
   
   ngOnInit() {
     this.servico = this.route.snapshot.data['servico'];
     this.servicoService.getFiles(this.servico?.id).subscribe(files => this.files = files);
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/servico')
   }
 
   onError (errorMsg: string) {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Funcionario } from 'src/app/models/funcionario';
 import { FuncionarioService } from '../../../services/funcionario-service/funcionario.service';
@@ -24,11 +24,16 @@ export class FuncionarioDetailedComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit() {
      this.funcionario = this.route.snapshot.data['funcionario'];
      this.serviceFuncionario.getFiles(this.funcionario.id).subscribe(files => this.files = files);
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/private/funcionario')
   }
 
   onError (errorMsg: string) {

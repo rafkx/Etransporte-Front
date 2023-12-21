@@ -1,6 +1,12 @@
 <div class="container">
     <div>
         <div>
+            <div class="button-back">
+                <button mat-fab (click)="goBack()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </div>
+            
             <mat-card style="background-color: #5BC168; color: #ffffff" >
                 <mat-card-title>Autenticar</mat-card-title>
                 <mat-card-content >
@@ -25,7 +31,7 @@
                             <mat-label>Qual é o papel do usuário?</mat-label>
                             <mat-select formControlName="role">
                                 <mat-option value="user">Funcionário</mat-option>
-                                <mat-option value="admin">administrador</mat-option>
+                                <mat-option value="admin">Administrador</mat-option>
                                 <mat-option value="gerente">Gerente</mat-option>
                             </mat-select>
                             <mat-error *ngIf="role.touched && role.hasError('required')">É obrigatório</mat-error>

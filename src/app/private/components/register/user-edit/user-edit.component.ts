@@ -41,6 +41,10 @@ export class UserEditComponent implements OnInit {
     this.route.navigateByUrl('/private/dashboard');
   }
 
+  goBack() {
+    this.route.navigateByUrl('/private/dashboard')
+  }
+
   private onSucces() {
     this.snackBar.open('Senha alterada com sucesso!', '', {
       duration: 5000,

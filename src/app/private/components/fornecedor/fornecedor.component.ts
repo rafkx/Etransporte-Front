@@ -56,6 +56,10 @@ export class FornecedorComponent implements OnInit {
     return this.user.role === 'gerente';
   }
 
+  goBack() {
+    this.router.navigateByUrl('/private/dashboard')
+  }
+
   refresh() {
     this.fornecedorService.getFornecedoresPaginated(1, 10)
     .pipe(

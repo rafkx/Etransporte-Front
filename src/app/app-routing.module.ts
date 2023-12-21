@@ -5,14 +5,6 @@ import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'public' },
-  /*{
-    path: 'funcionario',
-    loadChildren: () => import('./funcionario/funcionario.module').then(m => m.FuncionarioModule)
-  },
-  {
-    path: 'veiculo',
-    loadChildren: () => import('./veiculo/veiculo.module').then(m => m.VeiculoModule)
-  },*/
   {
     path: 'private',
     canActivate: [AuthGuard],

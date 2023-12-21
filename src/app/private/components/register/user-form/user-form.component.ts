@@ -35,6 +35,10 @@ export class UserFormComponent implements OnInit {
     this.funcionarioService.getFuncionarios().subscribe(funcionarios => this.funcionarios = funcionarios);
   }
 
+  goBack() {
+    this.route.navigateByUrl('/private/dashboard')
+  }
+
   register() {
     this.userService.create({
       name: this.name.value,
