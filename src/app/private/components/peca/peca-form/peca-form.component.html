@@ -53,7 +53,7 @@
                 <mat-form-field class="full-width">
                     <mat-label>Fornecedor da Peça</mat-label>
                     <mat-select formControlName="fornecedorP">
-                      <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor.id">
+                      <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor">
                         {{fornecedor.nome}}
                       </mat-option>
                     </mat-select>
@@ -62,7 +62,7 @@
 
                 <mat-form-field class="full-width">
                     <mat-label>Veiculo</mat-label>
-                    <mat-select formControlName="veiculo" multiple>
+                    <mat-select formControlName="veiculo">
                       <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo">
                         {{veiculo.placa}}
                       </mat-option>
