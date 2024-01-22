@@ -38,6 +38,8 @@ import { ListComponent } from './components/association/list/list.component';
 import { ManutencaoComponent } from './components/manutencao/manutencao.component';
 import { ManutencaoFormComponent } from './components/manutencao/manutencao-form/manutencao-form.component';
 import { ManutencaoResolver } from './components/manutencao/guards/manutencao.resolver';
+import { ManutencaoEditComponent } from './components/manutencao/manutencao-edit/manutencao-edit.component';
+import { ProfileImageComponent } from './components/funcionario/profile-image/profile-image.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -77,7 +79,8 @@ const routes: Routes = [
   { path: 'associate', component: AssociationComponent, data: { roles: [Role.Admin, Role.Gerente] } },
   { path: 'manutencao', component: ManutencaoComponent, data: { roles: [Role.Admin, Role.Gerente] } },
   { path: 'manutencao/new', component: ManutencaoFormComponent, resolve: { manutencao: ManutencaoResolver }, data: { roles: [Role.Admin, Role.Gerente] } },
-  { path: 'manutencao/:id', component: ManutencaoFormComponent, resolve: { manutencao: ManutencaoResolver }, data: { roles: [Role.Admin, Role.Gerente] } },
+  { path: 'manutencao/:id', component: ManutencaoEditComponent, resolve: { manutencao: ManutencaoResolver }, data: { roles: [Role.Admin, Role.Gerente] } },
+  { path: 'photo', component: ProfileImageComponent },
 ];
 
 @NgModule({

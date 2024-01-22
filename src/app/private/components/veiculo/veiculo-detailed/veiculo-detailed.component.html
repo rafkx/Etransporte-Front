@@ -7,8 +7,13 @@
 <mat-card>
     <mat-card-content class="primary">
 
+       
+        <button mat-stroked-button (click)="openDialog()">Selecionar Foto de Perfil</button>
+        
+
         <div>
             <div *ngIf="veiculo; else loading">
+                <img [src]="veiculo.fotoCarro">
                 <h1>{{ veiculo.placa }}</h1>
                 <p> <b>Renavam:</b> {{ veiculo.renavam }}</p>
                 <p> <b>Chassi:</b> {{ veiculo.chassi }}</p>

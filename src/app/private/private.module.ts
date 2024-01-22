@@ -45,6 +45,10 @@ import { ManutencaoFormComponent } from './components/manutencao/manutencao-form
 import { ManutencaoListComponent } from './components/manutencao/manutencao-list/manutencao-list.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ManutencaoEditComponent } from './components/manutencao/manutencao-edit/manutencao-edit.component';
+import { ProfileImageComponent } from './components/funcionario/profile-image/profile-image.component';
+import { ProfileImageCarComponent } from './components/veiculo/profile-image-car/profile-image-car.component';
+import { ProfileImagePecaComponent } from './components/peca/profile-image-peca/profile-image-peca.component';
 
 export const customCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'left',
@@ -96,6 +100,10 @@ export const customCurrencyMaskConfig: CurrencyMaskConfig = {
     ManutencaoComponent,
     ManutencaoFormComponent,
     ManutencaoListComponent,
+    ManutencaoEditComponent,
+    ProfileImageComponent,
+    ProfileImageCarComponent,
+    ProfileImagePecaComponent,
   ],
   imports: [
     CommonModule,

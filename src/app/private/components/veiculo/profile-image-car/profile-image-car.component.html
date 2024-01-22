@@ -1,0 +1,12 @@
+<mat-card style="background-color: #5BC168; color: #ffffff;" >
+    <mat-card-title>Escolha uma imagem</mat-card-title>
+    <mat-card-content>
+        <input type="file" (change)="onFileChange($event)">
+        <img *ngIf="selectedImage" [src]="imagePath" accept="image/*" alt="Foto de Perfil">
+
+        <div class="button">
+            <button mat-raised-button (click)="closeDialog()">Salvar</button>
+        </div>
+       
+    </mat-card-content>
+</mat-card>

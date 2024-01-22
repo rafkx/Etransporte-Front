@@ -7,8 +7,11 @@
 <mat-card>
     <mat-card-content class="primary">
 
+        <button mat-stroked-button (click)="openDialog()">Selecionar Foto de Perfil</button>
+
         <div>
             <div *ngIf="peca; else loading">
+                <img [src]="peca.fotoPeca">
                 <h1> {{ peca.nomePeca }} </h1>
                 <p><b>Código:</b> {{ peca.codPeca }} </p>
                 <p><b>Descrição:</b> {{ peca.descricao }} </p>

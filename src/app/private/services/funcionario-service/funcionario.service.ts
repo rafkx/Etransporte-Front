@@ -36,6 +36,12 @@ export class FuncionarioService {
     return this.http.delete(`http://localhost:3000/files-funcionario/${fileName}`).pipe(first());
   }
 
+  public addPhoto(photo: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('photo', photo);
+    return this.http.post('http://localhost:3000/funcionario/photo', formData);
+  }
+
   public getFuncionarios(): Observable<any>{
     return this.http.get('http://localhost:3000/funcionario').pipe(first());
   }

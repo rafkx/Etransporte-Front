@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { ProfileImagePecaComponent } from '../profile-image-peca/profile-image-peca.component';
 
 @Component({
   selector: 'app-peca-detailed',
@@ -17,6 +18,8 @@ export class PecaDetailedComponent implements OnInit {
 
   peca!: Peca;
   files: FileP[] | undefined;
+  httpClient: any;
+  imageUrl: string | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,6 +32,16 @@ export class PecaDetailedComponent implements OnInit {
   ngOnInit() {
     this.peca = this.route.snapshot.data['peca'];
     this.pecaService.getFiles(this.peca.id).subscribe(files => this.files = files);
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(ProfileImagePecaComponent);
+
+    dialogRef.afterClosed().subscribe(selectedImage => {
+      if (selectedImage) {
+        this.pecaService.addPhoto(this.peca.id, selectedImage). subscribe(() => console.log('Sucesso!'))
+      }
+    });
   }
 
   goBack() {

@@ -28,6 +28,7 @@ export interface Funcionario {
     numCarteiraTrab?: string;
     serieCarteiraTrab?: string;
     estadoCarteiraTrab?: string;
+    fotoPerfil?: string;
 }
 
 export interface Funcionario2 {

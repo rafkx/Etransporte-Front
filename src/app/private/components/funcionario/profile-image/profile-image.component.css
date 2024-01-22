@@ -1,0 +1,46 @@
+img { 
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    margin: 100px;
+    min-width: 350px;
+}
+
+mat-card-title {
+    margin: 10px;
+}
+
+mat-card mat-card-content form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+mat-form-field {
+    width: 100%;
+    min-width: 300px;
+}
+
+.button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button-back {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: left;
+}
+
+.button-back button{
+    background-color: #5BC168;
+    color: #ffffff;
+}

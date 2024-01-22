@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, first } from 'rxjs';
-import { Manutencao } from 'src/app/models/manutencao';
+import { Manutencao, ManutencaoI } from 'src/app/models/manutencao';
 
 @Injectable({
   providedIn: 'root'
@@ -36,19 +36,12 @@ export class ManutencaoService {
     return this.http.get<Manutencao>(`http://localhost:3000/manutencao/${id}`);
   }
 
-  public save (manutencao: Partial<Manutencao>) {
-    if (manutencao.id) {
-      return this.update(manutencao);
-    } 
-    return this.create(manutencao);
-  }
-
-  private create (manutencao: Partial<Manutencao>) {
+  public create (manutencao: Partial<ManutencaoI>) {
     console.log(manutencao);
-    return this.http.post<Manutencao>('http://localhost:3000/manutencao', manutencao).pipe(first());
+    return this.http.post<ManutencaoI>('http://localhost:3000/manutencao', manutencao).pipe(first());
   }
 
-  private update (manutencao: Partial<Manutencao>) {
+  public update (manutencao: Partial<Manutencao>) {
     return this.http.patch<Manutencao>(`http://localhost:3000/manutencao/${manutencao.id}`, manutencao).pipe(first());
   }
 

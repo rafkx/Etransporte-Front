@@ -36,6 +36,13 @@ export class PecaService {
     return this.http.delete(`http://localhost:3000/files-peca/${fileName}`).pipe(first());
   }
 
+  public addPhoto(id: string, photo: File) {
+    console.log(photo);
+    const formData2 = new FormData();
+    formData2.append('photo', photo);
+    return this.http.post(`http://localhost:3000/pecas/photo/${id}`, formData2);
+  }
+
   public getPecas(): Observable<any> {
     return this.http.get('http://localhost:3000/pecas').pipe(first());
   }

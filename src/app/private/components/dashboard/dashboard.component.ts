@@ -80,4 +80,8 @@ export class DashboardComponent {
     public goToManutencao() {
       this.router.navigateByUrl('/private/manutencao');
     }
+
+    public goToPhoto() {
+      this.router.navigateByUrl('/private/photo');
+    }
 }

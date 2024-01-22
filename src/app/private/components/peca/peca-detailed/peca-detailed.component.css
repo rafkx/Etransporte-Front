@@ -31,3 +31,12 @@ mat-card {
     background-color: #5BC168;
     color: #ffffff;
 }
+
+img { 
+  width: 100px; 
+  height: 100px; 
+  border-radius: 50%;
+  display: flex;
+  justify-content: left;
+  margin-top: 10px;
+}

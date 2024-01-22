@@ -26,6 +26,7 @@ export interface Veiculo {
     nomeVendedor: string;
     teleVendedor: string;
     descricao: string;
+    fotoCarro?: string;
 }
 
 export interface Veiculo2 {

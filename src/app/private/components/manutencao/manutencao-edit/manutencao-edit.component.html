@@ -1,0 +1,58 @@
+<div class="button-back">
+    <button mat-fab (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+</div>
+
+<mat-card>
+    <mat-card-content>
+        <mat-toolbar class="primary">Cadastro Manutenção</mat-toolbar>
+
+        <mat-card-content>
+            <form [formGroup]="form">
+
+                <mat-form-field class="full-width">
+                    <mat-label>Descrição Manutenção</mat-label>
+                    <input matInput type="text" formControlName="descricao">
+                    <mat-error *ngIf="descricao.touched && descricao.hasError('required')">Descrição é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Data Manutenção</mat-label>
+                    <input matInput type="date" formControlName="data">
+                    <mat-error *ngIf="data.touched && data.hasError('required')">Data é obrigatório</mat-error>
+                </mat-form-field>
+                
+                <mat-form-field class="full-width" formGroupName="km">
+                    <mat-label>Quilometragem Manutenção</mat-label>
+                    <input type="number" matInput formControlName="quantKm">
+                    <mat-error *ngIf="quantKm.touched && quantKm.hasError('required')">Quilometragem é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Tipagem Manutenção</mat-label>
+                    <mat-select formControlName="tipo">
+                        <mat-option [value]="'preventiva'">Preventiva</mat-option>
+                        <mat-option [value]="'corretiva'">Corretiva</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="tipo.touched && tipo.hasError('required')">Tipagem é obrigatório</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Veiculo</mat-label>
+                    <mat-select formControlName="veiculo">
+                      <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo">
+                        {{veiculo.placa}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="veiculo.touched && veiculo.hasError('required')">Selecione o veiculo da manutenção</mat-error>
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!form.valid">Salvar</button>
+            <button mat-raised-button (click)="onCancel()">Cancelar</button>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>

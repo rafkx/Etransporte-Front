@@ -41,6 +41,7 @@
     <button mat-raised-button [matMenuTriggerFor]="usuario"> <span style="text-transform: uppercase;"> {{ user.name }} </span> </button>
 
     <mat-menu #usuario="matMenu" xPosition="before">
+        <button mat-menu-item (click)="goToPhoto()"> <mat-icon>account_box</mat-icon> Alterar Foto</button> 
         <button mat-menu-item (click)="goToEditPassword()"> <mat-icon>edit</mat-icon> Alterar Senha</button> 
         <button mat-menu-item (click)="logOut()"> <mat-icon>logout</mat-icon> Sair</button>
     </mat-menu>

@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Veiculo } from 'src/app/models/veiculo';
 import { VeiculoService } from '../../../services/veiculo-service/veiculo.service';
-import { FileV } from 'src/app/models/file_veiculo';
+import { FileV, FileVeiculo } from 'src/app/models/file_veiculo';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
+import { ProfileImageCarComponent } from '../profile-image-car/profile-image-car.component';
 
 @Component({
   selector: 'app-veiculo-detailed',
@@ -30,6 +31,17 @@ export class VeiculoDetailedComponent implements OnInit {
   ngOnInit() {
     this.veiculo = this.route.snapshot.data['veiculo'];
     this.veiculoService.getFiles(this.veiculo?.id).subscribe(files => this.files = files);
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(ProfileImageCarComponent);
+
+    dialogRef.afterClosed().subscribe(selectedImage => {
+      if (selectedImage) {
+        console.log(selectedImage);
+        this.veiculoService.addPhoto(this.veiculo.id, selectedImage).subscribe(() => console.log('Sucesso!'));
+      }
+    })
   }
 
   goBack() {

@@ -2,7 +2,7 @@ import { HttpClient, HttpParams, HttpRequest, HttpResponse } from '@angular/comm
 import { Injectable } from '@angular/core';
 import { delay, first, Observable, pipe, tap } from 'rxjs';
 import { AutorizacaoVeiculo } from 'src/app/models/autorizacao-veiculo';
-import { FileVeiculo } from 'src/app/models/file_veiculo';
+import { FileV, FileVeiculo } from 'src/app/models/file_veiculo';
 import { Veiculo, VeiculoData } from 'src/app/models/veiculo';
 
 @Injectable({
@@ -27,7 +27,6 @@ export class VeiculoService {
   public getFiles(id: string): Observable<any> {
     return this.http.get(`http://localhost:3000/files-veiculo/${id}`);
   }
-
   public downloadFile(fileName: string) {
     return this.http.get(`http://localhost:3000/files-veiculo/download/${fileName}`, 
     { observe: 'response', responseType: 'blob' });
@@ -35,6 +34,14 @@ export class VeiculoService {
 
   public removeFile(fileName: string) {
     return this.http.delete(`http://localhost:3000/files-veiculo/${fileName}`).pipe(first());
+  }
+
+  public addPhoto(id: string, photo: File) {
+    console.log(photo);
+    const formData2 = new FormData();
+    formData2.append('photo', photo);
+    console.log(formData2);
+    return this.http.post(`http://localhost:3000/veiculo/photo/${id}`, formData2);
   }
 
   public autorizarVeiculo(autorizacao: AutorizacaoVeiculo) {

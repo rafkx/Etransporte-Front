@@ -14,12 +14,12 @@ import { ServicoServiceService } from 'src/app/private/services/servico-service/
 import { VeiculoService } from 'src/app/private/services/veiculo-service/veiculo.service';
 
 @Component({
-  selector: 'app-manutencao-form',
-  templateUrl: './manutencao-form.component.html',
-  styleUrls: ['./manutencao-form.component.css']
+  selector: 'app-manutencao-edit',
+  templateUrl: './manutencao-edit.component.html',
+  styleUrls: ['./manutencao-edit.component.css']
 })
-export class ManutencaoFormComponent implements OnInit {
-
+export class ManutencaoEditComponent implements OnInit {
+  
   form = this.formBuilder.group({
     id: [''],
     descricao: ['', [Validators.required]],
@@ -31,73 +31,56 @@ export class ManutencaoFormComponent implements OnInit {
       veiculo: [{}]
     }),
     tipo: ['', [Validators.required]],
-    veiculo: [{}, [Validators.required]],
-    itensPeca: this.formBuilder.array([]),
-    itensServico: this.formBuilder.array([]),
+    veiculo: [{}, [Validators.required]]
   });
 
-  formPeca(): FormGroup {
-    return this.formBuilder.group({
-      descricao: ['', [Validators.required]],
-      prazoKm: [0],
-      prazoMeses: [0],
-      valor: [0, [Validators.required]],
-      fornecedor: [{}, [Validators.required]],
-      peca: [{}, [Validators.required]],
-    });
-  }
-
-  formServico(): FormGroup {
-    return this.formBuilder.group({
-      descricao: ['', [Validators.required]],
-      prazoKm: [0],
-      prazoMeses: [0],
-      valor: [0, [Validators.required]],
-      fornecedor: [{}, [Validators.required]],
-      servico: [{}, [Validators.required]],
-    });
-  }
-
-  selectedValue: string = '';
   veiculos: Veiculo[] = [];
-  fornecedores: Fornecedor[] = [];
-  pecas: Peca[] = [];
-  servicos: Servico[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
-    private manutencaoService: ManutencaoService,
+    private route: ActivatedRoute,
+    private servico: ManutencaoService,
     private veiculoService: VeiculoService,
     private fornecedorService: FornecedorService,
     private pecaService: PecaService,
     private servicoService: ServicoServiceService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private route: ActivatedRoute,
   ) { }
-
+  
   ngOnInit(): void {
     this.veiculoService.getVeiculos().subscribe(veiculos => this.veiculos = veiculos);
-    this.fornecedorService.getFornecedores().subscribe(fornecedores => this.fornecedores = fornecedores);
-    this.pecaService.getPecas().subscribe(pecas => this.pecas = pecas);
-    this.servicoService.getServicos().subscribe(servicos => this.servicos = servicos);
+    const manutencao: Manutencao = this.route.snapshot.data['manutencao'];
+    this.form.patchValue({
+      id: manutencao.id,
+      descricao: manutencao.descricao,
+      data: manutencao.data,
+      km: {
+        id: manutencao.km.id,
+        quantKm: manutencao.km.quantKm,
+        data: manutencao.km.data,
+        veiculo: manutencao.km.veiculo,
+      },
+      tipo: manutencao.tipo,
+      veiculo: manutencao.veiculo
+    })
   }
 
   onSubmit() {
-    this.manutencaoService.create({
+    this.servico.update({
+      id: this.id.value,
       descricao: this.descricao.value,
       data: this.data.value,
       km: {
+        id: this.kmId.value,
         quantKm: this.quantKm.value,
         data: this.data.value,
-        veiculo: this.veiculo.value,
+        veiculo: this.veiculo.value
       },
       tipo: this.tipo.value,
-      veiculo: this.veiculo.value,
-      itensPeca: this.itensPeca.value,
-      itensServico: this.itensServico.value
+      veiculo: this.veiculo.value
     })
-    .subscribe({ next: (_result => this.onSucces()), error: (_error => this.onError()) });
+    .subscribe({ next: (_result => this.onSucces()), error: (_error => this.onError()) })
   }
 
   onCancel() {
@@ -108,16 +91,8 @@ export class ManutencaoFormComponent implements OnInit {
     this.router.navigateByUrl('/private/manutencao')
   }
 
-  addPeca() {
-    this.itensPeca.push(this.formPeca());
-  }
-
-  addServico() {
-    this.itensServico.push(this.formServico());
-  }
-
   private onSucces() {
-    this.snackBar.open('Manutenção cadastrada com sucesso', '', { duration: 2000 });
+    this.snackBar.open('Manutenção atualizada com sucesso', '', { duration: 2000 });
     this.onCancel();
   }
 
@@ -154,22 +129,4 @@ export class ManutencaoFormComponent implements OnInit {
     return this.km.get('quantKm') as FormControl;
   }
 
-  get itensPeca(): FormArray {
-    return this.form.get('itensPeca') as FormArray;
-  }
-
-  get itensServico(): FormArray {
-    return this.form.get('itensServico') as FormArray;
-  }
-
-  getErrorMessage (fieldName: string) {
-    const field = this.form.get(fieldName);
-
-    if (field?.hasError('required')) {
-      return 'Campo obrigatório';
-    }
-
-    return 'Campo inválido';
-  }
-  
 }

@@ -12,6 +12,7 @@ export interface Peca {
     pequenaPeca?: Peca[];
     fornecedorP: Fornecedor;
     veiculo: Veiculo[];
+    fotoPeca?: string;
 
 }
 
