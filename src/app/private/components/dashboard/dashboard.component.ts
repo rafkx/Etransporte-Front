@@ -1,87 +1,137 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Role } from 'src/app/models/role';
 import { JWTUser, User } from 'src/app/models/user';
 import { AuthService } from 'src/app/public/auth-service/auth.service';
+import { FuncionarioService } from '../../services/funcionario-service/funcionario.service';
+import { Funcionario } from 'src/app/models/funcionario';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent {
-    user: JWTUser;
-    IsDisabled: boolean = true;
-    
-    constructor(
-        private router: Router,
-        private AuthService: AuthService,
-    ) { 
-      this.user = <JWTUser>this.AuthService.userValue;
-      console.log(this.user);
-    }
+export class DashboardComponent implements OnInit {
+  user: JWTUser;
+  funcionario!: Funcionario;
+  IsDisabled: boolean = true;
+  isImageLoading: boolean | undefined;
 
-    get isAdmin() {
-      return this.user?.role === 'admin';
-    }
+  constructor(
+    private router: Router,
+    private AuthService: AuthService,
+    private funcionarioService: FuncionarioService
+  ) {
+    this.user = <JWTUser>this.AuthService.userValue;
+    console.log(this.user);
+  }
+  ngOnInit() {
+    this.funcionarioService.loadById(this.user.funcionario).subscribe(
+      (data: any) => {
+        this.funcionario = data;
+        this.getImageFromService();
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
 
-    get isUser() {
-      return this.user?.role === 'user';
-    }
+  get isAdmin() {
+    return this.user?.role === 'admin';
+  }
 
-    get isGerente() {
-      return this.user.role === 'gerente';
-    }
+  get isUser() {
+    return this.user?.role === 'user';
+  }
 
-    public logOut() {
-      this.AuthService.logout();
-    }
+  get isGerente() {
+    return this.user.role === 'gerente';
+  }
 
-    public goToFuncionario() {
-    this.router.navigateByUrl('/private/funcionario')
+  getImageFromService() {
+    this.isImageLoading = true;
+    console.log(this.funcionario);
+    if (!this.funcionario.fotoPerfil) {
+      this.goToPhoto();
+    } else {
+      this.funcionarioService.getPhoto().subscribe(
+        (data) => {
+          console.log(data);
+          this.createImageFromBlob(data);
+          this.isImageLoading = false;
+        },
+        (error) => {
+          this.isImageLoading = false;
+        }
+      );
     }
+  }
 
-    public goToVeiculo() {
-    this.router.navigateByUrl('/private/veiculo')
-    }
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.funcionario.fotoPerfil = reader.result;
+      },
+      false
+    );
 
-    public goToAutentication() {
-    this.router.navigateByUrl('/private/user')
+    if (image) {
+      reader.readAsDataURL(image);
     }
+  }
 
-    public goToServico() {
-    this.router.navigateByUrl('/private/servico')
-    }
+  public logOut() {
+    this.AuthService.logout();
+  }
 
-    public goToPeca() {
-    this.router.navigateByUrl('/private/peca')
-    }
+  public goToFuncionario() {
+    this.router.navigateByUrl('/private/funcionario');
+  }
 
-    public goToQuilometro() {
-      this.router.navigateByUrl('/private/quilometro')
-    }
+  public goToVeiculo() {
+    this.router.navigateByUrl('/private/veiculo');
+  }
 
-    public goToAbastecimento() {
-      this.router.navigateByUrl('/private/abastecimento')
-    }
+  public goToAutentication() {
+    this.router.navigateByUrl('/private/user');
+  }
 
-    public goToFornecedor() {
-      this.router.navigateByUrl('/private/fornecedor')
-    }
+  public goToServico() {
+    this.router.navigateByUrl('/private/servico');
+  }
 
-    public goToEditPassword() {
-      this.router.navigateByUrl('/private/passwordChange')
-    }
+  public goToPeca() {
+    this.router.navigateByUrl('/private/peca');
+  }
 
-    public goToAssociation() {
-      this.router.navigateByUrl('/private/associate/list');
-    }
+  public goToQuilometro() {
+    this.router.navigateByUrl('/private/quilometro');
+  }
 
-    public goToManutencao() {
-      this.router.navigateByUrl('/private/manutencao');
-    }
+  public goToAbastecimento() {
+    this.router.navigateByUrl('/private/abastecimento');
+  }
 
-    public goToPhoto() {
-      this.router.navigateByUrl('/private/photo');
-    }
+  public goToFornecedor() {
+    this.router.navigateByUrl('/private/fornecedor');
+  }
+
+  public goToEditPassword() {
+    this.router.navigateByUrl('/private/passwordChange');
+  }
+
+  public goToAssociation() {
+    this.router.navigateByUrl('/private/associate/list');
+  }
+
+  public goToManutencao() {
+    this.router.navigateByUrl('/private/manutencao');
+  }
+
+  public goToPhoto() {
+    this.router.navigateByUrl('/private/photo');
+  }
 }

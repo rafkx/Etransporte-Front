@@ -13,13 +13,13 @@ import { ProfileImageCarComponent } from '../profile-image-car/profile-image-car
 @Component({
   selector: 'app-veiculo-detailed',
   templateUrl: './veiculo-detailed.component.html',
-  styleUrls: ['./veiculo-detailed.component.css']
+  styleUrls: ['./veiculo-detailed.component.css'],
 })
 export class VeiculoDetailedComponent implements OnInit {
-
   veiculo!: Veiculo;
   files: FileV[] | undefined;
-  
+  isImageLoading: boolean | undefined;
+
   constructor(
     private route: ActivatedRoute,
     private veiculoService: VeiculoService,
@@ -30,32 +30,70 @@ export class VeiculoDetailedComponent implements OnInit {
 
   ngOnInit() {
     this.veiculo = this.route.snapshot.data['veiculo'];
-    this.veiculoService.getFiles(this.veiculo?.id).subscribe(files => this.files = files);
+    this.veiculoService
+      .getFiles(this.veiculo?.id)
+      .subscribe((files) => (this.files = files));
+    this.getImageFromService();
+  }
+
+  getImageFromService() {
+    this.isImageLoading = true;
+    if (!this.veiculo.fotoCarro) {
+      this.openDialog();
+    } else {
+      this.veiculoService.getPhoto(this.veiculo.id).subscribe(
+        (data) => {
+          console.log(data);
+          this.createImageFromBlob(data);
+          this.isImageLoading = false;
+        },
+        (error) => {
+          this.isImageLoading = false;
+          console.log(error);
+        }
+      );
+    }
+  }
+
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.veiculo.fotoCarro = reader.result;
+      },
+      false
+    );
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
   }
 
   openDialog() {
     const dialogRef = this.dialog.open(ProfileImageCarComponent);
 
-    dialogRef.afterClosed().subscribe(selectedImage => {
+    dialogRef.afterClosed().subscribe((selectedImage) => {
       if (selectedImage) {
-        console.log(selectedImage);
-        this.veiculoService.addPhoto(this.veiculo.id, selectedImage).subscribe(() => console.log('Sucesso!'));
+        this.veiculoService
+          .addPhoto(this.veiculo.id, selectedImage)
+          .subscribe(() => console.log('Sucesso!'));
       }
-    })
-  }
-
-  goBack() {
-    this.router.navigateByUrl('/private/veiculo')
-  }
-
-  onError (errorMsg: string) {
-    this.dialog.open(ErrorDialogComponent, {
-      data: errorMsg
     });
   }
 
-  onDownload (file: FileV) {
-    this.veiculoService.downloadFile(file.fileName).subscribe(response => {
+  goBack() {
+    this.router.navigateByUrl('/private/veiculo');
+  }
+
+  onError(errorMsg: string) {
+    this.dialog.open(ErrorDialogComponent, {
+      data: errorMsg,
+    });
+  }
+
+  onDownload(file: FileV) {
+    this.veiculoService.downloadFile(file.fileName).subscribe((response) => {
       let fileName = file.fileName;
       let blob: Blob = response.body as Blob;
       let a = document.createElement('a');
@@ -69,7 +107,7 @@ export class VeiculoDetailedComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: `Tem certeza que deseja remover o arquivo ${file.fileName}?`,
     });
-    
+
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.veiculoService.removeFile(file.fileName).subscribe(
@@ -79,12 +117,11 @@ export class VeiculoDetailedComponent implements OnInit {
               duration: 5000,
               verticalPosition: 'top',
               horizontalPosition: 'center',
-            })
+            });
           },
           () => this.onError('Erro ao tentar remover arquivo')
-        )
+        );
       }
-    })
+    });
   }
-
 }

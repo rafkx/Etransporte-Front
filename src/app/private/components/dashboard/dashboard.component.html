@@ -1,49 +1,91 @@
 <mat-toolbar class="primary" *ngIf="user">
-    <button mat-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item [matMenuTriggerFor]="frotas">Frotas</button>
-        <button mat-menu-item [matMenuTriggerFor]="financeiro">Financeiro</button>
-        <button mat-menu-item [matMenuTriggerFor]="estoque">Estoque</button>
-        <button mat-menu-item [matMenuTriggerFor]="rastreamento">Rastreamento</button>
-        <button mat-menu-item *ngIf="isAdmin || isGerente" [matMenuTriggerFor]="config">Configurações</button>
-    </mat-menu>
-    
-    <mat-menu #frotas="matMenu">
-        <button mat-menu-item (click)="goToVeiculo()">Veículo</button>
-        <button mat-menu-item (click)="goToQuilometro()">Quilometragens</button>
-        <button mat-menu-item (click)="goToAbastecimento()">Abastecimento</button>
-        <button mat-menu-item (click)="goToServico()">Serviço</button>
-        <button mat-menu-item (click)="goToPeca()">Peça</button>
-        <button mat-menu-item *ngIf="isAdmin || isGerente" (click)="goToManutencao()">Manutenção</button>
-    </mat-menu>
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [matMenuTriggerFor]="frotas">Frotas</button>
+    <button mat-menu-item [matMenuTriggerFor]="financeiro">Financeiro</button>
+    <button mat-menu-item [matMenuTriggerFor]="estoque">Estoque</button>
+    <button mat-menu-item [matMenuTriggerFor]="rastreamento">
+      Rastreamento
+    </button>
+    <button
+      mat-menu-item
+      *ngIf="isAdmin || isGerente"
+      [matMenuTriggerFor]="config"
+    >
+      Configurações
+    </button>
+  </mat-menu>
 
-    <mat-menu #financeiro="matMenu">
-        <button mat-menu-item *ngIf="isAdmin || isGerente" (click)="goToFuncionario()">Funcionário</button>
-        <button mat-menu-item (click)="goToFornecedor()">Fornecedor</button>
-    </mat-menu>
+  <mat-menu #frotas="matMenu">
+    <button mat-menu-item (click)="goToVeiculo()">Veículo</button>
+    <button mat-menu-item (click)="goToQuilometro()">Quilometragens</button>
+    <button mat-menu-item (click)="goToAbastecimento()">Abastecimento</button>
+    <button mat-menu-item (click)="goToServico()">Serviço</button>
+    <button mat-menu-item (click)="goToPeca()">Peça</button>
+    <button
+      mat-menu-item
+      *ngIf="isAdmin || isGerente"
+      (click)="goToManutencao()"
+    >
+      Manutenção
+    </button>
+  </mat-menu>
 
-    <mat-menu #estoque="matMenu">
-        <button mat-menu-item [disabled]="IsDisabled">Indisponível</button>
-    </mat-menu>
+  <mat-menu #financeiro="matMenu">
+    <button
+      mat-menu-item
+      *ngIf="isAdmin || isGerente"
+      (click)="goToFuncionario()"
+    >
+      Funcionário
+    </button>
+    <button mat-menu-item (click)="goToFornecedor()">Fornecedor</button>
+  </mat-menu>
 
-    <mat-menu #rastreamento="matMenu">
-        <button mat-menu-item [disabled]="IsDisabled">Indisponível</button>
-    </mat-menu>
+  <mat-menu #estoque="matMenu">
+    <button mat-menu-item [disabled]="IsDisabled">Indisponível</button>
+  </mat-menu>
 
-    <mat-menu #config="matMenu">
-        <button mat-menu-item (click)="goToAssociation()">Autorização</button>
-        <button mat-menu-item *ngIf="isAdmin" (click)="goToAutentication()">Autenticação</button>
-    </mat-menu>
+  <mat-menu #rastreamento="matMenu">
+    <button mat-menu-item [disabled]="IsDisabled">Indisponível</button>
+  </mat-menu>
 
-   
-    <span>Etransporte</span>
-    <span class="example-spacer"></span>
-    <button mat-raised-button [matMenuTriggerFor]="usuario"> <span style="text-transform: uppercase;"> {{ user.name }} </span> </button>
+  <mat-menu #config="matMenu">
+    <button mat-menu-item (click)="goToAssociation()">Autorização</button>
+    <button mat-menu-item *ngIf="isAdmin" (click)="goToAutentication()">
+      Autenticação
+    </button>
+  </mat-menu>
 
-    <mat-menu #usuario="matMenu" xPosition="before">
-        <button mat-menu-item (click)="goToPhoto()"> <mat-icon>account_box</mat-icon> Alterar Foto</button> 
-        <button mat-menu-item (click)="goToEditPassword()"> <mat-icon>edit</mat-icon> Alterar Senha</button> 
-        <button mat-menu-item (click)="logOut()"> <mat-icon>logout</mat-icon> Sair</button>
-    </mat-menu>
-    
+  <span>Etransporte</span>
+  <span class="example-spacer"></span>
+
+  <div *ngIf="funcionario" xPosition="before">
+    <img
+      [src]="funcionario.fotoPerfil"
+      alt="Place image title"
+      *ngIf="funcionario.fotoPerfil; else noImageFound"
+    />
+    <ng-template #noImageFound>
+      <img src="../assets/noImage.png" alt="Fallbackimage" />
+    </ng-template>
+  </div>
+
+  <button mat-raised-button [matMenuTriggerFor]="usuario">
+    <span style="text-transform: uppercase"> {{ user.name }} </span>
+  </button>
+
+  <mat-menu #usuario="matMenu" xPosition="before">
+    <button mat-menu-item (click)="goToPhoto()">
+      <mat-icon>account_box</mat-icon> Alterar Foto
+    </button>
+    <button mat-menu-item (click)="goToEditPassword()">
+      <mat-icon>edit</mat-icon> Alterar Senha
+    </button>
+    <button mat-menu-item (click)="logOut()">
+      <mat-icon>logout</mat-icon> Sair
+    </button>
+  </mat-menu>
 </mat-toolbar>

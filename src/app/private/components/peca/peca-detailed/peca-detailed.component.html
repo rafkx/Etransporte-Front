@@ -1,47 +1,65 @@
 <div class="button-back">
-    <button mat-fab (click)="goBack()">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
+  <button mat-fab (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
 </div>
 
 <mat-card>
-    <mat-card-content class="primary">
+  <mat-card-content class="primary">
+    <button mat-stroked-button (click)="openDialog()">
+      Selecionar Foto de Perfil
+    </button>
 
-        <button mat-stroked-button (click)="openDialog()">Selecionar Foto de Perfil</button>
+    <div>
+      <div *ngIf="peca; else loading">
+        <img
+          [src]="peca.fotoPeca"
+          alt="Place image title"
+          *ngIf="peca.fotoPeca; else noImageFound"
+        />
+        <ng-template #noImageFound>
+          <img src="../assets/noImage.png" alt="Fallbackimage" />
+        </ng-template>
+        <h1>{{ peca.nomePeca }}</h1>
+        <p><b>Código:</b> {{ peca.codPeca }}</p>
+        <p><b>Descrição:</b> {{ peca.descricao }}</p>
+        <p><b>Marca do Fabricante:</b> {{ peca.marcaFabricante }}</p>
+        <p><b>Modelo:</b> {{ peca.modelo }}</p>
+        <p>
+          <b>Peça Pequena:</b>
+          <!-- {{ peca.pequenaPeca[0].nomePeca }} -->
+        </p>
+      </div>
 
-        <div>
-            <div *ngIf="peca; else loading">
-                <img [src]="peca.fotoPeca">
-                <h1> {{ peca.nomePeca }} </h1>
-                <p><b>Código:</b> {{ peca.codPeca }} </p>
-                <p><b>Descrição:</b> {{ peca.descricao }} </p>
-                <p><b>Marca do Fabricante:</b> {{ peca.marcaFabricante }} </p>
-                <p><b>Modelo:</b> {{ peca.modelo }} </p>
-                <p><b>Peça Pequena:</b> <!-- {{ peca.pequenaPeca[0].nomePeca }} --></p>
-            </div>
-
-            <ng-template #loading>
-                <div class="loading-spinner">
-                    <mat-spinner></mat-spinner>
-                </div>
-            </ng-template>
+      <ng-template #loading>
+        <div class="loading-spinner">
+          <mat-spinner></mat-spinner>
         </div>
+      </ng-template>
+    </div>
 
-        <div *ngFor="let file of files">
-            <tr>
-                <td>{{ file.fileName }}</td>
-                <td>
-                    <button mat-icon-button style="color: whitesmoke;" (click)="onDelete(file)">
-                        <mat-icon fontIcon="delete"></mat-icon>
-                    </button>
-                </td>
-                <td>
-                    <button mat-icon-button style="color: whitesmoke;" (click)="onDownload(file)">
-                        <mat-icon fontIcon="download"></mat-icon>
-                    </button>
-                </td>
-            </tr>
-        </div>
-
-    </mat-card-content>
+    <div *ngFor="let file of files">
+      <tr>
+        <td>{{ file.fileName }}</td>
+        <td>
+          <button
+            mat-icon-button
+            style="color: whitesmoke"
+            (click)="onDelete(file)"
+          >
+            <mat-icon fontIcon="delete"></mat-icon>
+          </button>
+        </td>
+        <td>
+          <button
+            mat-icon-button
+            style="color: whitesmoke"
+            (click)="onDownload(file)"
+          >
+            <mat-icon fontIcon="download"></mat-icon>
+          </button>
+        </td>
+      </tr>
+    </div>
+  </mat-card-content>
 </mat-card>

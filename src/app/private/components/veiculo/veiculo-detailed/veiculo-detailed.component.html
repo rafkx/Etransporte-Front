@@ -1,64 +1,77 @@
 <div class="button-back">
-    <button mat-fab (click)="goBack()">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
+  <button mat-fab (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
 </div>
 
 <mat-card>
-    <mat-card-content class="primary">
+  <mat-card-content class="primary">
+    <button mat-stroked-button (click)="openDialog()">
+      Selecionar Foto de Perfil
+    </button>
 
-       
-        <button mat-stroked-button (click)="openDialog()">Selecionar Foto de Perfil</button>
-        
-
-        <div>
-            <div *ngIf="veiculo; else loading">
-                <img [src]="veiculo.fotoCarro">
-                <h1>{{ veiculo.placa }}</h1>
-                <p> <b>Renavam:</b> {{ veiculo.renavam }}</p>
-                <p> <b>Chassi:</b> {{ veiculo.chassi }}</p>
-                <p> <b>Tipo Chassi:</b> {{ veiculo.tipoChassi }}</p>
-                <p> <b>Ano:</b> {{ veiculo.ano }}</p>
-                <p> <b>Modelo:</b> {{ veiculo.modelo }}</p>
-                <p> <b>Combustivel</b> {{ veiculo.combustivel }}</p>
-                <p> <b>Última Km:</b> {{ veiculo.ultimaKm }}</p>
-                <p> <b>Cor Interna:</b> {{ veiculo.corInterna }}</p>
-                <p> <b>Cor Externa:</b> {{ veiculo.corExterna }}</p>
-                <p> <b>Número Motor Interno:</b> {{ veiculo.numMotorInterno }}</p>
-                <p> <b>Número Motor Externo:</b> {{ veiculo.numMotorExterno }}</p>
-                <p> <b>Rastreador:</b> {{ veiculo.rastreador }}</p>
-                <p> <b>Bloqueador:</b> {{ veiculo.bloqueador }}</p>
-                <p> <b>Data Aquisição:</b> {{ veiculo.dataAquisicao }}</p>
-                <p> <b>Condição:</b> {{ veiculo.condicao }}</p>
-                <p> <b>Valor Compra:</b> {{ veiculo.valorCompra }}</p>
-                <p> <b>Valor Reforma:</b> {{ veiculo.ValorReforma }}</p>
-                <p> <b>Valor Mercado:</b> {{ veiculo.valorMercado }}</p>
-                <p> <b>Nome Vendedor:</b> {{ veiculo.nomeVendedor }}</p>
-                <p> <b>Telefone Vendedor:</b> {{ veiculo.teleVendedor }}</p>
-                <p> <b>Descrição:</b> {{ veiculo.descricao }}</p>
-            </div>
-            <ng-template #loading>
-                <div class="loading-spinner">
-                    <mat-spinner></mat-spinner>
-                </div>
-            </ng-template>
+    <div>
+      <div *ngIf="veiculo; else loading">
+        <img
+          [src]="veiculo.fotoCarro"
+          alt="Place image title"
+          *ngIf="veiculo.fotoCarro; else noImageFound"
+        />
+        <ng-template #noImageFound>
+          <img src="../assets/noImage.png" alt="Fallbackimage" />
+        </ng-template>
+        <h1>{{ veiculo.placa }}</h1>
+        <p><b>Renavam:</b> {{ veiculo.renavam }}</p>
+        <p><b>Chassi:</b> {{ veiculo.chassi }}</p>
+        <p><b>Tipo Chassi:</b> {{ veiculo.tipoChassi }}</p>
+        <p><b>Ano:</b> {{ veiculo.ano }}</p>
+        <p><b>Modelo:</b> {{ veiculo.modelo }}</p>
+        <p><b>Combustivel</b> {{ veiculo.combustivel }}</p>
+        <p><b>Última Km:</b> {{ veiculo.ultimaKm }}</p>
+        <p><b>Cor Interna:</b> {{ veiculo.corInterna }}</p>
+        <p><b>Cor Externa:</b> {{ veiculo.corExterna }}</p>
+        <p><b>Número Motor Interno:</b> {{ veiculo.numMotorInterno }}</p>
+        <p><b>Número Motor Externo:</b> {{ veiculo.numMotorExterno }}</p>
+        <p><b>Rastreador:</b> {{ veiculo.rastreador }}</p>
+        <p><b>Bloqueador:</b> {{ veiculo.bloqueador }}</p>
+        <p><b>Data Aquisição:</b> {{ veiculo.dataAquisicao }}</p>
+        <p><b>Condição:</b> {{ veiculo.condicao }}</p>
+        <p><b>Valor Compra:</b> {{ veiculo.valorCompra }}</p>
+        <p><b>Valor Reforma:</b> {{ veiculo.ValorReforma }}</p>
+        <p><b>Valor Mercado:</b> {{ veiculo.valorMercado }}</p>
+        <p><b>Nome Vendedor:</b> {{ veiculo.nomeVendedor }}</p>
+        <p><b>Telefone Vendedor:</b> {{ veiculo.teleVendedor }}</p>
+        <p><b>Descrição:</b> {{ veiculo.descricao }}</p>
+      </div>
+      <ng-template #loading>
+        <div class="loading-spinner">
+          <mat-spinner></mat-spinner>
         </div>
+      </ng-template>
+    </div>
 
-        <div *ngFor="let file of files">
-            <tr>
-                <td>{{ file.fileName }}</td>
-                <td>
-                    <button mat-icon-button style="color: whitesmoke" (click)="onDelete(file)">
-                        <mat-icon fontIcon="delete"></mat-icon>
-                    </button>
-                </td>
-                <td>
-                    <button mat-icon-button style="color: whitesmoke" (click)="onDownload(file)">
-                        <mat-icon fontIcon="download"></mat-icon>
-                    </button>
-                </td>
-            </tr>
-        </div>
-
-    </mat-card-content>
+    <div *ngFor="let file of files">
+      <tr>
+        <td>{{ file.fileName }}</td>
+        <td>
+          <button
+            mat-icon-button
+            style="color: whitesmoke"
+            (click)="onDelete(file)"
+          >
+            <mat-icon fontIcon="delete"></mat-icon>
+          </button>
+        </td>
+        <td>
+          <button
+            mat-icon-button
+            style="color: whitesmoke"
+            (click)="onDownload(file)"
+          >
+            <mat-icon fontIcon="download"></mat-icon>
+          </button>
+        </td>
+      </tr>
+    </div>
+  </mat-card-content>
 </mat-card>

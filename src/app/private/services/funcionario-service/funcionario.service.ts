@@ -1,23 +1,20 @@
 import { Injectable } from '@angular/core';
-import { delay, first, Observable, tap } from 'rxjs';
+import { catchError, delay, first, Observable, pipe, tap } from 'rxjs';
 import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
 import { FileFuncionario } from 'src/app/models/file_funcionario';
 import { Funcionario } from 'src/app/models/funcionario';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FuncionarioService {
-
-  constructor(
-    private http: HttpClient,
-  ) { }
+  constructor(private http: HttpClient) {}
 
   funcionario: any | undefined;
 
   public fileUpload(files: FileFuncionario[], url: string) {
     const formData = new FormData();
-    files.forEach(file => formData.append('file', file));
+    files.forEach((file) => formData.append('file', file));
     formData.append('funcionario', this.funcionario);
     const request = new HttpRequest('POST', url, formData);
     return this.http.request(request);
@@ -28,12 +25,16 @@ export class FuncionarioService {
   }
 
   public downloadFile(fileName: string) {
-    return this.http.get(`http://localhost:3000/files-funcionario/download/${fileName}`,
-    { observe: 'response', responseType: 'blob'});
+    return this.http.get(
+      `http://localhost:3000/files-funcionario/download/${fileName}`,
+      { observe: 'response', responseType: 'blob' }
+    );
   }
 
   public removeFile(fileName: string) {
-    return this.http.delete(`http://localhost:3000/files-funcionario/${fileName}`).pipe(first());
+    return this.http
+      .delete(`http://localhost:3000/files-funcionario/${fileName}`)
+      .pipe(first());
   }
 
   public addPhoto(photo: File): Observable<any> {
@@ -42,7 +43,13 @@ export class FuncionarioService {
     return this.http.post('http://localhost:3000/funcionario/photo', formData);
   }
 
-  public getFuncionarios(): Observable<any>{
+  public getPhoto(): Observable<Blob> {
+    return this.http.get('http://localhost:3000/funcionario/photo', {
+      responseType: 'blob',
+    });
+  }
+
+  public getFuncionarios(): Observable<any> {
     return this.http.get('http://localhost:3000/funcionario').pipe(first());
   }
 
@@ -50,7 +57,9 @@ export class FuncionarioService {
     let params = new HttpParams();
     params = params.append('page', String(page));
     params = params.append('take', String(take));
-    return this.http.get('http://localhost:3000/funcionario/paginate', { params });
+    return this.http.get('http://localhost:3000/funcionario/paginate', {
+      params,
+    });
   }
 
   public getFilter(text: string, page: number, take: number): Observable<any> {
@@ -58,31 +67,40 @@ export class FuncionarioService {
     params = params.append('text', text);
     params = params.append('page', String(page));
     params = params.append('take', String(take));
-    return this.http.get('http://localhost:3000/funcionario/filter', { params });
+    return this.http.get('http://localhost:3000/funcionario/filter', {
+      params,
+    });
   }
 
-  public loadById(id: string){
-    return this.http.get<Funcionario>(`http://localhost:3000/funcionario/${id}`);
+  public loadById(id: string): Observable<any> {
+    return this.http.get(`http://localhost:3000/funcionario/${id}`);
   }
 
-  public save (funcionario: Partial<Funcionario>) {
+  public save(funcionario: Partial<Funcionario>) {
     if (funcionario.id) {
       return this.update(funcionario);
     }
     return this.create(funcionario);
   }
 
-  private create (funcionario: Partial<Funcionario>){
-    return this.http.post<Funcionario>('http://localhost:3000/funcionario', funcionario).pipe(
-      tap((res: Funcionario) => this.funcionario = res.id)
-    );
+  private create(funcionario: Partial<Funcionario>) {
+    return this.http
+      .post<Funcionario>('http://localhost:3000/funcionario', funcionario)
+      .pipe(tap((res: Funcionario) => (this.funcionario = res.id)));
   }
 
-  private update (funcionario: Partial<Funcionario>){
-    return this.http.patch<Funcionario>(`http://localhost:3000/funcionario/${funcionario.id}`, funcionario).pipe(first());
+  private update(funcionario: Partial<Funcionario>) {
+    return this.http
+      .patch<Funcionario>(
+        `http://localhost:3000/funcionario/${funcionario.id}`,
+        funcionario
+      )
+      .pipe(first());
   }
 
   public remove(id: string) {
-    return this.http.delete(`http://localhost:3000/funcionario/${id}`).pipe(first());
+    return this.http
+      .delete(`http://localhost:3000/funcionario/${id}`)
+      .pipe(first());
   }
 }
